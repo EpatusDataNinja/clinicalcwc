@@ -9,9 +9,9 @@ import MetricCard from '@/components/ui/MetricCard';
 
 export default function KPIBentoGrid() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
-      {/* Hero: Active Cases — spans 2 cols */}
-      <div className="col-span-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+      {/* Hero: Active Cases — spans 2 cols on tablet/desktop */}
+      <div className="sm:col-span-2">
         <MetricCard
           label="Active Cases"
           value={8}

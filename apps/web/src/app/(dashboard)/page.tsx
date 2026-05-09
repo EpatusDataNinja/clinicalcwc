@@ -6,14 +6,21 @@ import TaskSidebar from './components/TaskSidebar';
 
 export default function ClinicalCaseDashboardPage() {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-background">
       <DashboardTopbar />
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5 min-w-0">
+        {/* Main Content: Scrollable */}
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 space-y-6 min-w-0">
           <KPIBentoGrid />
-          <ActiveCaseTable />
+          <div className="pb-10">
+            <ActiveCaseTable />
+          </div>
         </div>
-        <TaskSidebar />
+        
+        {/* Task Sidebar: Hidden on small screens (mobile/tablets) */}
+        <div className="hidden xl:block">
+          <TaskSidebar />
+        </div>
       </div>
     </div>
   );
