@@ -7,7 +7,7 @@
 import { syncQueueDB, type SyncQueueItem } from './localDB';
 import { useCaseStore } from './store';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_BASE = '';
 const MAX_RETRIES = 3;
 
 export type SyncStatus = 'idle' | 'syncing' | 'success' | 'error' | 'offline';
