@@ -249,11 +249,12 @@ export default function RegisterForm() {
         )}
       </button>
 
-      <p className="text-center text-xs text-muted-foreground">
+      <div className="text-center text-xs text-muted-foreground mt-4">
         Already have an account?{' '}
-        <Link href="/sign-up-login-screen" className="text-primary hover:underline">Sign In
+        <Link href="/login" className="text-primary font-semibold hover:underline">
+          Sign In
         </Link>
-      </p>
+      </div>
     </form>
   );
 }

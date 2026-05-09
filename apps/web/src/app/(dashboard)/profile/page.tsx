@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import AppLayout from '@/components/AppLayout';
 import { useCaseStore } from '@/lib/store';
 import { updateProfile, logout } from '@/lib/authService';
 import { User, Mail, Lock, LogOut, Loader2, Save } from 'lucide-react';
@@ -30,7 +29,7 @@ export default function ProfilePage() {
           You are currently using ClinicalCWC in offline-only mode. Sign in to sync your data and manage your profile.
         </p>
         <button
-          onClick={() => router.push('/sign-up-login-screen')}
+          onClick={() => router.push('/login')}
           className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium shadow-sm hover:bg-primary/90 transition-colors"
         >
           Sign In / Register
@@ -64,11 +63,11 @@ export default function ProfilePage() {
   const handleLogout = () => {
     logout();
     toast.success('Signed out successfully');
-    router.push('/');
+    router.push('/login');
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 py-8">
+    <div className="max-w-2xl mx-auto space-y-6 py-8 px-4">
       {/* Profile Info Card */}
       <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
           <div className="flex items-center gap-4 mb-6">
@@ -90,7 +89,7 @@ export default function ProfilePage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                 placeholder="Dr. John Doe"
               />
             </div>
@@ -103,7 +102,7 @@ export default function ProfilePage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                 placeholder="you@institution.edu"
               />
             </div>
@@ -119,7 +118,7 @@ export default function ProfilePage() {
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                     placeholder="••••••••"
                   />
                 </div>
@@ -131,7 +130,7 @@ export default function ProfilePage() {
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                     placeholder="••••••••"
                   />
                 </div>
@@ -143,7 +142,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-all active:scale-95 disabled:opacity-50"
               >
                 {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                 Save Changes
@@ -155,18 +154,17 @@ export default function ProfilePage() {
         {/* Account Actions */}
         <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-6">
           <h3 className="text-sm font-semibold text-red-400 mb-2">Account Actions</h3>
-          <p className="text-xs text-muted-foreground mb-4">
+          <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
             Signing out will pause synchronization, but your locally encrypted cases will remain on this device.
           </p>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/20 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/20 transition-all active:scale-95"
           >
             <LogOut size={16} />
             Sign Out
           </button>
         </div>
-
       </div>
   );
 }
