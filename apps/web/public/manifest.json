@@ -1,0 +1,68 @@
+{
+    "name": "ClinicalCWC \u2014 Clinical Workflow Companion",
+    "short_name": "ClinicalCWC",
+    "description": "Offline-first clinical case notes, task tracking, and drug reference for medical interns.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0B1120",
+    "theme_color": "#3B82F6",
+    "orientation": "portrait-primary",
+    "categories": [
+        "medical",
+        "productivity",
+        "utilities"
+    ],
+    "icons": [
+        {
+            "src": "/assets/images/app_logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/assets/images/app_logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Case Dashboard",
+            "short_name": "Dashboard",
+            "description": "View active clinical cases",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "/assets/images/app_logo.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Drug Reference",
+            "short_name": "Drugs",
+            "description": "Search drug dosages offline",
+            "url": "/drug-reference",
+            "icons": [
+                {
+                    "src": "/assets/images/app_logo.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Task Manager",
+            "short_name": "Tasks",
+            "description": "View and manage clinical tasks",
+            "url": "/task-management",
+            "icons": [
+                {
+                    "src": "/assets/images/app_logo.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "clinicalcwc-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace clinicalcwc run dev",
+    "dev:api": "npm --workspace clinicalcwc-api run dev",
+    "type-check": "npm --workspace clinicalcwc run type-check",
+    "build:web": "npm --workspace clinicalcwc run build",
+    "build:api": "npm --workspace clinicalcwc-api run build"
+  }
+}
