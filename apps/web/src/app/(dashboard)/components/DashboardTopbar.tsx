@@ -37,59 +37,61 @@ export default function DashboardTopbar() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-card/50 backdrop-blur-sm shrink-0">
-        <div className="flex flex-col">
-          <h1 className="text-xl font-semibold text-foreground">Case Dashboard</h1>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Active clinical cases — 5 May 2026, 16:35
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-border bg-card/50 backdrop-blur-sm shrink-0">
+        <div className="flex flex-col min-w-0">
+          <h1 className="text-lg md:text-xl font-bold text-foreground truncate hidden sm:block">
+            Dashboard
+          </h1>
+          <p className="text-[10px] text-muted-foreground mt-0.5 hidden md:block">
+            Active clinical cases — Real-time
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Sync status indicator */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-            <AlertTriangle size={13} className="text-amber-400" />
-            <span className="text-xs font-medium text-amber-400">Sync Available</span>
+        <div className="flex items-center gap-2 md:gap-3 ml-auto">
+          {/* Sync Status - Hidden on small mobile */}
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+            <AlertTriangle size={12} className="text-amber-400" />
+            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-tight">Sync Needed</span>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20">
-            <Wifi size={13} className="text-green-400" />
-            <span className="text-xs font-medium text-green-400 hidden sm:block">Online</span>
+          <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-green-500/10 border border-green-500/20">
+            <Wifi size={12} className="text-green-400" />
+            <span className="text-[10px] font-bold text-green-400 hidden lg:block uppercase tracking-tight">Live</span>
           </div>
 
-          {/* Search */}
-          <div className="relative hidden md:block">
+          {/* Search - Hidden on mobile */}
+          <div className="relative hidden xl:block">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search cases… (⌘K)"
-              className="pl-9 pr-4 py-2 bg-input border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring w-52 transition-all focus:w-64"
+              placeholder="Search..."
+              className="pl-9 pr-4 py-1.5 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary w-40"
             />
           </div>
 
-          {/* Sync button */}
-          <button
-            onClick={handleSync}
-            className="p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-95"
-            title="Sync now"
-          >
-            <RefreshCw size={15} className={syncing ? 'animate-spin' : ''} />
-          </button>
+          {/* Action Buttons */}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleSync}
+              className="p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-90"
+              title="Sync now"
+            >
+              <RefreshCw size={14} className={syncing ? 'animate-spin' : ''} />
+            </button>
 
-          {/* Notifications */}
-          <button className="relative p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-95">
-            <Bell size={15} />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
+            <button className="p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-90 relative">
+              <Bell size={14} />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
+            </button>
 
-          {/* Add Case */}
-          <button
-            onClick={() => setShowAddCase(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-all active:scale-95 shadow-md"
-          >
-            <Plus size={15} />
-            <span className="hidden sm:block">New Case</span>
-          </button>
+            <button
+              onClick={() => setShowAddCase(true)}
+              className="flex items-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 transition-all active:scale-95 shadow-sm"
+            >
+              <Plus size={14} />
+              <span className="hidden xs:block">New</span>
+            </button>
+          </div>
         </div>
       </div>
 
