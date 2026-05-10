@@ -4,7 +4,6 @@ import React from 'react';
 import {
   RadialBarChart,
   RadialBar,
-  ResponsiveContainer,
   Tooltip,
 } from 'recharts';
 import { useTasks } from '@/lib/hooks';
@@ -40,20 +39,20 @@ export default function TaskCompletionChart() {
   return (
     <div className="card-elevated p-4 flex items-center gap-4">
       <div className="shrink-0">
-        <ResponsiveContainer width={90} height={90}>
-          <RadialBarChart
-            cx="50%"
-            cy="50%"
-            innerRadius="55%"
-            outerRadius="90%"
-            data={completionData}
-            startAngle={90}
-            endAngle={-270}
-          >
-            <RadialBar dataKey="value" cornerRadius={4} background={{ fill: 'var(--muted)' }} />
-            <Tooltip content={<CustomTooltip />} />
-          </RadialBarChart>
-        </ResponsiveContainer>
+        <RadialBarChart
+          width={90}
+          height={90}
+          cx="50%"
+          cy="50%"
+          innerRadius="55%"
+          outerRadius="90%"
+          data={completionData}
+          startAngle={90}
+          endAngle={-270}
+        >
+          <RadialBar dataKey="value" cornerRadius={4} background={{ fill: 'var(--muted)' }} />
+          <Tooltip content={<CustomTooltip />} />
+        </RadialBarChart>
       </div>
       <div>
         <p className="text-2xl font-bold text-emerald-400 tabular-nums">{completionRate}%</p>

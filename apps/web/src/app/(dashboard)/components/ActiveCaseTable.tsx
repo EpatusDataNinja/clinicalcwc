@@ -101,8 +101,8 @@ export default function ActiveCaseTable() {
   return (
     <div className="card-elevated overflow-hidden">
       {/* Table Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between px-3 sm:px-5 py-3 sm:py-4 border-b border-border">
+        <div className="flex items-center gap-2 sm:gap-3">
           <h2 className="text-sm font-semibold text-foreground">Active Case List</h2>
           <span className="text-xs text-muted-foreground font-mono tabular-nums">
             {filtered.length} cases
@@ -138,7 +138,7 @@ export default function ActiveCaseTable() {
 
       {/* Bulk action bar */}
       {selectedRows.size > 0 && (
-        <div className="flex items-center gap-3 px-5 py-2.5 bg-primary/10 border-b border-primary/20 animate-slide-up">
+        <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 bg-primary/10 border-b border-primary/20 animate-slide-up flex-wrap">
           <span className="text-xs font-semibold text-primary">
             {selectedRows.size} selected
           </span>
@@ -237,7 +237,7 @@ export default function ActiveCaseTable() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between px-5 py-3 border-t border-border">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-3 sm:px-5 py-3 border-t border-border">
           <span className="text-xs text-muted-foreground tabular-nums">
             Showing {(page - 1) * perPage + 1}–{Math.min(page * perPage, sorted.length)} of{' '}
             {sorted.length} cases

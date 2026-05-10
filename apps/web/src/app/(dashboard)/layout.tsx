@@ -36,12 +36,24 @@ export default function DashboardLayout({
     closeMobileMenu();
   }, [pathname, closeMobileMenu]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   if (!authToken) {
     return null;
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex min-h-[100dvh] h-[100dvh] overflow-hidden bg-background">
       {/* Fix 2: AppInitializer moved here from root layout */}
       <AppInitializer />
 

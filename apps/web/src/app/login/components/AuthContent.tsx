@@ -11,17 +11,17 @@ export default function AuthContent() {
   const [tab, setTab] = useState<'login' | 'register'>('login');
 
   return (
-    <div className="min-h-screen flex bg-background">
-      {/* Left Panel — Branding */}
+    <div className="min-h-[100dvh] flex flex-col lg:flex-row bg-background">
+      {/* Left Panel — Branding (Hidden purely decorative grid on mobile, order second) */}
       <div
-        className="hidden lg:flex lg:w-[45%] xl:w-[42%] flex-col relative overflow-hidden"
+        className="flex lg:w-[45%] xl:w-[42%] flex-col relative overflow-hidden order-2 lg:order-1"
         style={{
           background: 'linear-gradient(135deg, #0D1A35 0%, #0B1120 60%, #0D1A35 100%)',
         }}
       >
-        {/* Subtle grid overlay */}
+        {/* Subtle grid overlay - hidden on mobile to reduce noise */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-5 hidden lg:block"
           style={{
             backgroundImage: `
               linear-gradient(rgba(59,130,246,0.4) 1px, transparent 1px),
@@ -32,9 +32,9 @@ export default function AuthContent() {
         />
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col h-full px-10 py-10">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
+        <div className="relative z-10 flex flex-col h-full px-6 py-10 lg:px-10 lg:py-10">
+          {/* Logo - Hidden on mobile because it's above the form */}
+          <div className="hidden lg:flex items-center gap-3">
             <AppLogo size={36} />
             <div>
               <span className="block font-bold text-lg text-foreground tracking-tight leading-none">
@@ -46,25 +46,26 @@ export default function AuthContent() {
             </div>
           </div>
 
-            <div className="flex-1 flex flex-col justify-center relative">
-              {/* Hero Image / Banner - Can be configured via Admin Dashboard */}
-              <div className="relative w-full aspect-video md:aspect-[4/3] rounded-2xl overflow-hidden mb-8 border border-border shadow-2xl group">
+            <div className="flex-1 flex flex-col justify-center relative mt-6 lg:mt-0">
+              {/* Hero Image / Banner - Scaled down on mobile */}
+              <div className="relative w-full aspect-[2/1] md:aspect-[4/3] rounded-2xl overflow-hidden mb-6 lg:mb-8 border border-border shadow-2xl group">
                 <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
                 <AppImage 
                   src="/assets/images/login_hero.png" 
                   alt="Clinical Workflow Companion"
                   fill
+                  priority
                   className="object-cover transform transition-transform duration-700 group-hover:scale-105"
                   unoptimized={true}
                 />
               </div>
 
               <div className="max-w-sm relative z-20">
-                <h2 className="text-3xl font-bold text-foreground leading-tight">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
                   The clinical <br />
                   <span className="text-primary">workflow</span> companion
                 </h2>
-                <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
+                <p className="text-sm text-muted-foreground mt-3 lg:mt-4 leading-relaxed">
                   A secure, offline-first clinical workspace for medical interns. Encrypts your data locally and optionally syncs it securely across your devices.
                 </p>
               </div>
@@ -75,7 +76,7 @@ export default function AuthContent() {
         </div>
       </div>
       {/* Right Panel — Form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10 overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 lg:py-10 overflow-y-auto order-1 lg:order-2">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">

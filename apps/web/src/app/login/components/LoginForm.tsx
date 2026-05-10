@@ -44,10 +44,16 @@ export default function LoginForm() {
       Promise.all([
         runSync(result.token),
         pullRemoteSnapshot(result.token),
-      ]).then(() => {
-        toast.success('Sync complete', {
-          description: 'All encrypted cases are up to date.',
-        });
+      ]).then(([pushResult, pullResult]) => {
+        if (pushResult.status === 'error' || pullResult.status === 'error') {
+          toast.info('Sync pending', {
+            description: 'Your data will sync when the connection is stable.',
+          });
+        } else {
+          toast.success('Sync complete', {
+            description: 'All encrypted cases are up to date.',
+          });
+        }
       }).catch((syncErr) => {
         console.warn('Background sync failed:', syncErr);
         toast.info('Sync pending', {

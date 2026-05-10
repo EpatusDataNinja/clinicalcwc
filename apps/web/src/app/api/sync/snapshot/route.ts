@@ -33,8 +33,11 @@ export async function GET(req: NextRequest) {
         updatedAt: item.updatedAt.toISOString(),
       })),
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Snapshot sync error:', error);
+    if (error?.code === 'P1001') {
+      return NextResponse.json({ error: 'Database server unreachable. Offline mode active.' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to load sync snapshot' }, { status: 500 });
   }
 }

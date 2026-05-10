@@ -37,7 +37,7 @@ export default function DashboardTopbar() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-border bg-card/50 backdrop-blur-sm shrink-0">
+      <div className="flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 border-b border-border bg-card/50 backdrop-blur-sm shrink-0">
         <div className="flex flex-col min-w-0">
           <h1 className="text-lg md:text-xl font-bold text-foreground truncate hidden sm:block">
             Dashboard
@@ -86,10 +86,10 @@ export default function DashboardTopbar() {
 
             <button
               onClick={() => setShowAddCase(true)}
-              className="flex items-center gap-1.5 px-3 py-2 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 transition-all active:scale-95 shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 transition-all active:scale-95 shadow-sm"
             >
               <Plus size={14} />
-              <span className="hidden xs:block">New</span>
+              <span className="hidden sm:block">New</span>
             </button>
           </div>
         </div>
