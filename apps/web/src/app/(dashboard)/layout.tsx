@@ -6,6 +6,7 @@ import { useCaseStore } from '@/lib/store';
 import { useRouter, usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import AppLogo from '@/components/ui/AppLogo';
+import AppInitializer from '@/components/AppInitializer';
 
 export default function DashboardLayout({
   children,
@@ -14,6 +15,7 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  // Fix 9: Use selector instead of subscribing to entire store
   const authToken = useCaseStore((state) => state.authToken);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -40,6 +42,9 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
+      {/* Fix 2: AppInitializer moved here from root layout */}
+      <AppInitializer />
+
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex shrink-0 h-full border-r border-border">
         <Sidebar />

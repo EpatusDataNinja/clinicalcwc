@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata, Viewport } from 'next';
 import '@/styles/tailwind.css';
 import { Toaster } from 'sonner';
-import AppInitializer from '@/components/AppInitializer';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -32,7 +31,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/assets/images/app_logo.png" />
         </head>
       <body>
-        <AppInitializer />
+        {/* AppInitializer removed from root — now in dashboard layout only */}
         {children}
         <Toaster
           position="bottom-right"
@@ -48,10 +47,20 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Fix 6: Only register service worker in production
+              // In dev, unregister any stale service workers to prevent caching issues
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').catch(function() {});
-                });
+                if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                  // Development: unregister any stale SW
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(function(reg) { reg.unregister(); });
+                  });
+                } else {
+                  // Production: register SW
+                  window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').catch(function() {});
+                  });
+                }
               }
             `,
           }}

@@ -46,8 +46,20 @@ export default function AuthContent() {
             </div>
           </div>
 
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="mb-8 max-w-sm">
+            <div className="flex-1 flex flex-col justify-center relative">
+              {/* Hero Image / Banner - Can be configured via Admin Dashboard */}
+              <div className="relative w-full aspect-video md:aspect-[4/3] rounded-2xl overflow-hidden mb-8 border border-border shadow-2xl group">
+                <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
+                <AppImage 
+                  src="/assets/images/login_hero.png" 
+                  alt="Clinical Workflow Companion"
+                  fill
+                  className="object-cover transform transition-transform duration-700 group-hover:scale-105"
+                  unoptimized={true}
+                />
+              </div>
+
+              <div className="max-w-sm relative z-20">
                 <h2 className="text-3xl font-bold text-foreground leading-tight">
                   The clinical <br />
                   <span className="text-primary">workflow</span> companion
@@ -59,9 +71,7 @@ export default function AuthContent() {
             </div>
 
           {/* Footer */}
-          <div className="text-xs text-muted-foreground/50 font-mono">
-            ClinicalCWC v2.4.1 · Offline PWA
-          </div>
+          {/* Footer removed per user request */}
         </div>
       </div>
       {/* Right Panel — Form */}

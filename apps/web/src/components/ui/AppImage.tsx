@@ -1,7 +1,42 @@
 'use client';
 
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useCallback, useMemo, memo, Component, type ErrorInfo, type ReactNode } from 'react';
 import Image from 'next/image';
+
+// Fix 3: ErrorBoundary to prevent image errors from crashing the entire page
+class ImageErrorBoundary extends Component<
+  { children: ReactNode; fallbackSrc: string; width?: number; height?: number; alt: string },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallbackSrc: string; width?: number; height?: number; alt: string }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.warn('AppImage ErrorBoundary caught:', error.message);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Render a simple fallback <img> tag — no next/image optimization to avoid further crashes
+      return (
+        <img
+          src={this.props.fallbackSrc}
+          alt={this.props.alt}
+          width={this.props.width || 40}
+          height={this.props.height || 40}
+          style={{ objectFit: 'cover' }}
+        />
+      );
+    }
+    return this.props.children;
+  }
+}
 
 interface AppImageProps {
     src: string;
@@ -37,20 +72,27 @@ const AppImage = memo(function AppImage({
     onClick,
     fallbackSrc = '/assets/images/no_image.png',
     loading = 'lazy',
-    unoptimized = false,
+    unoptimized: unoptimizedProp,
     ...props
 }: AppImageProps) {
     const [imageSrc, setImageSrc] = useState(src);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
+    // Fix 3: Determine if unoptimized should be forced
+    // External URLs and local assets should skip the optimization pipeline to prevent crashes
     const isExternalUrl = useMemo(() => typeof imageSrc === 'string' && imageSrc.startsWith('http'), [imageSrc]);
-    const resolvedUnoptimized = unoptimized || isExternalUrl;
+    const isLocalAsset = useMemo(() => typeof imageSrc === 'string' && imageSrc.startsWith('/'), [imageSrc]);
+    const resolvedUnoptimized = unoptimizedProp !== undefined ? unoptimizedProp : (isExternalUrl || isLocalAsset);
 
     const handleError = useCallback(() => {
-        if (!hasError && imageSrc !== fallbackSrc) {
-            setImageSrc(fallbackSrc);
-            setHasError(true);
+        try {
+            if (!hasError && imageSrc !== fallbackSrc) {
+                setImageSrc(fallbackSrc);
+                setHasError(true);
+            }
+        } catch {
+            // Prevent cascade failures
         }
         setIsLoading(false);
     }, [hasError, imageSrc, fallbackSrc]);
@@ -93,28 +135,33 @@ const AppImage = memo(function AppImage({
         return baseProps;
     }, [imageSrc, alt, imageClassName, quality, placeholder, blurDataURL, resolvedUnoptimized, priority, loading, handleError, handleLoad, onClick]);
 
+    // Fix 3: Wrap in ErrorBoundary to prevent image errors from crashing the page
     if (fill) {
         return (
-            <div className="relative" style={{ width: '100%', height: '100%' }}>
-                <Image
-                    {...imageProps}
-                    fill
-                    sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
-                    style={{ objectFit: 'cover' }}
-                    {...props}
-                />
-            </div>
+            <ImageErrorBoundary fallbackSrc={fallbackSrc} alt={alt} width={width} height={height}>
+                <div className="relative" style={{ width: '100%', height: '100%' }}>
+                    <Image
+                        {...imageProps}
+                        fill
+                        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+                        style={{ objectFit: 'cover' }}
+                        {...props}
+                    />
+                </div>
+            </ImageErrorBoundary>
         );
     }
 
     return (
-        <Image
-            {...imageProps}
-            width={width || 400}
-            height={height || 300}
-            sizes={sizes}
-            {...props}
-        />
+        <ImageErrorBoundary fallbackSrc={fallbackSrc} alt={alt} width={width} height={height}>
+            <Image
+                {...imageProps}
+                width={width || 400}
+                height={height || 300}
+                sizes={sizes}
+                {...props}
+            />
+        </ImageErrorBoundary>
     );
 });
 

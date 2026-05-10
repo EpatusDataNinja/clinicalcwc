@@ -28,8 +28,16 @@ import {
 } from 'lucide-react';
 
 export default function SettingsPage() {
-  const store = useCaseStore();
-  const { encryptionPasscode, setEncryptionPasscode, authToken, setSyncStatus, syncStatus, setPendingSyncCount, pendingSyncCount, setLastSyncAt, lastSyncAt } = store;
+  // Fix 9: Use individual selectors instead of subscribing to entire store
+  const encryptionPasscode = useCaseStore((s) => s.encryptionPasscode);
+  const setEncryptionPasscode = useCaseStore((s) => s.setEncryptionPasscode);
+  const authToken = useCaseStore((s) => s.authToken);
+  const setSyncStatus = useCaseStore((s) => s.setSyncStatus);
+  const syncStatus = useCaseStore((s) => s.syncStatus);
+  const setPendingSyncCount = useCaseStore((s) => s.setPendingSyncCount);
+  const pendingSyncCount = useCaseStore((s) => s.pendingSyncCount);
+  const setLastSyncAt = useCaseStore((s) => s.setLastSyncAt);
+  const lastSyncAt = useCaseStore((s) => s.lastSyncAt);
 
   const [localPasscode, setLocalPasscode] = useState('');
   const [confirmLocalPasscode, setConfirmLocalPasscode] = useState('');

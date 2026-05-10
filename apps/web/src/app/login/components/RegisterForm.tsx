@@ -7,6 +7,7 @@ import { Eye, EyeOff, Loader2, AlertCircle, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { registerAccount } from '@/lib/authService';
 import { runSync } from '@/lib/syncService';
+import { useRouter } from 'next/navigation';
 
 interface RegisterFormData {
   fullName: string;
@@ -22,6 +23,8 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Fix 4: Use Next.js router for client-side navigation
+  const router = useRouter();
 
   const {
     register,
@@ -40,12 +43,17 @@ export default function RegisterForm() {
         password: data.password,
         name: data.fullName,
       });
-      await runSync(result.token);
-      setIsSubmitting(false);
+
+      // Fix 4: Use router.replace for instant client-side navigation
       toast.success('Account created!', {
         description: `Welcome, ${data.fullName}. Your workspace is ready.`,
       });
-      window.location.href = '/';
+      router.replace('/');
+
+      // Fix 5: Fire-and-forget sync — don't block the user
+      runSync(result.token).catch((syncErr) => {
+        console.warn('Background sync failed:', syncErr);
+      });
     } catch (error) {
       setIsSubmitting(false);
       toast.error(error instanceof Error ? error.message : 'Registration failed');
