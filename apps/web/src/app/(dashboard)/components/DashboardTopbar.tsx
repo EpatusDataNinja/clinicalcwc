@@ -5,12 +5,14 @@ import { Search, Plus, Bell, RefreshCw, Wifi, AlertTriangle } from 'lucide-react
 import AddCaseModal from './AddCaseModal';
 import { useCaseStore } from '@/lib/store';
 import { runSync, pullRemoteSnapshot } from '@/lib/syncService';
+import { useSyncStatus } from '@/lib/hooks';
 import { toast } from 'sonner';
 
 export default function DashboardTopbar() {
   const [showAddCase, setShowAddCase] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const authToken = useCaseStore((state) => state.authToken);
+  const { syncStatus, pendingSyncCount } = useSyncStatus();
 
   const handleSync = async () => {
     if (!authToken) {
@@ -49,10 +51,22 @@ export default function DashboardTopbar() {
 
         <div className="flex items-center gap-2 md:gap-3 ml-auto">
           {/* Sync Status - Hidden on small mobile */}
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-            <AlertTriangle size={12} className="text-amber-400" />
-            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-tight">Sync Needed</span>
-          </div>
+          {syncStatus === 'syncing' || syncing ? (
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
+              <RefreshCw size={12} className="text-primary animate-spin" />
+              <span className="text-[10px] font-bold text-primary uppercase tracking-tight">Syncing...</span>
+            </div>
+          ) : pendingSyncCount > 0 ? (
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <AlertTriangle size={12} className="text-amber-400" />
+              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-tight">Sync Needed ({pendingSyncCount})</span>
+            </div>
+          ) : (
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+              <Wifi size={12} className="text-emerald-400" />
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-tight">Synced</span>
+            </div>
+          )}
 
           <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-green-500/10 border border-green-500/20">
             <Wifi size={12} className="text-green-400" />

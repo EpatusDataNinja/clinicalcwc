@@ -183,20 +183,36 @@ export const mockCases: ClinicalCase[] = [
     ageGroup: '65+',
   },
   {
-    id: 'case-010',
-    patientAlias: 'H.Quaye',
-    chiefComplaint: 'Malaria — fever, rigors, headache',
-    history: '3-day history of intermittent fever with rigors, no prophylaxis',
-    examination: 'Temp 40.1°C, splenomegaly, pallor +, mRDT positive',
-    impression: 'Uncomplicated Plasmodium falciparum malaria',
-    plan: 'Artemether-lumefantrine, paracetamol, monitor for severity markers',
-    status: 'stable',
-    taskCount: 2,
-    overdueTaskCount: 0,
-    createdAt: '2026-05-04T16:00:00Z',
-    updatedAt: '2026-05-05T07:00:00Z',
-    ward: 'Infectious Disease',
+    id: 'case-011',
+    patientAlias: 'S.Osei',
+    chiefComplaint: 'Post-op fever, abdominal distension',
+    history: 'POD #3 following emergency laparotomy for perforated appendix',
+    examination: 'Temp 38.5°C, pulse 110, abdomen tense and tender, absent bowel sounds',
+    impression: 'Post-operative paralytic ileus vs early sepsis',
+    plan: 'NPO, IV fluids, septic workup, imaging (AXR/CT), monitor output',
+    status: 'active',
+    taskCount: 4,
+    overdueTaskCount: 1,
+    createdAt: '2026-05-04T09:00:00Z',
+    updatedAt: '2026-05-05T14:00:00Z',
+    ward: 'Surgical',
     ageGroup: '25–34',
+  },
+  {
+    id: 'case-012',
+    patientAlias: 'V.Mensah',
+    chiefComplaint: 'Neonatal jaundice, poor feeding',
+    history: '72-hour old neonate, born SVD, developed jaundice within 24 hours',
+    examination: 'Visible jaundice to mid-thighs (Kramer 4), lethargic, sucking weakly',
+    impression: 'Pathological jaundice — R/O ABO/Rh incompatibility',
+    plan: 'Phototherapy, SBR monitoring, Coombs test, encourage frequent feeding',
+    status: 'critical',
+    taskCount: 3,
+    overdueTaskCount: 0,
+    createdAt: '2026-05-05T08:00:00Z',
+    updatedAt: '2026-05-05T15:30:00Z',
+    ward: 'Paediatrics',
+    ageGroup: '<15',
   },
 ];
 
@@ -291,50 +307,114 @@ export const mockTasks: ClinicalTask[] = [
     dueAt: '2026-05-05T17:00:00Z',
     priority: 'medium',
   },
+  {
+    id: 'task-011',
+    caseId: 'case-011',
+    patientAlias: 'S.Osei',
+    title: 'Monitor NG output every 4 hours',
+    completed: false,
+    dueAt: '2026-05-05T12:00:00Z',
+    priority: 'high',
+  },
+  {
+    id: 'task-012',
+    caseId: 'case-012',
+    patientAlias: 'V.Mensah',
+    title: 'Check TSB level at 20:00',
+    completed: false,
+    dueAt: '2026-05-05T20:00:00Z',
+    priority: 'high',
+  },
+  {
+    id: 'task-013',
+    caseId: 'case-011',
+    patientAlias: 'S.Osei',
+    title: 'Check electrolytes (K+ focus)',
+    completed: false,
+    dueAt: '2026-05-05T18:00:00Z',
+    priority: 'medium',
+  },
+  {
+    id: 'task-014',
+    caseId: 'case-001',
+    patientAlias: 'P.Amara',
+    title: 'Check cardiac enzymes (Troponin I)',
+    completed: true,
+    dueAt: '2026-05-05T10:00:00Z',
+    priority: 'high',
+  },
+  {
+    id: 'task-015',
+    caseId: 'case-007',
+    patientAlias: 'F.Adjei',
+    title: 'Daily weights monitoring',
+    completed: false,
+    dueAt: '2026-05-06T07:00:00Z',
+    priority: 'low',
+  },
 ];
 
-export const mockDrugs: DrugReference[] = [
-  {
-    id: 'drug-001',
-    name: 'Artemether-Lumefantrine',
-    dosage: '80/480mg twice daily x 3 days (adult)',
-    route: 'Oral',
-    notes: 'Take with food or milk. Monitor for QT prolongation.',
-    category: 'Antimalarial',
-  },
-  {
-    id: 'drug-002',
-    name: 'Ceftriaxone',
-    dosage: '2g IV once daily (meningitis: 4g/day in divided doses)',
-    route: 'IV / IM',
-    notes: 'Do not mix with calcium-containing solutions.',
-    category: 'Antibiotic',
-  },
-  {
-    id: 'drug-003',
-    name: 'Metformin',
-    dosage: '500mg–2000mg daily in divided doses',
-    route: 'Oral',
-    notes: 'Hold if eGFR <30. Risk of lactic acidosis.',
-    category: 'Antidiabetic',
-  },
-  {
-    id: 'drug-004',
-    name: 'Furosemide',
-    dosage: '40–80mg IV/oral once or twice daily',
-    route: 'IV / Oral',
-    notes: 'Monitor electrolytes. Ototoxic at high doses.',
-    category: 'Diuretic',
-  },
-  {
-    id: 'drug-005',
-    name: 'Aspirin',
-    dosage: 'Loading: 300mg. Maintenance: 75mg daily',
-    route: 'Oral',
-    notes: 'Avoid in peptic ulcer. Use with PPI in high-risk patients.',
-    category: 'Antiplatelet',
-  },
+const drugBases = [
+  { name: 'Artemether-Lumefantrine', category: 'Antimalarial', route: 'Oral', note: 'Take with fatty food.' },
+  { name: 'Ceftriaxone', category: 'Antibiotic', route: 'IV/IM', note: 'Avoid calcium solutions.' },
+  { name: 'Metformin', category: 'Antidiabetic', route: 'Oral', note: 'Hold if eGFR < 30.' },
+  { name: 'Furosemide', category: 'Diuretic', route: 'IV/Oral', note: 'Monitor potassium levels.' },
+  { name: 'Aspirin', category: 'Antiplatelet', route: 'Oral', note: 'Watch for GI bleeding.' },
+  { name: 'Amoxicillin-Clavulanate', category: 'Antibiotic', route: 'Oral', note: 'Complete full course.' },
+  { name: 'Omeprazole', category: 'PPI', route: 'Oral', note: 'Take 30 mins before food.' },
+  { name: 'Paracetamol', category: 'Analgesic', route: 'Oral/IV', note: 'Max 4g per 24 hours.' },
+  { name: 'Morphine', category: 'Opioid', route: 'IV/SC', note: 'Monitor respiratory rate.' },
+  { name: 'Heparin', category: 'Anticoagulant', route: 'IV/SC', note: 'Check aPTT/Anti-Xa.' },
+  { name: 'Gentamicin', category: 'Antibiotic', route: 'IV', note: 'TDM required — ototoxic.' },
+  { name: 'Salbutamol', category: 'Bronchodilator', route: 'Inhaled', note: 'Monitor for tachycardia.' },
+  { name: 'Insulin Glargine', category: 'Insulin', route: 'SC', note: 'Long-acting, do not mix.' },
+  { name: 'Atorvastatin', category: 'Statin', route: 'Oral', note: 'Check LFTs if symptomatic.' },
+  { name: 'Lisinopril', category: 'ACE Inhibitor', route: 'Oral', note: 'Monitor for dry cough.' },
+  { name: 'Amlodipine', category: 'CCB', route: 'Oral', note: 'Watch for pedal edema.' },
+  { name: 'Warfarin', category: 'Anticoagulant', route: 'Oral', note: 'Monitor INR carefully.' },
+  { name: 'Diazepam', category: 'Benzodiazepine', route: 'Oral/IV', note: 'Risk of sedation/addiction.' },
+  { name: 'Phenytoin', category: 'Anticonvulsant', route: 'IV/Oral', note: 'Narrow therapeutic window.' },
+  { name: 'Prednisolone', category: 'Steroid', route: 'Oral', note: 'Take in morning with food.' },
 ];
+
+const dosages = ['5mg', '10mg', '20mg', '50mg', '100mg', '250mg', '500mg', '1g'];
+
+function generateDrugs(): DrugReference[] {
+  const result: DrugReference[] = [];
+  let idCounter = 1;
+
+  // First add base drugs as they are
+  drugBases.forEach((base, i) => {
+    result.push({
+      id: `drug-${String(idCounter++).padStart(4, '0')}`,
+      name: base.name,
+      dosage: dosages[i % dosages.length],
+      route: base.route,
+      notes: base.note,
+      category: base.category,
+    });
+  });
+
+  // Then generate variations until we hit 1000+
+  while (result.length < 1024) {
+    const base = drugBases[Math.floor(Math.random() * drugBases.length)];
+    const dosage = dosages[Math.floor(Math.random() * dosages.length)];
+    const suffix = String(idCounter).slice(-2);
+    
+    result.push({
+      id: `drug-${String(idCounter++).padStart(4, '0')}`,
+      name: `${base.name} Gen-${suffix}`,
+      dosage,
+      route: base.route,
+      notes: `Batch ${suffix}: ${base.note}`,
+      category: base.category,
+    });
+  }
+
+  return result;
+}
+
+export const mockDrugs: DrugReference[] = generateDrugs();
 
 export const conditionDistributionData = [
   { condition: 'Infections', count: 34, fill: '#3B82F6' },

@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import { Eye, Edit2, Trash2, ChevronUp, ChevronDown, Filter, AlertCircle, CheckSquare,  } from 'lucide-react';
-import { mockCases, type ClinicalCase, type CaseStatus } from '@/lib/mockData';
+import { useCases } from '@/lib/hooks';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import EmptyState from '@/components/ui/EmptyState';
 import Icon from '@/components/ui/AppIcon';
+import { CaseStatus, ClinicalCase } from '@/lib/mockData';
 
 
 type SortField = 'patientAlias' | 'chiefComplaint' | 'status' | 'updatedAt' | 'taskCount';
@@ -20,6 +21,7 @@ const STATUS_FILTERS: { label: string; value: CaseStatus | 'all' }[] = [
 ];
 
 export default function ActiveCaseTable() {
+  const cases = useCases();
   const [statusFilter, setStatusFilter] = useState<CaseStatus | 'all'>('all');
   const [sortField, setSortField] = useState<SortField>('updatedAt');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
@@ -27,7 +29,7 @@ export default function ActiveCaseTable() {
   const [page, setPage] = useState(1);
   const perPage = 7;
 
-  const filtered = mockCases.filter(
+  const filtered = cases.filter(
     (c) => statusFilter === 'all' || c.status === statusFilter
   );
 
@@ -89,7 +91,7 @@ export default function ActiveCaseTable() {
 
   const formatTime = (iso: string) => {
     const d = new Date(iso);
-    const now = new Date('2026-05-05T16:35:00Z');
+    const now = new Date();
     const diffMs = now.getTime() - d.getTime();
     const diffH = Math.floor(diffMs / 3600000);
     const diffM = Math.floor(diffMs / 60000);

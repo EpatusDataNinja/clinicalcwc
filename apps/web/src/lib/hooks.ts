@@ -78,6 +78,13 @@ export function useDrugs() {
 }
 
 /**
+ * Hook to get drugs count from store
+ */
+export function useDrugsCount() {
+  return useCaseStore((state) => state.drugs.length);
+}
+
+/**
  * Hook to get sync status
  */
 export function useSyncStatus() {

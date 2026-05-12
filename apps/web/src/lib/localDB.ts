@@ -64,7 +64,9 @@ export const db = new CWCDatabase();
 export async function initializeDatabase(initialDrugs: DrugReference[]): Promise<void> {
   try {
     const drugCount = await db.drugs.count();
-    if (drugCount === 0) {
+    // If empty or very few (from old seed), load the new professional set
+    if (drugCount < 10) {
+      if (drugCount > 0) await db.drugs.clear();
       await db.drugs.bulkAdd(initialDrugs);
     }
   } catch (error) {

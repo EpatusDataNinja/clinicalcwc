@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCaseStore } from '@/lib/store';
+import { useCases, useTasks, useDrugsCount } from '@/lib/hooks';
 import AppLogo from '@/components/ui/AppLogo';
 import { LayoutDashboard, BookOpen, Pill, CheckSquare, Settings, ChevronLeft, ChevronRight, Wifi, WifiOff, User, LogOut, Activity, X } from 'lucide-react';
 
@@ -15,45 +16,6 @@ interface NavItem {
   badge?: number;
   badgeVariant?: 'default' | 'critical' | 'warning';
 }
-
-const navItems: NavItem[] = [
-  {
-    id: 'nav-dashboard',
-    label: 'Case Dashboard',
-    href: '/',
-    icon: LayoutDashboard,
-    badge: 3,
-    badgeVariant: 'critical',
-  },
-  {
-    id: 'nav-tracker',
-    label: 'Case Tracker',
-    href: '/active-case-tracker',
-    icon: Activity,
-    badge: 2,
-    badgeVariant: 'critical',
-  },
-  {
-    id: 'nav-logbook',
-    label: 'Case Logbook',
-    href: '/case-logbook-analytics',
-    icon: BookOpen,
-  },
-  {
-    id: 'nav-tasks',
-    label: 'Task Manager',
-    href: '/task-management',
-    icon: CheckSquare,
-    badge: 5,
-    badgeVariant: 'warning',
-  },
-  {
-    id: 'nav-drugs',
-    label: 'Drug Reference',
-    href: '/drug-reference',
-    icon: Pill,
-  },
-];
 
 const bottomItems: NavItem[] = [
   { id: 'nav-settings', label: 'Settings', href: '/settings', icon: Settings },
@@ -68,6 +30,57 @@ export default function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [isOnline] = useState(true);
+
+  // Live Data Hooks
+  const cases = useCases();
+  const tasks = useTasks();
+  const drugsCount = useDrugsCount();
+
+  // Dynamic Badge Calculations
+  const activeCasesCount = cases.filter(c => c.status === 'active' || c.status === 'critical').length;
+  const criticalCasesCount = cases.filter(c => c.status === 'critical').length;
+  const overdueTasksCount = tasks.filter(t => !t.completed && new Date(t.dueAt) < new Date()).length;
+
+  const navItems: NavItem[] = [
+    {
+      id: 'nav-dashboard',
+      label: 'Case Dashboard',
+      href: '/',
+      icon: LayoutDashboard,
+      badge: activeCasesCount > 0 ? activeCasesCount : undefined,
+      badgeVariant: 'default',
+    },
+    {
+      id: 'nav-tracker',
+      label: 'Case Tracker',
+      href: '/active-case-tracker',
+      icon: Activity,
+      badge: criticalCasesCount > 0 ? criticalCasesCount : undefined,
+      badgeVariant: 'critical',
+    },
+    {
+      id: 'nav-logbook',
+      label: 'Case Logbook',
+      href: '/case-logbook-analytics',
+      icon: BookOpen,
+    },
+    {
+      id: 'nav-tasks',
+      label: 'Task Manager',
+      href: '/task-management',
+      icon: CheckSquare,
+      badge: overdueTasksCount > 0 ? overdueTasksCount : undefined,
+      badgeVariant: 'warning',
+    },
+    {
+      id: 'nav-drugs',
+      label: 'Drug Reference',
+      href: '/drug-reference',
+      icon: Pill,
+      badge: drugsCount > 100 ? drugsCount : undefined,
+      badgeVariant: 'default',
+    },
+  ];
 
   const isActive = (href: string, id: string) => {
     if (id === 'nav-dashboard') return pathname === '/';

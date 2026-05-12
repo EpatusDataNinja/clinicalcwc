@@ -2,33 +2,31 @@
 
 import React, { useState } from 'react';
 import { CheckSquare, Clock, AlertCircle, Check, ChevronRight } from 'lucide-react';
-import { mockTasks, type ClinicalTask } from '@/lib/mockData';
+import { useTasks, useCases } from '@/lib/hooks';
 import { PriorityBadge } from '@/components/ui/StatusBadge';
+import { updateTask } from '@/lib/clinicalDataService';
+import { ClinicalTask } from '@/lib/mockData';
 
 export default function TaskSidebar() {
-  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set(['task-004']));
+  const tasks = useTasks();
+  const cases = useCases();
 
-  const now = new Date('2026-05-05T16:35:00Z');
+  const now = new Date();
 
-  const overdue = mockTasks.filter((t) => {
+  const overdue = tasks.filter((t) => {
     const due = new Date(t.dueAt);
-    return !completedIds.has(t.id) && due < now;
+    return !t.completed && due < now;
   });
 
-  const upcoming = mockTasks.filter((t) => {
+  const upcoming = tasks.filter((t) => {
     const due = new Date(t.dueAt);
-    return !completedIds.has(t.id) && due >= now;
+    return !t.completed && due >= now;
   });
 
-  const done = mockTasks.filter((t) => completedIds.has(t.id));
+  const done = tasks.filter((t) => t.completed);
 
-  const toggleComplete = (id: string) => {
-    setCompletedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const toggleComplete = async (id: string, currentStatus: boolean) => {
+    await updateTask(id, { completed: !currentStatus });
   };
 
   const formatDue = (iso: string) => {
@@ -67,7 +65,7 @@ export default function TaskSidebar() {
                   key={t.id}
                   task={t}
                   isOverdue
-                  onToggle={() => toggleComplete(t.id)}
+                  onToggle={() => toggleComplete(t.id, t.completed)}
                   formatDue={formatDue}
                 />
               ))}
@@ -90,7 +88,7 @@ export default function TaskSidebar() {
                   key={t.id}
                   task={t}
                   isOverdue={false}
-                  onToggle={() => toggleComplete(t.id)}
+                  onToggle={() => toggleComplete(t.id, t.completed)}
                   formatDue={formatDue}
                 />
               ))}
@@ -114,7 +112,7 @@ export default function TaskSidebar() {
                   task={t}
                   isOverdue={false}
                   completed
-                  onToggle={() => toggleComplete(t.id)}
+                  onToggle={() => toggleComplete(t.id, t.completed)}
                   formatDue={formatDue}
                 />
               ))}
