@@ -1,6 +1,7 @@
-const CACHE_NAME = 'cwc-v1';
+const CACHE_NAME = 'cwc-v2';
 const STATIC_ASSETS = [
   '/',
+  '/login',
   '/active-case-tracker',
   '/task-management',
   '/drug-reference',
@@ -29,6 +30,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
+  
   if (url.pathname.startsWith('/api/')) {
     // Network-first for API calls
     event.respondWith(
@@ -36,13 +38,29 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
+
+  // Navigation requests (HTML pages)
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(url.pathname) || caches.match('/'))
+    );
+    return;
+  }
+
   // Cache-first for static assets
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return cached || fetch(event.request).then((res) => {
+        // Only cache valid responses
+        if (!res || res.status !== 200 || res.type !== 'basic') {
+          return res;
+        }
         const clone = res.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         return res;
+      }).catch(() => {
+        // Fallback for failed fetches
+        return null;
       });
     })
   );
