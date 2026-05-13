@@ -33,11 +33,36 @@ export interface EncryptedTaskRecord {
   updatedAt?: string;
 }
 
+export interface AppConfig {
+  key: string;
+  value: any;
+}
+
+export interface TelemetryLog {
+  id?: number;
+  event: string;
+  stage: 'init' | 'auth' | 'db' | 'hydration' | 'sync' | 'error';
+  status: 'start' | 'success' | 'error';
+  duration?: number;
+  metadata?: any;
+  timestamp: number;
+}
+
+export interface MigrationLog {
+  version: number;
+  appliedAt: number;
+  status: 'success' | 'error';
+  error?: string;
+}
+
 export class CWCDatabase extends Dexie {
   cases!: Table<EncryptedCaseRecord>;
   tasks!: Table<EncryptedTaskRecord>;
   drugs!: Table<DrugReference>;
   syncQueue!: Table<SyncQueueItem>;
+  appConfig!: Table<AppConfig>;
+  telemetry!: Table<TelemetryLog>;
+  migrations!: Table<MigrationLog>;
 
   constructor() {
     super('ClinicalCWC');
@@ -53,21 +78,37 @@ export class CWCDatabase extends Dexie {
       drugs: 'id, category, name',
       syncQueue: '++id, entityId, entity, synced, createdAt',
     });
+    this.version(3).stores({
+      appConfig: 'key',
+    });
+    this.version(4).stores({
+      telemetry: '++id, event, stage, timestamp',
+      migrations: 'version',
+    });
   }
 }
 
 export const db = new CWCDatabase();
 
 /**
- * Initialize database with sample data (if empty)
+ * Initialize database with sample data (if version mismatch)
  */
 export async function initializeDatabase(initialDrugs: DrugReference[]): Promise<void> {
+  const DRUG_DATA_VERSION = 2; // Incremented for the 1000+ professional set
+
   try {
-    const drugCount = await db.drugs.count();
-    // If empty or very few (from old seed), load the new professional set
-    if (drugCount < 10) {
-      if (drugCount > 0) await db.drugs.clear();
-      await db.drugs.bulkAdd(initialDrugs);
+    const config = await db.appConfig.get('drug_data_version');
+
+    // Only seed if version is missing or outdated
+    if (!config || config.value < DRUG_DATA_VERSION) {
+      console.log(`[DB] Seeding drug database (v${DRUG_DATA_VERSION})...`);
+
+      // use bulkPut to update existing items while keeping user additions
+      // bulkAdd would fail on existing IDs
+      await db.drugs.bulkPut(initialDrugs);
+
+      await db.appConfig.put({ key: 'drug_data_version', value: DRUG_DATA_VERSION });
+      console.log('[DB] Drug seeding complete.');
     }
   } catch (error) {
     console.error('Failed to initialize database:', error);
@@ -101,6 +142,14 @@ export const casesDB = {
       console.error('Failed to upsert case:', error);
     }
   },
+  upsertMany: async (records: EncryptedCaseRecord[]): Promise<void> => {
+    try {
+      await db.cases.bulkPut(records);
+    } catch (error) {
+      console.error('Failed to bulk upsert cases:', error);
+    }
+  },
+
   delete: async (id: string): Promise<void> => {
     try {
       await db.cases.delete(id);
@@ -146,7 +195,17 @@ export const tasksDB = {
   },
   upsertMany: async (records: EncryptedTaskRecord[]): Promise<void> => {
     try {
-      await db.tasks.bulkPut(records);
+      // Data Integrity: Verify case existence for all tasks
+      const caseIds = Array.from(new Set(records.map(r => r.caseId)));
+      const existingCases = await db.cases.bulkGet(caseIds);
+      const validCaseIds = new Set(existingCases.filter(c => !!c).map(c => c!.id));
+
+      const validRecords = records.filter(r => validCaseIds.has(r.caseId));
+      if (validRecords.length < records.length) {
+        console.warn(`[DB] Dropping ${records.length - validRecords.length} orphan tasks during bulk upsert.`);
+      }
+
+      await db.tasks.bulkPut(validRecords);
     } catch (error) {
       console.error('Failed to bulk upsert tasks:', error);
     }
@@ -252,3 +311,45 @@ export const syncQueueDB = {
     }
   },
 };
+
+/**
+ * Migration System
+ */
+const MIGRATIONS: Record<number, (db: CWCDatabase) => Promise<void>> = {
+  1: async (db) => {
+    console.log('[Migration] Version 1: Initial schema check');
+    // Placeholder for actual data migrations
+  },
+};
+
+export async function runMigrations(): Promise<void> {
+  const currentVersion = 1;
+
+  try {
+    for (let v = 1; v <= currentVersion; v++) {
+      const log = await db.migrations.get(v);
+      if (!log || log.status !== 'success') {
+        console.log(`[DB] Running data migration v${v}...`);
+        try {
+          await MIGRATIONS[v](db);
+          await db.migrations.put({
+            version: v,
+            appliedAt: Date.now(),
+            status: 'success'
+          });
+        } catch (err: any) {
+          await db.migrations.put({
+            version: v,
+            appliedAt: Date.now(),
+            status: 'error',
+            error: err.message || String(err)
+          });
+          throw new Error(`Migration v${v} failed: ${err.message}`);
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Migration pipeline failed:', error);
+    throw error;
+  }
+}

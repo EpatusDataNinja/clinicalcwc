@@ -399,8 +399,19 @@ function CaseCard({ caseItem: c, urgency, isExpanded, onToggle, timeSince, onEdi
               >
                 <Eye size={14} />
               </button>
-              <button className="p-1.5 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors" title="Edit case">
+              <button 
+                onClick={(e) => { e.stopPropagation(); onEdit(); }}
+                className="p-1.5 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors" 
+                title="Edit case"
+              >
                 <Edit2 size={14} />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted-foreground hover:text-red-400 transition-colors" 
+                title="Delete case"
+              >
+                <Trash2 size={14} />
               </button>
             </div>
           </div>

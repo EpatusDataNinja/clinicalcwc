@@ -131,7 +131,7 @@ export default function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
       {/* Sync Status */}
       <div
         className={`flex items-center gap-2 mx-3 mt-3 mb-1 px-2 py-1.5 rounded-md transition-all shrink-0 ${isOnline
-            ? 'bg-green-500/10 border border-green-500/20' : 'bg-amber-500/10 border border-amber-500/20'
+          ? 'bg-green-500/10 border border-green-500/20' : 'bg-amber-500/10 border border-amber-500/20'
           }`}
       >
         {isOnline ? (
@@ -166,7 +166,7 @@ export default function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
               href={item.href}
               title={actualCollapsed ? item.label : undefined}
               className={`group relative flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${active
-                  ? 'bg-primary/15 text-primary border border-primary/20 shadow-sm shadow-primary/5' : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'
+                ? 'bg-primary/15 text-primary border border-primary/20 shadow-sm shadow-primary/5' : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'
                 }`}
             >
               <Icon size={18} className="shrink-0" />
@@ -206,7 +206,7 @@ export default function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
               href={item.href}
               title={actualCollapsed ? item.label : undefined}
               className={`group relative flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${active
-                  ? 'bg-primary/15 text-primary border border-primary/20 shadow-sm shadow-primary/5' : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'
+                ? 'bg-primary/15 text-primary border border-primary/20 shadow-sm shadow-primary/5' : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'
                 }`}
             >
               <Icon size={18} className="shrink-0" />

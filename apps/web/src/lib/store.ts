@@ -52,8 +52,12 @@ export interface CaseStore {
   setEncryptionPasscode: (passcode: string | null) => void;
 
   // UI state
-  isInitialized: boolean;
-  setIsInitialized: (val: boolean) => void;
+  authStatus: 'idle' | 'hydrating' | 'ready' | 'error';
+  dataStatus: 'idle' | 'restoring' | 'ready' | 'error';
+  setAuthStatus: (status: 'idle' | 'hydrating' | 'ready' | 'error') => void;
+  setDataStatus: (status: 'idle' | 'restoring' | 'ready' | 'error') => void;
+  initError: string | null;
+  setInitError: (error: string | null) => void;
 }
 
 const DEFAULT_SYNC_STATUS: SyncStatus = 'idle';
@@ -88,7 +92,7 @@ export const useCaseStore = create<CaseStore>()(
           tasks: state.tasks.filter((t) => t.caseId !== id),
         }));
       },
-      loadCases: (cases) => set({ cases }), // Implementation for new action
+      loadCases: (cases) => set({ cases }),
 
       getCase: (id) => get().cases.find((c) => c.id === id),
 
@@ -113,7 +117,7 @@ export const useCaseStore = create<CaseStore>()(
           tasks: state.tasks.filter((t) => t.id !== id),
         }));
       },
-      loadTasks: (tasks) => set({ tasks }), // Implementation for new action
+      loadTasks: (tasks) => set({ tasks }),
 
       getTasksByCase: (caseId) => get().tasks.filter((t) => t.caseId === caseId),
 
@@ -144,21 +148,25 @@ export const useCaseStore = create<CaseStore>()(
       setEncryptionPasscode: (passcode) => set({ encryptionPasscode: passcode }),
 
       // UI
-      isInitialized: false,
-      setIsInitialized: (val) => set({ isInitialized: val }),
+      authStatus: 'idle',
+      dataStatus: 'idle',
+      setAuthStatus: (status) => set({ authStatus: status }),
+      setDataStatus: (status) => set({ dataStatus: status }),
+      initError: null,
+      setInitError: (error) => set({ initError: error }),
     }),
     {
       name: 'cwc-store',
       partialize: (state) => ({
-        cases: state.cases,
-        tasks: state.tasks,
-        drugs: state.drugs,
         authToken: state.authToken,
         userId: state.userId,
         userName: state.userName,
         userEmail: state.userEmail,
         lastSyncAt: state.lastSyncAt,
       }),
+      onRehydrateStorage: () => (state) => {
+        state?.setAuthStatus('ready');
+      },
     }
   )
 );

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import Sidebar from '@/components/Sidebar';
-import { useCaseStore } from '@/lib/store';
+import { useCaseStore, type CaseStore } from '@/lib/store';
 import { useRouter, usePathname } from 'next/navigation';
-import { Menu } from 'lucide-react';
+import { Menu, Loader2, LayoutDashboard } from 'lucide-react';
 import AppLogo from '@/components/ui/AppLogo';
 import AppInitializer from '@/components/AppInitializer';
 
@@ -15,16 +15,20 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  // Fix 9: Use selector instead of subscribing to entire store
-  const authToken = useCaseStore((state) => state.authToken);
+  // Hardened Audit: Use decoupled status
+  const authToken = useCaseStore((state: CaseStore) => state.authToken);
+  const authStatus = useCaseStore((state: CaseStore) => state.authStatus);
+  const dataStatus = useCaseStore((state: CaseStore) => state.dataStatus);
+  const initError = useCaseStore((state: CaseStore) => state.initError);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Auth Guard
+  // Auth Guard (Decoupled from Data)
   useEffect(() => {
-    if (!authToken) {
+    // Only redirect if auth hydration is complete and we still have no token
+    if (authStatus === 'ready' && !authToken) {
       router.replace('/login');
     }
-  }, [authToken, router]);
+  }, [authStatus, authToken, router]);
 
   // Safer close handler
   const closeMobileMenu = useCallback(() => {
@@ -48,7 +52,8 @@ export default function DashboardLayout({
     };
   }, [isMobileMenuOpen]);
 
-  if (!authToken) {
+  // Prevent flash during initial hydration
+  if (['idle', 'hydrating'].includes(authStatus) || (!authToken && pathname !== '/login')) {
     return null;
   }
 
@@ -99,7 +104,35 @@ export default function DashboardLayout({
         </header>
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden relative">
-          {children}
+          {dataStatus === 'error' ? (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 px-6 text-center">
+              <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                <LayoutDashboard size={32} />
+              </div>
+              <h2 className="text-lg font-semibold text-foreground">Workspace Initialization Failed</h2>
+              <p className="text-sm text-muted-foreground max-w-sm">
+                {initError || 'There was a problem loading your clinical workspace. Please try refreshing the page.'}
+              </p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+              >
+                Retry Initialization
+              </button>
+            </div>
+          ) : dataStatus !== 'ready' ? (
+            <div className="flex flex-col items-center justify-center h-full space-y-4">
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
+              <div className="text-center">
+                <p className="text-sm font-medium text-foreground">Initializing clinical workspace...</p>
+                <p className="text-xs text-muted-foreground mt-1 animate-pulse capitalize">
+                  Current Stage: {dataStatus}
+                </p>
+              </div>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
     </div>

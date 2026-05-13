@@ -7,11 +7,11 @@ import { encryptData, decryptData } from './encryptionService';
 import { casesDB, tasksDB, type EncryptedCaseRecord, type EncryptedTaskRecord } from './localDB';
 import { enqueueChange } from './syncService';
 import { useCaseStore } from './store';
+import { telemetry } from './telemetryService';
 import type { ClinicalCase, ClinicalTask } from './mockData';
 
 const ENCRYPTION_SALT_KEY = 'cwc_encryption_salt';
 const DEVICE_KEY_STORAGE = 'cwc_device_passcode';
-
 /**
  * Get encryption passcode from user (in-memory or from settings)
  * For now, returns a default or prompts user
@@ -258,11 +258,9 @@ export async function restoreEncryptedRecords(input: {
 }): Promise<void> {
   await casesDB.clear();
   await tasksDB.clear();
-  for (const record of input.cases) {
-    await casesDB.upsert(record);
-  }
+  await casesDB.upsertMany(input.cases);
   await tasksDB.upsertMany(input.tasks);
-  useCaseStore.getState().setIsInitialized(false);
+  useCaseStore.getState().setDataStatus('idle');
   await restoreDataFromDB();
 }
 
@@ -281,6 +279,7 @@ export async function decryptTask(
   }
 }
 
+
 /**
  * Restore all data from IndexedDB to store (on app init)
  */
@@ -288,7 +287,8 @@ export async function restoreDataFromDB(): Promise<void> {
   const store = useCaseStore.getState();
   const passcode = await getEncryptionPasscode();
 
-  try {
+  await telemetry.trace('db_restoration', 'db', async () => {
+    store.setDataStatus('restoring');
     const decryptedCases: ClinicalCase[] = [];
     const decryptedTasks: ClinicalTask[] = [];
 
@@ -312,8 +312,69 @@ export async function restoreDataFromDB(): Promise<void> {
     }
     store.loadTasks(decryptedTasks);
 
-    store.setIsInitialized(true);
-  } catch (error) {
-    console.error('Failed to restore data from DB:', error);
+    store.setDataStatus('ready');
+  }, {
+    caseCount: (await casesDB.getAll()).length,
+    taskCount: (await tasksDB.getAll()).length
+  }).catch(err => {
+    store.setDataStatus('error');
+    store.setInitError('Failed to restore clinical data from local storage.');
+    throw err;
+  });
+}
+/**
+ * Seed database with mock cases and tasks (encrypted)
+ * Hardened: Checks status guards and enforces relational order.
+ */
+export async function seedClinicalData(cases: ClinicalCase[], tasks: ClinicalTask[]): Promise<void> {
+  const CLINICAL_DATA_VERSION = 2; // Bumped to 2 to ensure analytics data is re-seeded
+  const store = useCaseStore.getState();
+
+  // Guard: Never seed if we are already in a ready/stable state
+  if (store.dataStatus === 'ready') {
+    return;
   }
+
+  const passcode = await getEncryptionPasscode();
+  const { db } = await import('./localDB');
+
+  await telemetry.trace('clinical_seeding_internal', 'db', async () => {
+    const config = await db.appConfig.get('clinical_data_version');
+    const currentVersion = config ? config.value : 0;
+
+    if (currentVersion >= CLINICAL_DATA_VERSION) {
+      return;
+    }
+
+    console.log(`[DB] Seeding clinical data (v${currentVersion} -> v${CLINICAL_DATA_VERSION})...`);
+
+    // 1. Seed Cases First (Required for Task Relational Integrity)
+    const encryptedCases: EncryptedCaseRecord[] = [];
+    for (const c of cases) {
+      const encryptedData = await encryptData(c, passcode);
+      encryptedCases.push({
+        id: c.id,
+        encryptedData,
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+      });
+    }
+    await casesDB.upsertMany(encryptedCases);
+
+    // 2. Seed Tasks (Will be checked against cases by upsertMany)
+    const encryptedTasks: EncryptedTaskRecord[] = [];
+    for (const t of tasks) {
+      const encryptedData = await encryptData(t, passcode);
+      encryptedTasks.push({
+        id: t.id,
+        caseId: t.caseId,
+        encryptedData,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+    }
+    await tasksDB.upsertMany(encryptedTasks);
+
+    await db.appConfig.put({ key: 'clinical_data_version', value: CLINICAL_DATA_VERSION });
+  });
 }
