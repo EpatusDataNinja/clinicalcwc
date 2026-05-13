@@ -313,6 +313,26 @@ export const syncQueueDB = {
 };
 
 /**
+ * Low-level utility to enqueue a sync change.
+ * Placed here to prevent circular dependencies between clinicalDataService and syncService.
+ */
+export function enqueueChange(
+  entityId: string,
+  type: SyncQueueItem['type'],
+  entity: SyncQueueItem['entity'],
+  payload: unknown
+): void {
+  syncQueueDB.enqueue({
+    entityId,
+    type,
+    entity,
+    payload,
+    synced: false,
+    retryCount: 0,
+  }).catch(err => console.error('[DB] Failed to enqueue sync item:', err));
+}
+
+/**
  * Migration System
  */
 const MIGRATIONS: Record<number, (db: CWCDatabase) => Promise<void>> = {

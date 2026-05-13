@@ -4,11 +4,10 @@
  */
 
 import { encryptData, decryptData } from './encryptionService';
-import { casesDB, tasksDB, type EncryptedCaseRecord, type EncryptedTaskRecord } from './localDB';
-import { enqueueChange } from './syncService';
+import { casesDB, tasksDB, db, type EncryptedCaseRecord, type EncryptedTaskRecord, enqueueChange } from './localDB';
 import { useCaseStore } from './store';
 import { telemetry } from './telemetryService';
-import type { ClinicalCase, ClinicalTask } from './mockData';
+import { mockCases, mockTasks, type ClinicalCase, type ClinicalTask } from './mockData';
 
 const ENCRYPTION_SALT_KEY = 'cwc_encryption_salt';
 const DEVICE_KEY_STORAGE = 'cwc_device_passcode';
@@ -256,10 +255,18 @@ export async function restoreEncryptedRecords(input: {
   cases: EncryptedCaseRecord[];
   tasks: EncryptedTaskRecord[];
 }): Promise<void> {
+  // After login, the server is the source of truth.
+  // Always clear local data and replace with the server's snapshot, even if empty.
   await casesDB.clear();
   await tasksDB.clear();
   await casesDB.upsertMany(input.cases);
   await tasksDB.upsertMany(input.tasks);
+
+  // If the pulled snapshot is empty (new account), force a re-seed of mock data
+  if (input.cases.length === 0) {
+    await seedClinicalData(mockCases, mockTasks);
+  }
+
   useCaseStore.getState().setDataStatus('idle');
   await restoreDataFromDB();
 }
@@ -289,27 +296,19 @@ export async function restoreDataFromDB(): Promise<void> {
 
   await telemetry.trace('db_restoration', 'db', async () => {
     store.setDataStatus('restoring');
-    const decryptedCases: ClinicalCase[] = [];
-    const decryptedTasks: ClinicalTask[] = [];
 
     // Restore cases
     const caseRecords = await casesDB.getAll();
-    for (const record of caseRecords) {
-      const caseData = await decryptCase(record, passcode);
-      if (caseData) {
-        decryptedCases.push(caseData);
-      }
-    }
+    const decryptedCases = (await Promise.all(
+      caseRecords.map(r => decryptCase(r, passcode))
+    )).filter((c): c is ClinicalCase => !!c);
     store.loadCases(decryptedCases);
 
     // Restore tasks
     const taskRecords = await tasksDB.getAll();
-    for (const record of taskRecords) {
-      const taskData = await decryptTask(record, passcode);
-      if (taskData) {
-        decryptedTasks.push(taskData);
-      }
-    }
+    const decryptedTasks = (await Promise.all(
+      taskRecords.map(r => decryptTask(r, passcode))
+    )).filter((t): t is ClinicalTask => !!t);
     store.loadTasks(decryptedTasks);
 
     store.setDataStatus('ready');
@@ -330,20 +329,29 @@ export async function seedClinicalData(cases: ClinicalCase[], tasks: ClinicalTas
   const CLINICAL_DATA_VERSION = 2; // Bumped to 2 to ensure analytics data is re-seeded
   const store = useCaseStore.getState();
 
-  // Guard: Never seed if we are already in a ready/stable state
-  if (store.dataStatus === 'ready') {
-    return;
-  }
-
   const passcode = await getEncryptionPasscode();
-  const { db } = await import('./localDB');
-
   await telemetry.trace('clinical_seeding_internal', 'db', async () => {
     const config = await db.appConfig.get('clinical_data_version');
     const currentVersion = config ? config.value : 0;
 
-    if (currentVersion >= CLINICAL_DATA_VERSION) {
-      return;
+    // Check if existing data is decryptable with current passcode
+    const existingRecords = await casesDB.getAll();
+    if (existingRecords.length > 0) {
+      const isDecryptable = await decryptCase(existingRecords[0], passcode);
+
+      if (!isDecryptable) {
+        console.warn('[DB] Existing data encrypted with a different key. Clearing for re-seed...');
+        await casesDB.clear();
+        await tasksDB.clear();
+      } else if (currentVersion >= CLINICAL_DATA_VERSION) {
+        // Data is fine and version is current
+        return;
+      }
+    } else {
+      // No records, but check version to avoid unnecessary seeding
+      if (currentVersion >= CLINICAL_DATA_VERSION && !store.authToken) {
+        return;
+      }
     }
 
     console.log(`[DB] Seeding clinical data (v${currentVersion} -> v${CLINICAL_DATA_VERSION})...`);

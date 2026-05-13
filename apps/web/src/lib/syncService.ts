@@ -4,8 +4,9 @@
  * Backend stores encrypted blobs only.
  */
 
-import { syncQueueDB, type SyncQueueItem } from './localDB';
+import { syncQueueDB, type SyncQueueItem, casesDB, tasksDB } from './localDB';
 import { useCaseStore } from './store';
+import { restoreEncryptedRecords } from './clinicalDataService';
 
 const API_BASE = '';
 const MAX_RETRIES = 3;
@@ -91,7 +92,10 @@ export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
   }
 
   try {
-    const res = await fetch(`${API_BASE}/api/sync/snapshot`, {
+    // Send lastSyncAt to the server for delta synchronization
+    const lastSyncAt = useCaseStore.getState().lastSyncAt;
+    const queryParams = lastSyncAt ? `?lastSyncAt=${encodeURIComponent(lastSyncAt)}` : '';
+    const res = await fetch(`${API_BASE}/api/sync/snapshot${queryParams}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json().catch(() => ({}));
@@ -100,7 +104,6 @@ export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
       throw new Error(data.error || 'Failed to pull remote snapshot');
     }
 
-    const { restoreEncryptedRecords } = await import('./clinicalDataService');
     await restoreEncryptedRecords({
       cases: data.cases || [],
       tasks: data.tasks || [],
@@ -123,15 +126,6 @@ export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
       lastSyncAt: useCaseStore.getState().lastSyncAt,
     };
   }
-}
-
-export function enqueueChange(
-  entityId: string,
-  type: SyncQueueItem['type'],
-  entity: SyncQueueItem['entity'],
-  payload: unknown
-): void {
-  syncQueueDB.enqueue({ entityId, type, entity, payload, synced: false, retryCount: 0 });
 }
 
 export async function getPendingCount(): Promise<number> {

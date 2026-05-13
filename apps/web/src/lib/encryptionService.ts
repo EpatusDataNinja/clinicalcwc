@@ -19,7 +19,13 @@ function getOrCreateSalt(): Uint8Array {
   return salt;
 }
 
+const keyCache = new Map<string, CryptoKey>();
+
 async function deriveKey(passcode: string): Promise<CryptoKey> {
+  if (keyCache.has(passcode)) {
+    return keyCache.get(passcode)!;
+  }
+
   const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
@@ -29,7 +35,7 @@ async function deriveKey(passcode: string): Promise<CryptoKey> {
     ['deriveKey']
   );
   const salt = getOrCreateSalt() as BufferSource;
-  return crypto.subtle.deriveKey(
+  const key = await crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
       salt,
@@ -41,6 +47,9 @@ async function deriveKey(passcode: string): Promise<CryptoKey> {
     false,
     ['encrypt', 'decrypt']
   );
+
+  keyCache.set(passcode, key);
+  return key;
 }
 
 export async function encryptData(data: unknown, passcode: string): Promise<string> {
