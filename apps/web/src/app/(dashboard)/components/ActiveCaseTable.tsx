@@ -1,13 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Eye, Edit2, Trash2, ChevronUp, ChevronDown, Filter, AlertCircle, CheckSquare,  } from 'lucide-react';
+import {
+  Eye,
+  Edit2,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  Filter,
+  AlertCircle,
+  CheckSquare,
+} from 'lucide-react';
 import { useCases } from '@/lib/hooks';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import EmptyState from '@/components/ui/EmptyState';
 import Icon from '@/components/ui/AppIcon';
 import { CaseStatus, ClinicalCase } from '@/lib/mockData';
-
 
 type SortField = 'patientAlias' | 'chiefComplaint' | 'status' | 'updatedAt' | 'taskCount';
 type SortDir = 'asc' | 'desc';
@@ -29,9 +37,7 @@ export default function ActiveCaseTable() {
   const [page, setPage] = useState(1);
   const perPage = 7;
 
-  const filtered = cases.filter(
-    (c) => statusFilter === 'all' || c.status === statusFilter
-  );
+  const filtered = cases.filter((c) => statusFilter === 'all' || c.status === statusFilter);
 
   const sorted = [...filtered].sort((a, b) => {
     let cmp = 0;
@@ -141,9 +147,7 @@ export default function ActiveCaseTable() {
       {/* Bulk action bar */}
       {selectedRows.size > 0 && (
         <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 bg-primary/10 border-b border-primary/20 animate-slide-up flex-wrap">
-          <span className="text-xs font-semibold text-primary">
-            {selectedRows.size} selected
-          </span>
+          <span className="text-xs font-semibold text-primary">{selectedRows.size} selected</span>
           <button className="text-xs text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded hover:bg-muted/60">
             Update Status
           </button>

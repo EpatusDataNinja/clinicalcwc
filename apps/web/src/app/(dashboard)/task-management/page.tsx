@@ -3,9 +3,25 @@
 import React, { useState } from 'react';
 import { useTasks, useCases } from '@/lib/hooks';
 import type { ClinicalTask, TaskPriority } from '@/lib/mockData';
-import { createTask, deleteTask as deletePersistedTask, updateTask } from '@/lib/clinicalDataService';
+import {
+  createTask,
+  deleteTask as deletePersistedTask,
+  updateTask,
+} from '@/lib/clinicalDataService';
 import { PriorityBadge } from '@/components/ui/StatusBadge';
-import { CheckSquare, Clock, AlertTriangle, Plus, Search, ChevronDown, Trash2, Link2, CheckCircle2, Circle, ListTodo } from 'lucide-react';
+import {
+  CheckSquare,
+  Clock,
+  AlertTriangle,
+  Plus,
+  Search,
+  ChevronDown,
+  Trash2,
+  Link2,
+  CheckCircle2,
+  Circle,
+  ListTodo,
+} from 'lucide-react';
 
 type FilterTab = 'all' | 'pending' | 'overdue' | 'completed';
 type PriorityFilter = 'all' | TaskPriority;
@@ -34,7 +50,12 @@ export default function TaskManagementPage() {
   const [caseFilter, setCaseFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newTask, setNewTask] = useState({ title: '', caseId: '', priority: 'medium' as TaskPriority, dueAt: '' });
+  const [newTask, setNewTask] = useState({
+    title: '',
+    caseId: '',
+    priority: 'medium' as TaskPriority,
+    dueAt: '',
+  });
 
   const tasks = baseTasks.map((t) => ({
     ...t,
@@ -49,7 +70,10 @@ export default function TaskManagementPage() {
       (filterTab === 'completed' && t.completed);
     const matchPriority = priorityFilter === 'all' || t.priority === priorityFilter;
     const matchCase = caseFilter === 'all' || t.caseId === caseFilter;
-    const matchSearch = search === '' || t.title.toLowerCase().includes(search.toLowerCase()) || t.patientAlias.toLowerCase().includes(search.toLowerCase());
+    const matchSearch =
+      search === '' ||
+      t.title.toLowerCase().includes(search.toLowerCase()) ||
+      t.patientAlias.toLowerCase().includes(search.toLowerCase());
     return matchTab && matchPriority && matchCase && matchSearch;
   });
 
@@ -70,7 +94,7 @@ export default function TaskManagementPage() {
       patientAlias: caseItem.patientAlias,
       title: newTask.title.trim(),
       completed: false,
-      dueAt: newTask.dueAt ? new Date(newTask.dueAt).toISOString() : new Date(Date.now() + 3600000).toISOString(),
+      dueAt: newTask.dueAt ? new Date(newTask.dueAt).toISOString() : '',
       priority: newTask.priority,
     });
     setNewTask({ title: '', caseId: '', priority: 'medium', dueAt: '' });
@@ -119,12 +143,39 @@ export default function TaskManagementPage() {
       {/* KPI Strip */}
       <div className="grid grid-cols-4 gap-4 px-6 py-4 border-b border-border shrink-0">
         {[
-          { label: 'Pending', value: pendingCount, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20', icon: Circle },
-          { label: 'Overdue', value: overdueCount, color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20', icon: AlertTriangle },
-          { label: 'Completed', value: completedCount, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20', icon: CheckCircle2 },
-          { label: 'Completion Rate', value: `${completionRate}%`, color: 'text-violet-400', bg: 'bg-violet-500/10 border-violet-500/20', icon: ListTodo },
+          {
+            label: 'Pending',
+            value: pendingCount,
+            color: 'text-blue-400',
+            bg: 'bg-blue-500/10 border-blue-500/20',
+            icon: Circle,
+          },
+          {
+            label: 'Overdue',
+            value: overdueCount,
+            color: 'text-red-400',
+            bg: 'bg-red-500/10 border-red-500/20',
+            icon: AlertTriangle,
+          },
+          {
+            label: 'Completed',
+            value: completedCount,
+            color: 'text-emerald-400',
+            bg: 'bg-emerald-500/10 border-emerald-500/20',
+            icon: CheckCircle2,
+          },
+          {
+            label: 'Completion Rate',
+            value: `${completionRate}%`,
+            color: 'text-violet-400',
+            bg: 'bg-violet-500/10 border-violet-500/20',
+            icon: ListTodo,
+          },
         ].map((kpi) => (
-          <div key={kpi.label} className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${kpi.bg}`}>
+          <div
+            key={kpi.label}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${kpi.bg}`}
+          >
             <kpi.icon size={18} className={kpi.color} />
             <div>
               <p className={`text-xl font-bold tabular-nums ${kpi.color}`}>{kpi.value}</p>
@@ -158,7 +209,10 @@ export default function TaskManagementPage() {
         </div>
 
         <div className="relative flex-1 min-w-[180px] max-w-xs">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Search
+            size={13}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+          />
           <input
             type="text"
             placeholder="Search tasks..."
@@ -192,10 +246,15 @@ export default function TaskManagementPage() {
           >
             <option value="all">All Patients</option>
             {cases.map((c) => (
-              <option key={c.id} value={c.id}>{c.patientAlias}</option>
+              <option key={c.id} value={c.id}>
+                {c.patientAlias}
+              </option>
             ))}
           </select>
-          <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <ChevronDown
+            size={12}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+          />
         </div>
 
         <span className="ml-auto text-xs text-muted-foreground tabular-nums">
@@ -210,7 +269,12 @@ export default function TaskManagementPage() {
             <CheckSquare size={40} className="text-muted-foreground/30 mb-3" />
             <p className="text-sm font-medium text-muted-foreground">No tasks match your filters</p>
             <button
-              onClick={() => { setFilterTab('all'); setPriorityFilter('all'); setCaseFilter('all'); setSearch(''); }}
+              onClick={() => {
+                setFilterTab('all');
+                setPriorityFilter('all');
+                setCaseFilter('all');
+                setSearch('');
+              }}
               className="mt-3 text-xs text-primary hover:underline"
             >
               Clear filters
@@ -235,11 +299,18 @@ export default function TaskManagementPage() {
           <div className="w-full max-w-md mx-4 card-elevated rounded-2xl shadow-2xl animate-slide-up">
             <div className="flex items-center justify-between px-6 py-4 border-b border-border">
               <h2 className="text-base font-semibold text-foreground">New Task</h2>
-              <button onClick={() => setShowAddModal(false)} className="p-1.5 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors">✕</button>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="p-1.5 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                ✕
+              </button>
             </div>
             <div className="px-6 py-5 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Task Title *</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                  Task Title *
+                </label>
                 <input
                   type="text"
                   placeholder="e.g. Repeat ECG in 30 minutes"
@@ -249,7 +320,9 @@ export default function TaskManagementPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Linked Patient *</label>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                  Linked Patient *
+                </label>
                 <select
                   value={newTask.caseId}
                   onChange={(e) => setNewTask({ ...newTask, caseId: e.target.value })}
@@ -257,16 +330,22 @@ export default function TaskManagementPage() {
                 >
                   <option value="">Select patient...</option>
                   {cases.map((c) => (
-                    <option key={c.id} value={c.id}>{c.patientAlias} — {c.chiefComplaint.slice(0, 30)}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.patientAlias} — {c.chiefComplaint.slice(0, 30)}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Priority</label>
+                  <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Priority
+                  </label>
                   <select
                     value={newTask.priority}
-                    onChange={(e) => setNewTask({ ...newTask, priority: e.target.value as TaskPriority })}
+                    onChange={(e) =>
+                      setNewTask({ ...newTask, priority: e.target.value as TaskPriority })
+                    }
                     className="w-full px-3 py-2 rounded-lg border border-border bg-input text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="high">High</option>
@@ -275,7 +354,9 @@ export default function TaskManagementPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Due Date</label>
+                  <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Due Date
+                  </label>
                   <input
                     type="datetime-local"
                     value={newTask.dueAt}
@@ -286,7 +367,10 @@ export default function TaskManagementPage() {
               </div>
             </div>
             <div className="flex items-center gap-3 px-6 py-4 border-t border-border">
-              <button onClick={() => setShowAddModal(false)} className="flex-1 px-4 py-2 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="flex-1 px-4 py-2 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+              >
                 Cancel
               </button>
               <button
@@ -318,10 +402,14 @@ function TaskRow({ task, onToggle, onDelete, formatDue }: TaskRowProps) {
         task.completed
           ? 'border-border/50 bg-muted/20 opacity-60'
           : task.isOverdue
-          ? 'border-red-500/30 bg-red-500/5 glow-critical' :'card-elevated hover:border-primary/20'
+            ? 'border-red-500/30 bg-red-500/5 glow-critical'
+            : 'card-elevated hover:border-primary/20'
       }`}
     >
-      <button onClick={onToggle} className="shrink-0 text-muted-foreground hover:text-primary transition-colors">
+      <button
+        onClick={onToggle}
+        className="shrink-0 text-muted-foreground hover:text-primary transition-colors"
+      >
         {task.completed ? (
           <CheckCircle2 size={18} className="text-emerald-400" />
         ) : (
@@ -330,7 +418,9 @@ function TaskRow({ task, onToggle, onDelete, formatDue }: TaskRowProps) {
       </button>
 
       <div className="flex-1 min-w-0">
-        <p className={`text-sm font-medium ${task.completed ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+        <p
+          className={`text-sm font-medium ${task.completed ? 'line-through text-muted-foreground' : 'text-foreground'}`}
+        >
           {task.title}
         </p>
         <div className="flex items-center gap-3 mt-1">
@@ -338,7 +428,9 @@ function TaskRow({ task, onToggle, onDelete, formatDue }: TaskRowProps) {
             <Link2 size={10} />
             {task.patientAlias}
           </span>
-          <span className={`flex items-center gap-1 text-xs font-medium ${task.isOverdue ? 'text-red-400' : 'text-muted-foreground'}`}>
+          <span
+            className={`flex items-center gap-1 text-xs font-medium ${task.isOverdue ? 'text-red-400' : 'text-muted-foreground'}`}
+          >
             <Clock size={10} />
             {formatDue(task.dueAt)}
           </span>

@@ -1,14 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Search,
-  ChevronUp,
-  ChevronDown,
-  Eye,
-  Download,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { Search, ChevronUp, ChevronDown, Eye, Download, SlidersHorizontal } from 'lucide-react';
 import { type ClinicalCase, type CaseStatus } from '@/lib/mockData';
 import { useCases } from '@/lib/hooks';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -73,16 +66,20 @@ export default function LogbookTable() {
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
-    else { setSortField(field); setSortDir('asc'); }
+    else {
+      setSortField(field);
+      setSortDir('asc');
+    }
     setPage(1);
   };
 
   const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field)
-      return <ChevronUp size={10} className="inline ml-1 opacity-30" />;
-    return sortDir === 'asc'
-      ? <ChevronUp size={12} className="inline ml-1 text-primary" />
-      : <ChevronDown size={12} className="inline ml-1 text-primary" />;
+    if (sortField !== field) return <ChevronUp size={10} className="inline ml-1 opacity-30" />;
+    return sortDir === 'asc' ? (
+      <ChevronUp size={12} className="inline ml-1 text-primary" />
+    ) : (
+      <ChevronDown size={12} className="inline ml-1 text-primary" />
+    );
   };
 
   return (
@@ -99,11 +96,17 @@ export default function LogbookTable() {
         <div className="flex items-center gap-2 flex-wrap">
           {/* Search */}
           <div className="relative">
-            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Search
+              size={13}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
             <input
               type="text"
               value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
               placeholder="Search alias, complaint, impression…"
               className="pl-8 pr-3 py-2 bg-input border border-border rounded-lg text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring w-52 transition-all focus:w-64"
             />
@@ -114,7 +117,10 @@ export default function LogbookTable() {
             {ALL_STATUSES.map((s) => (
               <button
                 key={`logbook-filter-${s}`}
-                onClick={() => { setStatusFilter(s); setPage(1); }}
+                onClick={() => {
+                  setStatusFilter(s);
+                  setPage(1);
+                }}
                 className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all capitalize ${
                   statusFilter === s
                     ? 'bg-primary text-primary-foreground'
@@ -194,15 +200,16 @@ export default function LogbookTable() {
                     description="Try adjusting the search query or status filter to find what you're looking for."
                     action={{
                       label: 'Clear Search',
-                      onClick: () => { setSearch(''); setStatusFilter('all'); },
+                      onClick: () => {
+                        setSearch('');
+                        setStatusFilter('all');
+                      },
                     }}
                   />
                 </td>
               </tr>
             ) : (
-              paginated.map((c) => (
-                <LogbookRow key={c.id} caseItem={c} />
-              ))
+              paginated.map((c) => <LogbookRow key={c.id} caseItem={c} />)
             )}
           </tbody>
         </table>
@@ -212,15 +219,21 @@ export default function LogbookTable() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3 border-t border-border">
         <div className="flex items-center gap-3">
           <span className="text-xs text-muted-foreground tabular-nums">
-            Showing {sorted.length === 0 ? 0 : (page - 1) * perPage + 1}–{Math.min(page * perPage, sorted.length)} of {sorted.length}
+            Showing {sorted.length === 0 ? 0 : (page - 1) * perPage + 1}–
+            {Math.min(page * perPage, sorted.length)} of {sorted.length}
           </span>
           <select
             value={perPage}
-            onChange={(e) => { setPerPage(Number(e.target.value)); setPage(1); }}
+            onChange={(e) => {
+              setPerPage(Number(e.target.value));
+              setPage(1);
+            }}
             className="bg-input border border-border rounded text-xs text-foreground px-2 py-1 focus:outline-none focus:ring-1 focus:ring-ring"
           >
             {[5, 8, 10, 20, 50].map((n) => (
-              <option key={`per-page-${n}`} value={n}>{n} per page</option>
+              <option key={`per-page-${n}`} value={n}>
+                {n} per page
+              </option>
             ))}
           </select>
         </div>
@@ -315,9 +328,7 @@ function LogbookRow({ caseItem: c }: { caseItem: ClinicalCase }) {
         <div className="flex items-center gap-1.5">
           <span className="text-sm tabular-nums text-foreground">{c.taskCount}</span>
           {c.overdueTaskCount > 0 && (
-            <span className="text-xs text-red-400 font-semibold">
-              ({c.overdueTaskCount}↑)
-            </span>
+            <span className="text-xs text-red-400 font-semibold">({c.overdueTaskCount}↑)</span>
           )}
         </div>
       </td>

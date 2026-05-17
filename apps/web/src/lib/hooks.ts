@@ -4,10 +4,16 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useCaseStore, type CaseStore } from '@/lib/store';
-import { restoreDataFromDB, seedClinicalData } from '@/lib/clinicalDataService';
+import {
+  restoreDataFromDB,
+  seedClinicalData,
+  initializeDrugDatabase,
+  loadDrugsIntoStore,
+} from '@/lib/clinicalDataService';
 import { mockDrugs, mockCases, mockTasks } from '@/lib/mockData';
-import { drugsDB, casesDB, db, initializeDatabase, runMigrations } from '@/lib/localDB';
+import { db, runMigrations } from '@/lib/localDB';
 import { telemetry } from '@/lib/telemetryService';
+import { config } from '@/lib/config';
 
 /**
  * Initialize the app: load cases/tasks/drugs from store/DB
@@ -25,13 +31,16 @@ export function useAppInitialization() {
 
     async function init() {
       const store = useCaseStore.getState();
-      
+
       // Start global init timeout (10s)
       const timeoutId = setTimeout(() => {
-        if (store.dataStatus !== 'ready') {
-          console.error('[Init] Initialization timed out after 10s');
-          store.setDataStatus('error');
-          store.setInitError('Initialization timed out. Please check your connection or refresh.');
+        const current = useCaseStore.getState();
+        if (current.dataStatus !== 'ready' && !current.isLocked) {
+          console.warn('[Init] Initialization timed out after 10s');
+          current.setDataStatus('error');
+          current.setInitError(
+            'Initialization timed out. Please check your connection or refresh.'
+          );
         }
       }, 10000);
 
@@ -43,26 +52,27 @@ export function useAppInitialization() {
             await runMigrations();
           });
 
-          // 2. Drug Seeding (Version-aware)
+          // 2. Drug Seeding (Version-aware) — via service layer
           await telemetry.trace('drug_initialization', 'db', async () => {
-            await initializeDatabase(mockDrugs);
-            const drugs = await drugsDB.getAll();
-            store.loadDrugs(drugs);
+            await initializeDrugDatabase(mockDrugs);
+            await loadDrugsIntoStore();
           });
 
           // 3. Clinical Seeding (Version-aware)
-          await telemetry.trace('clinical_seeding', 'db', async () => {
-            await seedClinicalData(mockCases, mockTasks);
-          });
-          
+          if (config.enableSeedData) {
+            await telemetry.trace('clinical_seeding', 'db', async () => {
+              await seedClinicalData(mockCases, mockTasks);
+            });
+          }
+
           // 4. Data Restoration
           await restoreDataFromDB();
         });
-        
+
         clearTimeout(timeoutId);
-      } catch (err: any) {
+      } catch (err: unknown) {
         clearTimeout(timeoutId);
-        const errorMsg = err.message || 'Initialization failed';
+        const errorMsg = err instanceof Error ? err.message : 'Initialization failed';
         store.setDataStatus('error');
         store.setInitError(errorMsg);
         setError(err instanceof Error ? err : new Error(errorMsg));

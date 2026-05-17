@@ -18,15 +18,22 @@ import { useCases, useTasks } from '@/lib/hooks';
 export default function LogbookKPIGrid() {
   const cases = useCases();
   const tasks = useTasks();
-  const active = cases.filter((item) => item.status === 'active' || item.status === 'critical').length;
+  const active = cases.filter(
+    (item) => item.status === 'active' || item.status === 'critical'
+  ).length;
   const discharged = cases.filter((item) => item.status === 'discharged').length;
   const critical = cases.filter((item) => item.status === 'critical').length;
-  const overdue = tasks.filter((item) => !item.completed && new Date(item.dueAt).getTime() < Date.now()).length;
+  const overdue = tasks.filter(
+    (item) => !item.completed && new Date(item.dueAt).getTime() < Date.now()
+  ).length;
   const avgTasks = cases.length > 0 ? (tasks.length / cases.length).toFixed(1) : '0.0';
   const now = new Date();
   const thisMonth = cases.filter((item) => {
     const created = new Date(item.createdAt);
-    return created.getUTCFullYear() === now.getUTCFullYear() && created.getUTCMonth() === now.getUTCMonth();
+    return (
+      created.getUTCFullYear() === now.getUTCFullYear() &&
+      created.getUTCMonth() === now.getUTCMonth()
+    );
   }).length;
 
   return (

@@ -1,6 +1,7 @@
 import { useCaseStore } from './store';
+import { lockClinicalData } from './clinicalDataService';
 
-const API_BASE = '';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
 
 export interface AuthUser {
   id: string;
@@ -34,14 +35,11 @@ export async function login(email: string, password: string): Promise<AuthRespon
   useCaseStore.getState().setUserId(result.user.id);
   useCaseStore.getState().setUserName(result.user.name || null);
   useCaseStore.getState().setUserEmail(result.user.email);
-  // Fix: Ensure the encryption passcode is set so local data can be decrypted
+  useCaseStore.getState().resetFailureCount();
+  useCaseStore.getState().unlockApp();
+
+  // Set in-memory only. Do not persist raw password to localStorage.
   useCaseStore.getState().setEncryptionPasscode(password);
-
-  // Persist passcode to survive page refresh
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem('cwc_device_passcode', password);
-  }
-
   return result;
 }
 
@@ -55,13 +53,9 @@ export async function registerAccount(input: {
   useCaseStore.getState().setUserId(result.user.id);
   useCaseStore.getState().setUserName(result.user.name || null);
   useCaseStore.getState().setUserEmail(result.user.email);
+  useCaseStore.getState().resetFailureCount();
+  useCaseStore.getState().unlockApp();
   useCaseStore.getState().setEncryptionPasscode(input.password);
-
-  // Persist passcode to survive page refresh
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem('cwc_device_passcode', input.password);
-  }
-
   return result;
 }
 
@@ -78,7 +72,7 @@ export async function updateProfile(input: {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(input),
   });
@@ -102,13 +96,6 @@ export async function logout(): Promise<void> {
   store.setUserId(null);
   store.setUserName(null);
   store.setUserEmail(null);
-  store.setEncryptionPasscode(null);
-
-  if (typeof window !== 'undefined') {
-    window.localStorage.removeItem('cwc_device_passcode');
-    // Clear local DB on logout to prevent key-mismatch on next login
-    const { casesDB, tasksDB, db } = await import('./localDB');
-    await Promise.all([casesDB.clear(), tasksDB.clear()]);
-    await db.appConfig.delete('clinical_data_version');
-  }
+  store.resetFailureCount();
+  lockClinicalData('logout');
 }

@@ -18,9 +18,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="dark">
       <head>
@@ -29,7 +27,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="ClinicalCWC" />
         <link rel="apple-touch-icon" href="/assets/images/app_logo.png" />
-        </head>
+      </head>
       <body>
         {/* AppInitializer removed from root — now in dashboard layout only */}
         {children}

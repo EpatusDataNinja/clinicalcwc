@@ -1,26 +1,35 @@
 /**
- * Sync Service — queues local changes and syncs when online.
- * Implements last-write-wins conflict strategy.
- * Backend stores encrypted blobs only.
+ * Sync Service - queues local changes and syncs when online.
+ * Local encrypted data remains source of truth; remote snapshots are recovery input.
  */
 
-import { syncQueueDB, type SyncQueueItem, casesDB, tasksDB } from './localDB';
+import { casesDB, syncQueueDB, tasksDB, type SyncQueueItem } from './localDB';
 import { useCaseStore } from './store';
 import { restoreEncryptedRecords } from './clinicalDataService';
 
-const API_BASE = '';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
 const MAX_RETRIES = 3;
 
 export type SyncStatus = 'idle' | 'syncing' | 'success' | 'error' | 'offline';
+export type SyncFailureReason =
+  | 'key_mismatch'
+  | 'snapshot_rejected'
+  | 'network'
+  | 'server'
+  | 'local_data_present';
 
 export interface SyncResult {
   status: SyncStatus;
   synced: number;
   failed: number;
   lastSyncAt: string | null;
+  reason?: SyncFailureReason;
 }
 
-async function syncItem(item: SyncQueueItem, token?: string): Promise<boolean> {
+async function syncItem(
+  item: SyncQueueItem,
+  token?: string
+): Promise<{ ok: boolean; reason?: SyncFailureReason }> {
   try {
     const endpoint = `${API_BASE}/api/sync/${item.entity}`;
     const res = await fetch(endpoint, {
@@ -31,10 +40,16 @@ async function syncItem(item: SyncQueueItem, token?: string): Promise<boolean> {
       },
       body: JSON.stringify({ entityId: item.entityId, payload: item.payload }),
     });
-    return res.ok;
+
+    return { ok: res.ok, reason: res.ok ? undefined : 'server' };
   } catch {
-    return false;
+    return { ok: false, reason: 'network' };
   }
+}
+
+async function getLocalClinicalRecordCount(): Promise<number> {
+  const [cases, tasks] = await Promise.all([casesDB.getAll(), tasksDB.getAll()]);
+  return cases.length + tasks.length;
 }
 
 export async function runSync(token?: string): Promise<SyncResult> {
@@ -44,7 +59,7 @@ export async function runSync(token?: string): Promise<SyncResult> {
   }
 
   const pending = await syncQueueDB.getPending();
-  const toSync = pending.filter((s) => s.retryCount < MAX_RETRIES);
+  const toSync = pending.filter((item) => item.retryCount < MAX_RETRIES);
 
   if (toSync.length === 0) {
     const lastSync = useCaseStore.getState().lastSyncAt;
@@ -53,20 +68,21 @@ export async function runSync(token?: string): Promise<SyncResult> {
 
   let synced = 0;
   let failed = 0;
+  let failureReason: SyncFailureReason | undefined;
 
   for (const item of toSync) {
     if (token) {
-      const ok = await syncItem(item, token);
-      if (ok && item.id) {
+      const result = await syncItem(item, token);
+      if (result.ok && item.id) {
         await syncQueueDB.markSynced(item.id);
-        synced++;
+        synced += 1;
       } else if (item.id) {
         await syncQueueDB.incrementRetry(item.id);
-        failed++;
+        failureReason = result.reason;
+        failed += 1;
       }
     } else {
-      // No token — mark as pending, will retry when user logs in
-      failed++;
+      failed += 1;
     }
   }
 
@@ -82,17 +98,31 @@ export async function runSync(token?: string): Promise<SyncResult> {
     synced,
     failed,
     lastSyncAt: useCaseStore.getState().lastSyncAt,
+    reason: failureReason,
   };
 }
 
-export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
+export async function pullRemoteSnapshot(
+  token: string,
+  options?: { force?: boolean }
+): Promise<SyncResult> {
   if (typeof window === 'undefined' || !navigator.onLine) {
     const lastSync = useCaseStore.getState().lastSyncAt;
     return { status: 'offline', synced: 0, failed: 0, lastSyncAt: lastSync };
   }
 
   try {
-    // Send lastSyncAt to the server for delta synchronization
+    const localRecordCount = await getLocalClinicalRecordCount();
+    if (localRecordCount > 0 && !options?.force) {
+      return {
+        status: 'idle',
+        synced: 0,
+        failed: 0,
+        lastSyncAt: useCaseStore.getState().lastSyncAt,
+        reason: 'local_data_present',
+      };
+    }
+
     const lastSyncAt = useCaseStore.getState().lastSyncAt;
     const queryParams = lastSyncAt ? `?lastSyncAt=${encodeURIComponent(lastSyncAt)}` : '';
     const res = await fetch(`${API_BASE}/api/sync/snapshot${queryParams}`, {
@@ -101,13 +131,29 @@ export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      throw new Error(data.error || 'Failed to pull remote snapshot');
+      return {
+        status: 'error',
+        synced: 0,
+        failed: 1,
+        lastSyncAt: useCaseStore.getState().lastSyncAt,
+        reason: 'server',
+      };
     }
 
-    await restoreEncryptedRecords({
+    const restored = await restoreEncryptedRecords({
       cases: data.cases || [],
       tasks: data.tasks || [],
     });
+
+    if (!restored) {
+      return {
+        status: 'error',
+        synced: 0,
+        failed: 1,
+        lastSyncAt: useCaseStore.getState().lastSyncAt,
+        reason: 'snapshot_rejected',
+      };
+    }
 
     const now = new Date().toISOString();
     useCaseStore.getState().setLastSyncAt(now);
@@ -118,12 +164,13 @@ export async function pullRemoteSnapshot(token: string): Promise<SyncResult> {
       lastSyncAt: now,
     };
   } catch (error) {
-    console.error('Pull sync failed:', error);
+    console.warn('Pull sync failed:', error);
     return {
       status: 'error',
       synced: 0,
       failed: 1,
       lastSyncAt: useCaseStore.getState().lastSyncAt,
+      reason: 'network',
     };
   }
 }

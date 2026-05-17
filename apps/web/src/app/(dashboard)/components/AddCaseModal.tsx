@@ -26,10 +26,26 @@ interface AddCaseModalProps {
 }
 
 const CASE_TEMPLATES = [
-  { label: 'Chest Pain Protocol', complaint: 'Acute chest pain, diaphoresis', impression: 'ACS — R/O STEMI/NSTEMI' },
-  { label: 'Fever Workup', complaint: 'Fever, rigors, malaise', impression: 'Febrile illness — source TBD' },
-  { label: 'Dyspnea Assessment', complaint: 'Shortness of breath, exertional', impression: 'Dyspnea — cardiac vs respiratory' },
-  { label: 'Altered Consciousness', complaint: 'Reduced GCS, confusion', impression: 'Altered consciousness — cause TBD' },
+  {
+    label: 'Chest Pain Protocol',
+    complaint: 'Acute chest pain, diaphoresis',
+    impression: 'ACS — R/O STEMI/NSTEMI',
+  },
+  {
+    label: 'Fever Workup',
+    complaint: 'Fever, rigors, malaise',
+    impression: 'Febrile illness — source TBD',
+  },
+  {
+    label: 'Dyspnea Assessment',
+    complaint: 'Shortness of breath, exertional',
+    impression: 'Dyspnea — cardiac vs respiratory',
+  },
+  {
+    label: 'Altered Consciousness',
+    complaint: 'Reduced GCS, confusion',
+    impression: 'Altered consciousness — cause TBD',
+  },
 ];
 
 export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
@@ -49,7 +65,7 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
     },
   });
 
-  const applyTemplate = (tpl: typeof CASE_TEMPLATES[0]) => {
+  const applyTemplate = (tpl: (typeof CASE_TEMPLATES)[0]) => {
     setValue('chiefComplaint', tpl.complaint);
     setValue('impression', tpl.impression);
   };
@@ -105,7 +121,11 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
                   type="button"
                   onClick={() => setStep(i + 1)}
                   className={`flex items-center gap-2 text-xs font-semibold transition-colors ${
-                    step === i + 1 ? 'text-primary' : step > i + 1 ? 'text-emerald-400' : 'text-muted-foreground'
+                    step === i + 1
+                      ? 'text-primary'
+                      : step > i + 1
+                        ? 'text-emerald-400'
+                        : 'text-muted-foreground'
                   }`}
                 >
                   <span
@@ -113,7 +133,8 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
                       step === i + 1
                         ? 'bg-primary border-primary text-white'
                         : step > i + 1
-                        ? 'bg-emerald-500 border-emerald-500 text-white' :'border-border text-muted-foreground'
+                          ? 'bg-emerald-500 border-emerald-500 text-white'
+                          : 'border-border text-muted-foreground'
                     }`}
                   >
                     {step > i + 1 ? '✓' : i + 1}
@@ -169,8 +190,23 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
                     className="w-full px-3 py-2.5 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
                   >
                     <option value="">Select ward</option>
-                    {['CCU', 'ICU', 'Gen Med', 'Surgical', 'Neuro', 'Cardiology', 'OPD', 'Haematology', 'Infectious Disease', 'Urology', 'Paediatrics', 'Obs & Gynae'].map((w) => (
-                      <option key={`ward-${w}`} value={w}>{w}</option>
+                    {[
+                      'CCU',
+                      'ICU',
+                      'Gen Med',
+                      'Surgical',
+                      'Neuro',
+                      'Cardiology',
+                      'OPD',
+                      'Haematology',
+                      'Infectious Disease',
+                      'Urology',
+                      'Paediatrics',
+                      'Obs & Gynae',
+                    ].map((w) => (
+                      <option key={`ward-${w}`} value={w}>
+                        {w}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -178,13 +214,17 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1.5">Age Group</label>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Age Group
+                  </label>
                   <select
                     {...register('ageGroup')}
                     className="w-full px-3 py-2.5 bg-input border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
                   >
                     {['<15', '15–24', '25–34', '35–44', '45–54', '55–64', '65+'].map((ag) => (
-                      <option key={`age-${ag}`} value={ag}>{ag}</option>
+                      <option key={`age-${ag}`} value={ag}>
+                        {ag}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -325,8 +365,8 @@ export default function AddCaseModal({ open, onClose }: AddCaseModalProps) {
                   Encryption Notice
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  This case will be AES-encrypted before saving to IndexedDB. Your passcode
-                  or device key is used for encryption — data is never stored in plaintext.
+                  This case will be AES-encrypted before saving to IndexedDB. Your passcode or
+                  device key is used for encryption — data is never stored in plaintext.
                 </p>
               </div>
             </div>

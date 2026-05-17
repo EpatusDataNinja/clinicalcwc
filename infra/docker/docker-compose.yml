@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: clinicalcwc
-      POSTGRES_PASSWORD: clinicalcwc
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-clinicalcwc}
       POSTGRES_DB: clinicalcwc
     ports:
       - "5432:5432"
@@ -12,11 +12,11 @@ services:
 
   api:
     image: node:20-alpine
-    working_dir: /workspace/clinicalcwc/api
+    working_dir: /workspace/apps/api
     command: sh -c "npm install && npm run migrate && npm run dev"
     environment:
-      DATABASE_URL: postgresql://clinicalcwc:clinicalcwc@postgres:5432/clinicalcwc
-      JWT_SECRET: change-me-in-production
+      DATABASE_URL: postgresql://clinicalcwc:${POSTGRES_PASSWORD:-clinicalcwc}@postgres:5432/clinicalcwc
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       FRONTEND_URL: http://localhost:4028
       PORT: 3001
     ports:

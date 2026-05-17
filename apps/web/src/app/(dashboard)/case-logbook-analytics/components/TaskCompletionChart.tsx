@@ -1,11 +1,7 @@
 'use client';
 
 import React from 'react';
-import {
-  RadialBarChart,
-  RadialBar,
-  Tooltip,
-} from 'recharts';
+import { RadialBarChart, RadialBar, Tooltip } from 'recharts';
 import { useTasks } from '@/lib/hooks';
 
 const CustomTooltip = ({
@@ -30,7 +26,9 @@ export default function TaskCompletionChart() {
   const completed = tasks.filter((task) => task.completed).length;
   const pending = Math.max(tasks.length - completed, 0);
   const completionRate = tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0;
-  const overdue = tasks.filter((task) => !task.completed && new Date(task.dueAt).getTime() < Date.now()).length;
+  const overdue = tasks.filter(
+    (task) => !task.completed && new Date(task.dueAt).getTime() < Date.now()
+  ).length;
   const completionData = [
     { name: 'Completed', value: completionRate, fill: '#10B981' },
     { name: 'Pending', value: Math.max(100 - completionRate, 0), fill: 'var(--border)' },

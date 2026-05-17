@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, AlertTriangle, CheckCircle, Clock, UserX,  } from 'lucide-react';
+import { Activity, AlertTriangle, CheckCircle, Clock, UserX } from 'lucide-react';
 import MetricCard from '@/components/ui/MetricCard';
 import { useCases, useTasks } from '@/lib/hooks';
 
@@ -12,10 +12,10 @@ export default function KPIBentoGrid() {
   const cases = useCases();
   const tasks = useTasks();
 
-  const activeCount = cases.filter(c => c.status === 'active' || c.status === 'critical').length;
-  const criticalCount = cases.filter(c => c.status === 'critical').length;
-  const stableCount = cases.filter(c => c.status === 'stable').length;
-  const dischargedTodayCount = cases.filter(c => {
+  const activeCount = cases.filter((c) => c.status === 'active' || c.status === 'critical').length;
+  const criticalCount = cases.filter((c) => c.status === 'critical').length;
+  const stableCount = cases.filter((c) => c.status === 'stable').length;
+  const dischargedTodayCount = cases.filter((c) => {
     if (c.status !== 'discharged') return false;
     const updatedAt = new Date(c.updatedAt);
     const today = new Date();
@@ -23,8 +23,8 @@ export default function KPIBentoGrid() {
   }).length;
 
   const now = new Date();
-  const overdueTasksCount = tasks.filter(t => !t.completed && new Date(t.dueAt) < now).length;
-  const overdueCasesCount = cases.filter(c => c.overdueTaskCount > 0).length;
+  const overdueTasksCount = tasks.filter((t) => !t.completed && new Date(t.dueAt) < now).length;
+  const overdueCasesCount = cases.filter((c) => c.overdueTaskCount > 0).length;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
@@ -33,7 +33,7 @@ export default function KPIBentoGrid() {
         <MetricCard
           label="Active Cases"
           value={activeCount}
-          subtext={`Across ${new Set(cases.map(c => c.ward)).size} wards — Live updates`}
+          subtext={`Across ${new Set(cases.map((c) => c.ward)).size} wards — Live updates`}
           icon={Activity}
           variant="default"
           featured
@@ -78,4 +78,4 @@ export default function KPIBentoGrid() {
       />
     </div>
   );
-}
+}

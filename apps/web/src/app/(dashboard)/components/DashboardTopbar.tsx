@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Plus, Bell, RefreshCw, Wifi, AlertTriangle } from 'lucide-react';
+import { Search, Plus, Bell, RefreshCw, Wifi, AlertTriangle, LockKeyhole } from 'lucide-react';
 import AddCaseModal from './AddCaseModal';
 import { useCaseStore } from '@/lib/store';
-import { runSync, pullRemoteSnapshot } from '@/lib/syncService';
+import { runSync } from '@/lib/syncService';
 import { useSyncStatus } from '@/lib/hooks';
 import { toast } from 'sonner';
+import { lockClinicalData } from '@/lib/clinicalDataService';
 
 export default function DashboardTopbar() {
   const [showAddCase, setShowAddCase] = useState(false);
@@ -23,12 +24,11 @@ export default function DashboardTopbar() {
     setSyncing(true);
     try {
       await runSync(authToken);
-      await pullRemoteSnapshot(authToken);
       toast.success('Sync completed', {
-        description: 'All your clinical cases are up to date.',
+        description: 'Encrypted local changes were backed up.',
       });
     } catch (error) {
-      console.error('Sync failed:', error);
+      console.warn('Sync failed:', error);
       toast.error('Sync failed', {
         description: 'Check your connection and try again.',
       });
@@ -54,28 +54,39 @@ export default function DashboardTopbar() {
           {syncStatus === 'syncing' || syncing ? (
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
               <RefreshCw size={12} className="text-primary animate-spin" />
-              <span className="text-[10px] font-bold text-primary uppercase tracking-tight">Syncing...</span>
+              <span className="text-[10px] font-bold text-primary uppercase tracking-tight">
+                Syncing...
+              </span>
             </div>
           ) : pendingSyncCount > 0 ? (
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <AlertTriangle size={12} className="text-amber-400" />
-              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-tight">Sync Needed ({pendingSyncCount})</span>
+              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-tight">
+                Sync Needed ({pendingSyncCount})
+              </span>
             </div>
           ) : (
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
               <Wifi size={12} className="text-emerald-400" />
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-tight">Synced</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-tight">
+                Synced
+              </span>
             </div>
           )}
 
           <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-green-500/10 border border-green-500/20">
             <Wifi size={12} className="text-green-400" />
-            <span className="text-[10px] font-bold text-green-400 hidden lg:block uppercase tracking-tight">Live</span>
+            <span className="text-[10px] font-bold text-green-400 hidden lg:block uppercase tracking-tight">
+              Live
+            </span>
           </div>
 
           {/* Search - Hidden on mobile */}
           <div className="relative hidden xl:block">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Search
+              size={14}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
             <input
               type="text"
               placeholder="Search..."
@@ -91,6 +102,14 @@ export default function DashboardTopbar() {
               title="Sync now"
             >
               <RefreshCw size={14} className={syncing ? 'animate-spin' : ''} />
+            </button>
+
+            <button
+              onClick={() => lockClinicalData('explicit')}
+              className="p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-90"
+              title="Lock clinical workspace"
+            >
+              <LockKeyhole size={14} />
             </button>
 
             <button className="p-2 rounded-lg border border-border hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-all active:scale-90 relative">

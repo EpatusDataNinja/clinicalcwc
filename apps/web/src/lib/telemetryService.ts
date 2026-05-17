@@ -5,7 +5,7 @@
 
 import { db, type TelemetryLog } from './localDB';
 
-type Stage = 'init' | 'auth' | 'db' | 'hydration' | 'sync' | 'error';
+type Stage = 'init' | 'auth' | 'db' | 'hydration' | 'sync' | 'security' | 'error';
 type Status = 'start' | 'success' | 'error';
 
 export interface TelemetryEvent {
@@ -13,7 +13,7 @@ export interface TelemetryEvent {
   stage: Stage;
   status: Status;
   duration?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 class TelemetryService {
@@ -47,10 +47,11 @@ class TelemetryService {
     };
 
     // Console output for development
-    const statusColor = data.status === 'success' ? '\x1b[32m' : data.status === 'error' ? '\x1b[31m' : '\x1b[34m';
+    const statusColor =
+      data.status === 'success' ? '\x1b[32m' : data.status === 'error' ? '\x1b[31m' : '\x1b[34m';
     const resetColor = '\x1b[0m';
-    
-    console.log(
+
+    console.info(
       `[${data.stage.toUpperCase()}] ${data.event} - ${statusColor}${data.status.toUpperCase()}${resetColor} ${
         data.duration ? `(${data.duration.toFixed(2)}ms)` : ''
       }`,
@@ -60,7 +61,7 @@ class TelemetryService {
     try {
       if (db.isOpen()) {
         await db.telemetry.add(logEntry);
-        
+
         // Retention: Keep only last 1000 logs
         const count = await db.telemetry.count();
         if (count > 1100) {
@@ -81,24 +82,24 @@ class TelemetryService {
     key: string,
     stage: Stage,
     operation: () => Promise<T>,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<T> {
     this.startTimer(key);
     await this.log({ event: key, stage, status: 'start', metadata });
-    
+
     try {
       const result = await operation();
       const duration = this.endTimer(key);
       await this.log({ event: key, stage, status: 'success', duration, metadata });
       return result;
-    } catch (error: any) {
+    } catch (error: unknown) {
       const duration = this.endTimer(key);
-      await this.log({ 
-        event: key, 
-        stage, 
-        status: 'error', 
-        duration, 
-        metadata: { ...metadata, error: error.message || String(error) } 
+      await this.log({
+        event: key,
+        stage,
+        status: 'error',
+        duration,
+        metadata: { ...metadata, error: error instanceof Error ? error.message : String(error) },
       });
       throw error;
     }

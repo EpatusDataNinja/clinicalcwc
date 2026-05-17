@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  CI: true
+  TZ: UTC
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Workspace Validation Guardrails
+        # Ensures all monorepo workspaces are resolved and linked correctly
+        run: |
+          npm query .workspace
+          npm ls --depth=0
+
+      - name: Restore Next.js Build Cache
+        uses: actions/cache@v4
+        with:
+          path: apps/web/.next/cache
+          # Strict cache key: invalidates on dependency changes, shared package changes, or web source changes
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json', 'apps/web/package.json', 'apps/api/package.json', 'packages/**') }}-${{ hashFiles('apps/web/src/**', 'apps/web/public/**') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json', 'apps/web/package.json', 'apps/api/package.json', 'packages/**') }}-
+
+      - name: "[WEB] Lint"
+        run: npm --workspace clinicalcwc run lint
+
+      - name: "[WEB] Type-check"
+        run: npm --workspace clinicalcwc run type-check
+
+      - name: "[API] Lint"
+        run: npm --workspace clinicalcwc-api run lint
+
+      - name: "[API] Type-check"
+        run: npm --workspace clinicalcwc-api run type-check
+
+      - name: "[WEB] Run unit and integration tests"
+        # This ensures we hit our P2 goal of >80% coverage
+        run: npm --workspace clinicalcwc run test
+        env:
+          NODE_ENV: test
+
+      - name: "[API] Run application tests"
+        run: npm --workspace clinicalcwc-api run test
+        env:
+          NODE_ENV: test
+
+      - name: "[WEB] Build"
+        # Mandatory build gate: fails immediately on optimization errors or missing dependencies
+        run: npm --workspace clinicalcwc run build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:3001
+
+      - name: "[API] Build"
+        # Compiles TypeScript for the Express backend
+        run: npm --workspace clinicalcwc-api run build

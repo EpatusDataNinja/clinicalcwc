@@ -355,25 +355,50 @@ export const mockTasks: ClinicalTask[] = [
 ];
 
 const drugBases = [
-  { name: 'Artemether-Lumefantrine', category: 'Antimalarial', route: 'Oral', note: 'Take with fatty food.' },
+  {
+    name: 'Artemether-Lumefantrine',
+    category: 'Antimalarial',
+    route: 'Oral',
+    note: 'Take with fatty food.',
+  },
   { name: 'Ceftriaxone', category: 'Antibiotic', route: 'IV/IM', note: 'Avoid calcium solutions.' },
   { name: 'Metformin', category: 'Antidiabetic', route: 'Oral', note: 'Hold if eGFR < 30.' },
   { name: 'Furosemide', category: 'Diuretic', route: 'IV/Oral', note: 'Monitor potassium levels.' },
   { name: 'Aspirin', category: 'Antiplatelet', route: 'Oral', note: 'Watch for GI bleeding.' },
-  { name: 'Amoxicillin-Clavulanate', category: 'Antibiotic', route: 'Oral', note: 'Complete full course.' },
+  {
+    name: 'Amoxicillin-Clavulanate',
+    category: 'Antibiotic',
+    route: 'Oral',
+    note: 'Complete full course.',
+  },
   { name: 'Omeprazole', category: 'PPI', route: 'Oral', note: 'Take 30 mins before food.' },
   { name: 'Paracetamol', category: 'Analgesic', route: 'Oral/IV', note: 'Max 4g per 24 hours.' },
   { name: 'Morphine', category: 'Opioid', route: 'IV/SC', note: 'Monitor respiratory rate.' },
   { name: 'Heparin', category: 'Anticoagulant', route: 'IV/SC', note: 'Check aPTT/Anti-Xa.' },
   { name: 'Gentamicin', category: 'Antibiotic', route: 'IV', note: 'TDM required — ototoxic.' },
-  { name: 'Salbutamol', category: 'Bronchodilator', route: 'Inhaled', note: 'Monitor for tachycardia.' },
+  {
+    name: 'Salbutamol',
+    category: 'Bronchodilator',
+    route: 'Inhaled',
+    note: 'Monitor for tachycardia.',
+  },
   { name: 'Insulin Glargine', category: 'Insulin', route: 'SC', note: 'Long-acting, do not mix.' },
   { name: 'Atorvastatin', category: 'Statin', route: 'Oral', note: 'Check LFTs if symptomatic.' },
   { name: 'Lisinopril', category: 'ACE Inhibitor', route: 'Oral', note: 'Monitor for dry cough.' },
   { name: 'Amlodipine', category: 'CCB', route: 'Oral', note: 'Watch for pedal edema.' },
   { name: 'Warfarin', category: 'Anticoagulant', route: 'Oral', note: 'Monitor INR carefully.' },
-  { name: 'Diazepam', category: 'Benzodiazepine', route: 'Oral/IV', note: 'Risk of sedation/addiction.' },
-  { name: 'Phenytoin', category: 'Anticonvulsant', route: 'IV/Oral', note: 'Narrow therapeutic window.' },
+  {
+    name: 'Diazepam',
+    category: 'Benzodiazepine',
+    route: 'Oral/IV',
+    note: 'Risk of sedation/addiction.',
+  },
+  {
+    name: 'Phenytoin',
+    category: 'Anticonvulsant',
+    route: 'IV/Oral',
+    note: 'Narrow therapeutic window.',
+  },
   { name: 'Prednisolone', category: 'Steroid', route: 'Oral', note: 'Take in morning with food.' },
 ];
 
@@ -400,7 +425,7 @@ function generateDrugs(): DrugReference[] {
     const base = drugBases[Math.floor(Math.random() * drugBases.length)];
     const dosage = dosages[Math.floor(Math.random() * dosages.length)];
     const suffix = String(idCounter).slice(-2);
-    
+
     result.push({
       id: `drug-${String(idCounter++).padStart(4, '0')}`,
       name: `${base.name} Gen-${suffix}`,

@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { CheckSquare, Clock, AlertCircle, Check, ChevronRight } from 'lucide-react';
-import { useTasks, useCases } from '@/lib/hooks';
+import { useTasks } from '@/lib/hooks';
 import { PriorityBadge } from '@/components/ui/StatusBadge';
 import { updateTask } from '@/lib/clinicalDataService';
 import { ClinicalTask } from '@/lib/mockData';
 
 export default function TaskSidebar() {
   const tasks = useTasks();
-  const cases = useCases();
 
   const now = new Date();
 
@@ -42,7 +41,7 @@ export default function TaskSidebar() {
       <div className="flex items-center justify-between px-4 py-4 border-b border-border">
         <div className="flex items-center gap-2">
           <CheckSquare size={15} className="text-primary" />
-          <h2 className="text-sm font-semibold text-foreground">Today's Tasks</h2>
+          <h2 className="text-sm font-semibold text-foreground">Today&apos;s Tasks</h2>
         </div>
         <span className="text-xs font-mono tabular-nums text-muted-foreground">
           {overdue.length + upcoming.length} pending
@@ -151,14 +150,16 @@ function TaskCard({
         completed
           ? 'border-border/50 bg-muted/20 opacity-60'
           : isOverdue
-          ? 'border-red-500/25 bg-red-500/5 hover:bg-red-500/10' :'border-border/70 bg-muted/20 hover:bg-muted/40'
+            ? 'border-red-500/25 bg-red-500/5 hover:bg-red-500/10'
+            : 'border-border/70 bg-muted/20 hover:bg-muted/40'
       }`}
     >
       <button
         onClick={onToggle}
         className={`mt-0.5 w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all duration-150 active:scale-95 ${
           completed
-            ? 'bg-emerald-500 border-emerald-500 text-white' :'border-border hover:border-primary bg-transparent'
+            ? 'bg-emerald-500 border-emerald-500 text-white'
+            : 'border-border hover:border-primary bg-transparent'
         }`}
       >
         {completed && <Check size={10} />}

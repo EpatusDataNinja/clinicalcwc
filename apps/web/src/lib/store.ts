@@ -8,21 +8,25 @@ import { persist } from 'zustand/middleware';
 import type { ClinicalCase, ClinicalTask, DrugReference } from './mockData';
 import type { SyncStatus } from './syncService';
 
+export type LockReason =
+  | 'missing_passcode'
+  | 'passcode_mismatch'
+  | 'lockout'
+  | 'inactivity'
+  | 'tab_close'
+  | 'explicit'
+  | 'logout'
+  | 'snapshot_rejected';
+
 export interface CaseStore {
   // Cases
   cases: ClinicalCase[];
-  addCase: (caseData: Omit<ClinicalCase, 'id' | 'createdAt' | 'updatedAt'>) => Promise<string>;
-  updateCase: (id: string, data: Partial<ClinicalCase>) => Promise<void>;
-  deleteCase: (id: string) => Promise<void>;
-  loadCases: (cases: ClinicalCase[]) => void; // New action
+  loadCases: (cases: ClinicalCase[]) => void;
   getCase: (id: string) => ClinicalCase | undefined;
 
   // Tasks
   tasks: ClinicalTask[];
-  addTask: (taskData: Omit<ClinicalTask, 'id'>) => Promise<string>;
-  updateTask: (id: string, data: Partial<ClinicalTask>) => Promise<void>;
-  deleteTask: (id: string) => Promise<void>;
-  loadTasks: (tasks: ClinicalTask[]) => void; // New action
+  loadTasks: (tasks: ClinicalTask[]) => void;
   getTasksByCase: (caseId: string) => ClinicalTask[];
 
   // Drugs
@@ -58,6 +62,15 @@ export interface CaseStore {
   setDataStatus: (status: 'idle' | 'restoring' | 'ready' | 'error') => void;
   initError: string | null;
   setInitError: (error: string | null) => void;
+
+  // Security Lockout
+  isLocked: boolean;
+  lockReason: LockReason | null;
+  lockApp: (reason?: LockReason) => void;
+  unlockApp: () => void;
+  decryptionFailureCount: number;
+  incrementFailureCount: () => void;
+  resetFailureCount: () => void;
 }
 
 const DEFAULT_SYNC_STATUS: SyncStatus = 'idle';
@@ -66,72 +79,26 @@ export const useCaseStore = create<CaseStore>()(
   persist(
     (set, get) => ({
       // Cases
-      cases: [],
-      addCase: async (caseData) => {
-        const id = `case-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-        const now = new Date().toISOString();
-        const newCase: ClinicalCase = {
-          ...caseData,
-          id,
-          createdAt: now,
-          updatedAt: now,
-        };
-        set((state) => ({ cases: [newCase, ...state.cases] }));
-        return id;
-      },
-      updateCase: async (id, data) => {
-        set((state) => ({
-          cases: state.cases.map((c) =>
-            c.id === id ? { ...c, ...data, updatedAt: new Date().toISOString() } : c
-          ),
-        }));
-      },
-      deleteCase: async (id) => {
-        set((state) => ({
-          cases: state.cases.filter((c) => c.id !== id),
-          tasks: state.tasks.filter((t) => t.caseId !== id),
-        }));
-      },
-      loadCases: (cases) => set({ cases }),
-
-      getCase: (id) => get().cases.find((c) => c.id === id),
+      cases: [] as ClinicalCase[],
+      loadCases: (cases: ClinicalCase[]) => set({ cases }),
+      getCase: (id: string) => get().cases.find((c) => c.id === id),
 
       // Tasks
-      tasks: [],
-      addTask: async (taskData) => {
-        const id = `task-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-        const newTask: ClinicalTask = {
-          ...taskData,
-          id,
-        };
-        set((state) => ({ tasks: [newTask, ...state.tasks] }));
-        return id;
-      },
-      updateTask: async (id, data) => {
-        set((state) => ({
-          tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...data } : t)),
-        }));
-      },
-      deleteTask: async (id) => {
-        set((state) => ({
-          tasks: state.tasks.filter((t) => t.id !== id),
-        }));
-      },
-      loadTasks: (tasks) => set({ tasks }),
-
-      getTasksByCase: (caseId) => get().tasks.filter((t) => t.caseId === caseId),
+      tasks: [] as ClinicalTask[],
+      loadTasks: (tasks: ClinicalTask[]) => set({ tasks }),
+      getTasksByCase: (caseId: string) => get().tasks.filter((t) => t.caseId === caseId),
 
       // Drugs
-      drugs: [],
-      loadDrugs: (drugs) => set({ drugs }),
+      drugs: [] as DrugReference[],
+      loadDrugs: (drugs: DrugReference[]) => set({ drugs }),
 
       // Sync
       syncStatus: DEFAULT_SYNC_STATUS,
-      setSyncStatus: (status) => set({ syncStatus: status }),
+      setSyncStatus: (status: SyncStatus) => set({ syncStatus: status }),
       pendingSyncCount: 0,
-      setPendingSyncCount: (count) => set({ pendingSyncCount: count }),
+      setPendingSyncCount: (count: number) => set({ pendingSyncCount: count }),
       lastSyncAt: null,
-      setLastSyncAt: (time) => set({ lastSyncAt: time }),
+      setLastSyncAt: (time: string) => set({ lastSyncAt: time }),
 
       // Auth
       authToken: null,
@@ -154,6 +121,30 @@ export const useCaseStore = create<CaseStore>()(
       setDataStatus: (status) => set({ dataStatus: status }),
       initError: null,
       setInitError: (error) => set({ initError: error }),
+
+      // Security
+      isLocked: false,
+      lockReason: null,
+      lockApp: (reason = 'explicit') =>
+        set({
+          cases: [],
+          tasks: [],
+          encryptionPasscode: null,
+          isLocked: true,
+          lockReason: reason,
+          dataStatus: 'idle',
+        }),
+      unlockApp: () =>
+        set({
+          isLocked: false,
+          lockReason: null,
+          initError: null,
+          decryptionFailureCount: 0,
+        }),
+      decryptionFailureCount: 0,
+      incrementFailureCount: () =>
+        set((state) => ({ decryptionFailureCount: state.decryptionFailureCount + 1 })),
+      resetFailureCount: () => set({ decryptionFailureCount: 0 }),
     }),
     {
       name: 'cwc-store',
@@ -163,6 +154,9 @@ export const useCaseStore = create<CaseStore>()(
         userName: state.userName,
         userEmail: state.userEmail,
         lastSyncAt: state.lastSyncAt,
+        isLocked: state.isLocked,
+        lockReason: state.lockReason,
+        decryptionFailureCount: state.decryptionFailureCount,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setAuthStatus('ready');

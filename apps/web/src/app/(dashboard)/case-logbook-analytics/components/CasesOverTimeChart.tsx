@@ -1,7 +1,15 @@
 'use client';
 
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { useCases } from '@/lib/hooks';
 
 interface TooltipPayloadItem {
@@ -41,12 +49,12 @@ export default function CasesOverTimeChart() {
     for (let index = 11; index >= 0; index--) {
       const date = new Date();
       date.setUTCDate(date.getUTCDate() - index * 7);
-      const key = `${date.getUTCFullYear()}-W${Math.ceil((((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000) + 1) / 7)}`;
+      const key = `${date.getUTCFullYear()}-W${Math.ceil(((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7)}`;
       buckets.set(key, { week: key.split('-')[1], cases: 0, critical: 0 });
     }
     for (const item of cases) {
       const date = new Date(item.createdAt);
-      const key = `${date.getUTCFullYear()}-W${Math.ceil((((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000) + 1) / 7)}`;
+      const key = `${date.getUTCFullYear()}-W${Math.ceil(((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7)}`;
       const bucket = buckets.get(key);
       if (bucket) {
         bucket.cases += 1;

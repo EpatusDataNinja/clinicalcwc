@@ -69,7 +69,10 @@ const TaskSidebar = dynamic(() => import('./components/TaskSidebar'), {
       </div>
       <div className="px-3 py-3 space-y-3">
         {[...Array(4)].map((_, i) => (
-          <div key={`task-skel-${i}`} className="p-2.5 rounded-lg border border-border/70 bg-muted/20 animate-pulse">
+          <div
+            key={`task-skel-${i}`}
+            className="p-2.5 rounded-lg border border-border/70 bg-muted/20 animate-pulse"
+          >
             <div className="h-3 w-full bg-muted/50 rounded mb-2" />
             <div className="h-2 w-20 bg-muted/30 rounded" />
           </div>
@@ -91,7 +94,7 @@ export default function ClinicalCaseDashboardPage() {
             <ActiveCaseTable />
           </div>
         </div>
-        
+
         {/* Task Sidebar: Hidden on small screens (mobile/tablets) */}
         <div className="hidden xl:block">
           <TaskSidebar />

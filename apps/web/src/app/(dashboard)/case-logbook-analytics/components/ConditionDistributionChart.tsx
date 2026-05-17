@@ -40,7 +40,16 @@ const CustomTooltip = ({
 
 export default function ConditionDistributionChart() {
   const cases = useCases();
-  const palette = ['#3B82F6', '#EF4444', '#F59E0B', '#8B5CF6', '#06B6D4', '#10B981', '#F97316', '#64748B'];
+  const palette = [
+    '#3B82F6',
+    '#EF4444',
+    '#F59E0B',
+    '#8B5CF6',
+    '#06B6D4',
+    '#10B981',
+    '#F97316',
+    '#64748B',
+  ];
   const conditionDistributionData = Object.entries(
     cases.reduce<Record<string, number>>((acc, item) => {
       const condition = item.impression.split(/[—-]/)[0].trim() || 'Other';

@@ -130,9 +130,7 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-foreground mb-1.5">
-          Institution
-        </label>
+        <label className="block text-xs font-semibold text-foreground mb-1.5">Institution</label>
         <input
           {...register('institution')}
           type="text"
@@ -224,11 +222,18 @@ export default function RegisterForm() {
           id="agreeTerms"
           className="rounded border-border bg-input accent-primary w-4 h-4 mt-0.5 shrink-0"
         />
-        <label htmlFor="agreeTerms" className="text-xs text-muted-foreground cursor-pointer leading-relaxed">
+        <label
+          htmlFor="agreeTerms"
+          className="text-xs text-muted-foreground cursor-pointer leading-relaxed"
+        >
           I agree to the{' '}
-          <a href="#" className="text-primary hover:underline">Terms of Service</a>
-          {' '}and{' '}
-          <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+          <a href="#" className="text-primary hover:underline">
+            Terms of Service
+          </a>{' '}
+          and{' '}
+          <a href="#" className="text-primary hover:underline">
+            Privacy Policy
+          </a>
           . I understand this app stores encrypted patient aliases only.
         </label>
       </div>

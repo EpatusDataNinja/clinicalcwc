@@ -4,12 +4,15 @@
  * POST /api/auth/login - Authenticate user
  */
 
-import { Router, type Request, type Response } from 'express';
+import { Router, type NextFunction, type Request, type Response } from 'express';
 import bcryptjs from 'bcryptjs';
 import { prisma } from '../index.js';
 import { generateToken } from '../middleware/auth.js';
 
 const router = Router();
+const AUTH_WINDOW_MS = 15 * 60 * 1000;
+const AUTH_MAX_ATTEMPTS = 10;
+const authAttempts = new Map<string, { count: number; resetAt: number }>();
 
 interface RegisterRequest extends Request {
   body: {
@@ -26,10 +29,39 @@ interface LoginRequest extends Request {
   };
 }
 
+function getRateLimitKey(req: Request): string {
+  const email = typeof req.body?.email === 'string' ? req.body.email.toLowerCase() : 'anonymous';
+  return `${req.ip}:${email}`;
+}
+
+function rateLimitAuth(req: Request, res: Response, next: NextFunction): void {
+  const key = getRateLimitKey(req);
+  const now = Date.now();
+  const current = authAttempts.get(key);
+
+  if (!current || current.resetAt <= now) {
+    authAttempts.set(key, { count: 1, resetAt: now + AUTH_WINDOW_MS });
+    next();
+    return;
+  }
+
+  if (current.count >= AUTH_MAX_ATTEMPTS) {
+    res.status(429).json({ error: 'Too many authentication attempts. Please wait and try again.' });
+    return;
+  }
+
+  current.count += 1;
+  next();
+}
+
+function resetAuthAttempts(req: Request): void {
+  authAttempts.delete(getRateLimitKey(req));
+}
+
 /**
  * Register a new user
  */
-router.post('/register', async (req: RegisterRequest, res: Response): Promise<void> => {
+router.post('/register', rateLimitAuth, async (req: RegisterRequest, res: Response): Promise<void> => {
   try {
     const { email, password, name } = req.body;
 
@@ -59,6 +91,7 @@ router.post('/register', async (req: RegisterRequest, res: Response): Promise<vo
 
     // Generate token
     const token = generateToken(user.id);
+    resetAuthAttempts(req);
 
     res.status(201).json({
       token,
@@ -77,7 +110,7 @@ router.post('/register', async (req: RegisterRequest, res: Response): Promise<vo
 /**
  * Login user
  */
-router.post('/login', async (req: LoginRequest, res: Response): Promise<void> => {
+router.post('/login', rateLimitAuth, async (req: LoginRequest, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
 
@@ -102,6 +135,7 @@ router.post('/login', async (req: LoginRequest, res: Response): Promise<void> =>
 
     // Generate token
     const token = generateToken(user.id);
+    resetAuthAttempts(req);
 
     res.status(200).json({
       token,

@@ -22,7 +22,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:4028',
   credentials: true,
 }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 // Request logging
 app.use((req: Request, res: Response, next: NextFunction) => {

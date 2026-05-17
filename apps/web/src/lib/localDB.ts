@@ -35,16 +35,16 @@ export interface EncryptedTaskRecord {
 
 export interface AppConfig {
   key: string;
-  value: any;
+  value: unknown;
 }
 
 export interface TelemetryLog {
   id?: number;
   event: string;
-  stage: 'init' | 'auth' | 'db' | 'hydration' | 'sync' | 'error';
+  stage: 'init' | 'auth' | 'db' | 'hydration' | 'sync' | 'security' | 'error';
   status: 'start' | 'success' | 'error';
   duration?: number;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   timestamp: number;
 }
 
@@ -89,31 +89,6 @@ export class CWCDatabase extends Dexie {
 }
 
 export const db = new CWCDatabase();
-
-/**
- * Initialize database with sample data (if version mismatch)
- */
-export async function initializeDatabase(initialDrugs: DrugReference[]): Promise<void> {
-  const DRUG_DATA_VERSION = 2; // Incremented for the 1000+ professional set
-
-  try {
-    const config = await db.appConfig.get('drug_data_version');
-
-    // Only seed if version is missing or outdated
-    if (!config || config.value < DRUG_DATA_VERSION) {
-      console.log(`[DB] Seeding drug database (v${DRUG_DATA_VERSION})...`);
-
-      // use bulkPut to update existing items while keeping user additions
-      // bulkAdd would fail on existing IDs
-      await db.drugs.bulkPut(initialDrugs);
-
-      await db.appConfig.put({ key: 'drug_data_version', value: DRUG_DATA_VERSION });
-      console.log('[DB] Drug seeding complete.');
-    }
-  } catch (error) {
-    console.error('Failed to initialize database:', error);
-  }
-}
 
 /**
  * Cases API — encrypted storage
@@ -196,13 +171,15 @@ export const tasksDB = {
   upsertMany: async (records: EncryptedTaskRecord[]): Promise<void> => {
     try {
       // Data Integrity: Verify case existence for all tasks
-      const caseIds = Array.from(new Set(records.map(r => r.caseId)));
+      const caseIds = Array.from(new Set(records.map((r) => r.caseId)));
       const existingCases = await db.cases.bulkGet(caseIds);
-      const validCaseIds = new Set(existingCases.filter(c => !!c).map(c => c!.id));
+      const validCaseIds = new Set(existingCases.filter((c) => !!c).map((c) => c!.id));
 
-      const validRecords = records.filter(r => validCaseIds.has(r.caseId));
+      const validRecords = records.filter((r) => validCaseIds.has(r.caseId));
       if (validRecords.length < records.length) {
-        console.warn(`[DB] Dropping ${records.length - validRecords.length} orphan tasks during bulk upsert.`);
+        console.warn(
+          `[DB] Dropping ${records.length - validRecords.length} orphan tasks during bulk upsert.`
+        );
       }
 
       await db.tasks.bulkPut(validRecords);
@@ -229,13 +206,34 @@ export const tasksDB = {
 /**
  * Drugs API — plain (no encryption needed for reference data)
  */
-export const drugsDB = {
+export interface DrugsDB {
+  getAll: () => Promise<DrugReference[]>;
+  upsert: (record: DrugReference) => Promise<void>;
+  bulkDelete: (ids: string[]) => Promise<void>;
+  search: (query: string) => Promise<DrugReference[]>;
+}
+
+export const drugsDB: DrugsDB = {
   getAll: async (): Promise<DrugReference[]> => {
     try {
       return await db.drugs.toArray();
     } catch (error) {
       console.error('Failed to get drugs:', error);
       return [];
+    }
+  },
+  upsert: async (record: DrugReference): Promise<void> => {
+    try {
+      await db.drugs.put(record);
+    } catch (error) {
+      console.error('Failed to upsert drug:', error);
+    }
+  },
+  bulkDelete: async (ids: string[]): Promise<void> => {
+    try {
+      await db.drugs.bulkDelete(ids);
+    } catch (error) {
+      console.error('Failed to bulk delete drugs:', error);
     }
   },
   search: async (query: string): Promise<DrugReference[]> => {
@@ -322,14 +320,16 @@ export function enqueueChange(
   entity: SyncQueueItem['entity'],
   payload: unknown
 ): void {
-  syncQueueDB.enqueue({
-    entityId,
-    type,
-    entity,
-    payload,
-    synced: false,
-    retryCount: 0,
-  }).catch(err => console.error('[DB] Failed to enqueue sync item:', err));
+  syncQueueDB
+    .enqueue({
+      entityId,
+      type,
+      entity,
+      payload,
+      synced: false,
+      retryCount: 0,
+    })
+    .catch((err) => console.error('[DB] Failed to enqueue sync item:', err));
 }
 
 /**
@@ -355,16 +355,17 @@ export async function runMigrations(): Promise<void> {
           await db.migrations.put({
             version: v,
             appliedAt: Date.now(),
-            status: 'success'
+            status: 'success',
           });
-        } catch (err: any) {
+        } catch (err: unknown) {
+          const errMsg = err instanceof Error ? err.message : String(err);
           await db.migrations.put({
             version: v,
             appliedAt: Date.now(),
             status: 'error',
-            error: err.message || String(err)
+            error: errMsg,
           });
-          throw new Error(`Migration v${v} failed: ${err.message}`);
+          throw new Error(`Migration v${v} failed: ${errMsg}`);
         }
       }
     }

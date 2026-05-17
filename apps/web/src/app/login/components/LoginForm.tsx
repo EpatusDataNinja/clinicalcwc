@@ -41,33 +41,33 @@ export default function LoginForm() {
       router.replace('/');
 
       // Fix 5: Fire-and-forget sync — don't block the user
-      Promise.all([
-        runSync(result.token),
-        pullRemoteSnapshot(result.token),
-      ]).then(([pushResult, pullResult]) => {
-        if (pushResult.status === 'error' || pullResult.status === 'error') {
+      Promise.all([runSync(result.token), pullRemoteSnapshot(result.token)])
+        .then(([pushResult, pullResult]) => {
+          if (pushResult.status === 'error' || pullResult.status === 'error') {
+            toast.info('Sync pending', {
+              description: 'Your data will sync when the connection is stable.',
+            });
+          } else {
+            toast.success('Sync complete', {
+              description: 'All encrypted cases are up to date.',
+            });
+          }
+        })
+        .catch((syncErr) => {
+          console.warn('Background sync failed:', syncErr);
           toast.info('Sync pending', {
             description: 'Your data will sync when the connection is stable.',
           });
-        } else {
-          toast.success('Sync complete', {
-            description: 'All encrypted cases are up to date.',
-          });
-        }
-      }).catch((syncErr) => {
-        console.warn('Background sync failed:', syncErr);
-        toast.info('Sync pending', {
-          description: 'Your data will sync when the connection is stable.',
         });
-      });
     } catch (error) {
       setIsSubmitting(false);
       const msg = error instanceof Error ? error.message : 'Invalid credentials';
       setError('email', { message: msg });
-      
+
       if (msg.toLowerCase().includes('invalid')) {
         toast.error('Login Failed', {
-          description: 'If you just joined, you must click the "Register" tab to create your account first.',
+          description:
+            'If you just joined, you must click the "Register" tab to create your account first.',
           duration: 6000,
         });
       }
@@ -111,7 +111,10 @@ export default function LoginForm() {
             <label className="text-xs font-semibold text-foreground">
               Password <span className="text-red-400">*</span>
             </label>
-            <a href="#" className="text-xs text-primary hover:text-primary/80 transition-colors font-medium">
+            <a
+              href="#"
+              className="text-xs text-primary hover:text-primary/80 transition-colors font-medium"
+            >
               Forgot password?
             </a>
           </div>
@@ -152,7 +155,10 @@ export default function LoginForm() {
             id="rememberMe"
             className="rounded border-border bg-input accent-primary w-4 h-4 cursor-pointer"
           />
-          <label htmlFor="rememberMe" className="text-xs text-muted-foreground cursor-pointer select-none">
+          <label
+            htmlFor="rememberMe"
+            className="text-xs text-muted-foreground cursor-pointer select-none"
+          >
             Keep me signed in on this device
           </label>
         </div>

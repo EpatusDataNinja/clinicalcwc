@@ -1,0 +1,535 @@
+﻿node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+./src/app/(dashboard)/active-case-tracker/page.tsx
+5:10  Warning: 'Plus' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+14:3  Warning: 'Filter' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/case-logbook-analytics/components/LogbookTable.tsx
+16:10  Warning: 'getDuration' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+27:10  Warning: 'formatDate' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/case-logbook-analytics/components/TaskCompletionChart.tsx
+27:9  Warning: 'pending' is assigned a value but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/components/ActiveCaseTable.tsx
+17:8  Warning: 'Icon' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/components/AddCaseModal.tsx
+76:13  Warning: 'caseId' is assigned a value but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/page.tsx
+5:10  Warning: 'Loader2' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/profile/page.tsx
+57:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(dashboard)/settings/page.tsx
+42:9  Warning: 'lastSyncAt' is assigned a value but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/user-manual/page.tsx
+4:9  Error: Delete `┬À`  prettier/prettier
+5:12  Error: Delete `┬À`  prettier/prettier
+6:14  Error: Delete `┬À`  prettier/prettier
+7:10  Error: Delete `┬À`  prettier/prettier
+8:17  Error: Delete `┬À`  prettier/prettier
+9:15  Error: Delete `┬À`  prettier/prettier
+10:15  Error: Delete `┬À`  prettier/prettier
+11:8  Error: Delete `┬À`  prettier/prettier
+12:16  Error: Delete `┬À`  prettier/prettier
+13:12  Error: Delete `┬À`  prettier/prettier
+14:13  Error: Delete `┬À`  prettier/prettier
+15:10  Error: Delete `┬À`  prettier/prettier
+16:7  Error: Delete `┬À`  prettier/prettier
+19:11  Error: Insert `,`  prettier/prettier
+46:94  Error: Replace 
+`┬Àorganize┬Àyour┬Àdaily┬Àclinical┬Àduties,┬Àtrack┬Àactive┬Àpatient┬Àcases,┬Àstructure┬Àyour┬Àclinical` with `ÔÅÄ┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬Àorganize┬Àyour┬Àdaily┬Àclinical┬Àduties,┬Àtrack┬Àactive┬Àpatient┬Àcases,┬Àstructure┬Àyour┬ÀclinicalÔÅ
+Ä┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+53:92  Error: Replace `┬Àimmediately┬Àand┬Àstored┬Àlocally┬Àin┬Àyour┬Àbrowser's┬Àinternal┬Àdatabase┬À(IndexedDB┬Àvia` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àimmediately┬Àand┬Àstored┬Àlocally┬Àin┬Àyour┬Àbrowser's┬Àinternal┬Àdatabase┬À(I
+ndexedDB┬ÀviaÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+53:139  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+68:91  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+71:17  Error: Replace `<strong┬ÀclassName="text-foreground">Medical┬ÀInterns┬Àand┬ÀJunior┬ÀResidents:</strong>┬ÀKeep┬Àt
+rack┬Àof┬Àfast-moving┬Àpatient┬Àlists,┬Àward┬Àrounds,┬Àcheck-backs,┬Àand┬Àhandovers┬Àwithout┬Àlosing┬Àsticky┬Ànotes.` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Medical┬ÀInterns┬Àand┬ÀJunior┬ÀResidents:</st
+rong>{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀKeep┬Àtrack┬Àof┬Àfast-moving┬Àpatient┬Àlists,┬Àward┬Àrounds,┬Àcheck-backs,┬Àa
+nd┬ÀhandoversÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àwithout┬Àlosing┬Àsticky┬Ànotes.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+72:17  Error: Replace `<strong┬ÀclassName="text-foreground">Junior┬ÀClinicians┬À&┬ÀTrainees:</strong>┬ÀFoster┬Àstructur
+ed┬Àclinical┬Àthinking┬Àby┬Àstandardizing┬Àcase┬Ànotes┬Àinto┬Àstructured┬Àinputs.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬
+À<strong┬ÀclassName="text-foreground">Junior┬ÀClinicians┬À&┬ÀTrainees:</strong>┬ÀFosterÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Às
+tructured┬Àclinical┬Àthinking┬Àby┬Àstandardizing┬Àcase┬Ànotes┬Àinto┬Àstructured┬Àinputs.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+73:17  Error: Replace `<strong┬ÀclassName="text-foreground">Clinical┬ÀStudents:</strong>┬ÀLog┬Ànon-identified┬Àcase┬Àar
+chetypes┬Àand┬Àcommon┬Àclinical┬Àscenarios┬Àthey┬Àencounter┬Àduring┬Àrotations┬Àfor┬Àpersonal┬Àlearning.` with `ÔÅÄ┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Clinical┬ÀStudents:</strong>┬ÀLog┬Ànon-identifiedÔÅÄ┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcase┬Àarchetypes┬Àand┬Àcommon┬Àclinical┬Àscenarios┬Àthey┬Àencounter┬Àduring┬Àrotations┬ÀforÔÅÄ┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àpersonal┬Àlearning.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+90:99  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+95:17  Error: Replace `<strong┬ÀclassName="text-foreground">Patients:</strong>┬ÀCWC┬Àis┬Ànot┬Àdesigned┬Àfor┬Àself-diagn
+osis,┬Àsymptom┬Àtracking,┬Àor┬Àmedical┬Àadvice.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foregrou
+nd">Patients:</strong>┬ÀCWC┬Àis┬Ànot┬Àdesigned┬ÀforÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àself-diagnosis,┬Àsymptom┬Àtracking,┬À
+or┬Àmedical┬Àadvice.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+96:17  Error: Replace `<strong┬ÀclassName="text-foreground">Official┬ÀInstitutional┬ÀRecord┬ÀKeeping:</strong>┬ÀCWC┬Àis
+┬À<strong>NOT</strong>┬Àan┬ÀElectronic┬ÀMedical┬ÀRecord┬À(EMR)┬Àor┬ÀElectronic┬ÀHealth┬ÀRecord┬À(EHR)┬Àsystem.┬ÀIt┬Àmus
+t┬Ànever┬Àbe┬Àused┬Àas┬Àthe┬Àofficial┬Àlegal┬Àrecord┬Àof┬Àpatient┬Àcare.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬
+ÀclassName="text-foreground">Official┬ÀInstitutional┬ÀRecord┬ÀKeeping:</strong>{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀCWC
+┬Àis┬À<strong>NOT</strong>┬Àan┬ÀElectronic┬ÀMedical┬ÀRecord┬À(EMR)┬Àor┬ÀElectronic┬ÀHealthÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬ÀRecord┬À(EHR)┬Àsystem.┬ÀIt┬Àmust┬Ànever┬Àbe┬Àused┬Àas┬Àthe┬Àofficial┬Àlegal┬Àrecord┬Àof┬ÀpatientÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬Àcare.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+97:17  Error: Replace `<strong┬ÀclassName="text-foreground">Direct┬ÀClinical┬ÀDecision┬ÀSupport:</strong>┬ÀCWC┬Àdoes┬Àn
+ot┬Àpossess┬Àclinical┬Àintelligence.┬ÀIt┬Àdoes┬Ànot┬Àcalculate┬Àdrug┬Àdoses,┬Àrecommend┬Àdiagnostics,┬Àor┬Àrecommend┬Àp
+lans┬Àof┬Àaction.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Direct┬ÀClinical┬ÀDecision
+┬ÀSupport:</strong>┬ÀCWCÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdoes┬Ànot┬Àpossess┬Àclinical┬Àintelligence.┬ÀIt┬Àdoes┬Ànot┬Àcalc
+ulate┬Àdrug┬Àdoses,┬ÀrecommendÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdiagnostics,┬Àor┬Àrecommend┬Àplans┬Àof┬Àaction.ÔÅÄ┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+110:97  Error: Replace `┬Àinterruptions.┬ÀOn┬Àa┬Àtypical┬Àshift,┬Àa┬Àjunior┬Àclinician┬Àfaces┬Àextreme┬Àcognitive┬Àload
+:┬Àmanaging┬Àhandovers,┬Àtracking┬Àdozens┬Àof┬Àlaboratory┬Àcheck-backs,┬Àand┬Àexecuting┬Àdiagnostic` with `ÔÅÄ┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬Àinterruptions.┬ÀOn┬Àa┬Àtypical┬Àshift,┬Àa┬Àjunior┬Àclinician┬Àfaces┬Àextreme┬Àcognitive┬Àload:ÔÅÄ┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬Àmanaging┬Àhandovers,┬Àtracking┬Àdozens┬Àof┬Àlaboratory┬Àcheck-backs,┬Àand┬Àexecuting┬ÀdiagnosticÔÅÄ┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+118:54  Error: Replace `By┬Àexternalizing┬Àtasks┬Àand┬Àtimelines┬Àinto┬Àa┬Àstructured┬Àdigital┬Àapplication,┬Àyou┬Àfree
+┬Àup┬Àmental┬Àcapacity┬Àto┬Àfocus┬Àon┬Àdirect┬Àpatient┬Àcare.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀBy┬Àexternalizi
+ng┬Àtasks┬Àand┬Àtimelines┬Àinto┬Àa┬Àstructured┬Àdigital┬Àapplication,┬Àyou┬ÀfreeÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àup┬À
+mental┬Àcapacity┬Àto┬Àfocus┬Àon┬Àdirect┬Àpatient┬Àcare.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+121:74  Error: Replace `Standardizes┬ÀClinical┬ÀThinking` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀStandardizes┬ÀClinical┬ÀThinkingÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+122:54  Error: Replace `The┬Àstructured┬Àcase┬Ànote┬Àtemplate┬Àhelps┬Àyou┬Àsystematically┬Àreview┬Àeach┬Àcase,┬Àensurin
+g┬Àno┬Àvital┬Àdiagnostic┬Àsteps┬Àare┬Àomitted.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀThe┬Àstructured┬Àcase┬Ànote┬Àt
+emplate┬Àhelps┬Àyou┬Àsystematically┬Àreview┬Àeach┬Àcase,ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àensuring┬Àno┬Àvital┬Àdiagnos
+tic┬Àsteps┬Àare┬Àomitted.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+135:65  Error: Replace `Key┬ÀSetup┬À&┬ÀSecurity┬ÀExpectations` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀKey┬ÀSetup┬À&┬ÀSecurity┬ÀExpectationsÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+140:71  Error: Replace `The┬ÀPasscode┬Àis┬ÀYour┬ÀOnly┬ÀKey` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀThe┬ÀPasscode┬Àis┬ÀYour┬ÀOnly┬ÀKeyÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+142:84  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+142:101  Error: Replace `┬Àyou┬Àlose┬Àor┬Àforget┬Àyour┬Àpasscode,` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àyou┬Àlo
+se┬Àor┬Àforget┬Àyour┬Àpasscode,{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+147:95  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+163:94  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+166:100  Error: Replace 
+`┬ÀiOS┬ÀSafari┬Àand┬Àchoose┬À*Add┬Àto┬ÀHome┬ÀScreen*,┬Àor┬Àtap┬Àthe┬Àmenu┬Àon┬ÀAndroid┬ÀChrome┬Àand` with `ÔÅÄ┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀiOS┬ÀSafari┬Àand┬Àchoose┬À*Add┬Àto┬ÀHome┬ÀScreen*,┬Àor┬Àtap┬Àthe┬Àmenu┬Àon┬ÀAndroid┬ÀChrome┬ÀandÔÅÄ┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+169:99  Error: Replace `┬À(no┬Àsign-up┬Àrequired,┬Àdata┬Àstrictly┬Àlocal)┬Àor┬À**Cloud┬ÀSync┬ÀMode**┬À(enables` with `Ô
+ÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À(no┬Àsign-up┬Àrequired,┬Àdata┬Àstrictly┬Àlocal)┬Àor┬À**Cloud┬ÀSync┬ÀMode**┬À(enablesÔÅÄ┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+183:101  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+186:17  Error: Replace `<strong┬ÀclassName="text-foreground">Navigation┬ÀBar:</strong>┬ÀSwitch┬Àbetween┬Àclinical┬Àcase
+┬Àtracker,┬Àtasks,┬Àlogbook,┬Àand┬Àdrug┬Àreference.┬ÀDisplays┬Àconnection┬Àstatus┬Àand┬Àquick-lock.` with `ÔÅÄ┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Navigation┬ÀBar:</strong>┬ÀSwitch┬Àbetween┬ÀclinicalÔÅÄ┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcase┬Àtracker,┬Àtasks,┬Àlogbook,┬Àand┬Àdrug┬Àreference.┬ÀDisplays┬Àconnection┬Àstatus┬ÀandÔÅÄ┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àquick-lock.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+187:17  Error: Replace `<strong┬ÀclassName="text-foreground">Metrics┬ÀGrid:</strong>┬ÀReal-time┬Àcounts┬Àof┬Àactive┬Àca
+ses,┬Àpending┬Àtasks,┬Àoverdue┬Àalerts,┬Àand┬Àtask┬Àcompletion┬Àpercentages.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<str
+ong┬ÀclassName="text-foreground">Metrics┬ÀGrid:</strong>┬ÀReal-time┬Àcounts┬Àof┬ÀactiveÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àc
+ases,┬Àpending┬Àtasks,┬Àoverdue┬Àalerts,┬Àand┬Àtask┬Àcompletion┬Àpercentages.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+188:17  Error: Replace `<strong┬ÀclassName="text-foreground">Case┬ÀFeed:</strong>┬ÀA┬Àconsolidated┬Àview┬Àof┬Àactive┬Àp
+atient┬Àcards┬Àhighlighting┬Àcritical┬Àreviews.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foregrou
+nd">Case┬ÀFeed:</strong>┬ÀA┬Àconsolidated┬Àview┬Àof┬ÀactiveÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àpatient┬Àcards┬Àhighlighting┬
+Àcritical┬Àreviews.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+205:96  Error: Replace `┬Ànumbers.┬ÀUse┬Àunique,┬Ànon-identifying┬Àpseudonyms┬Àlike┬À<em>Case-A</em>,` with `ÔÅÄ┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànumbers.┬ÀUse┬Àunique,┬Ànon-identifying┬Àpseudonyms┬Àlike┬À<em>Case-A</em>,{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+210:72  Error: Replace `Creating┬ÀStructured┬ÀCase┬ÀNotes:` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀCreating┬ÀStructured┬ÀCase┬ÀNotes:ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+212:19  Error: Replace `<strong>Chief┬ÀComplaint:</strong>┬ÀPrimary┬Àpresentation┬Àsymptom┬À(e.g.,┬Àchest┬Àpain).` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong>Chief┬ÀComplaint:</strong>┬ÀPrimary┬Àpresentation┬Àsymptom┬À(e.g.,┬Àch
+est┬Àpain).ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+213:19  Error: Replace `<strong>History:</strong>┬ÀBrief,┬Àrelevant┬Àclinical┬Àbackground.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À<strong>History:</strong>┬ÀBrief,┬Àrelevant┬Àclinical┬Àbackground.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+214:19  Error: Replace `<strong>Examination:</strong>┬ÀObjective┬Àexamination┬Àfindings.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À<strong>Examination:</strong>┬ÀObjective┬Àexamination┬Àfindings.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+215:19  Error: Replace `<strong>Impression:</strong>┬ÀWorking┬Àdiagnoses┬Àor┬Àdifferentials.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À<strong>Impression:</strong>┬ÀWorking┬Àdiagnoses┬Àor┬Àdifferentials.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+216:19  Error: Replace `<strong>Plan:</strong>┬ÀImmediate,┬Àactionable┬Àclinical┬Àsteps.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À<strong>Plan:</strong>┬ÀImmediate,┬Àactionable┬Àclinical┬Àsteps.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+230:101  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+233:17  Error: Replace `<strong┬ÀclassName="text-foreground">Search┬Àand┬ÀFilter:</strong>┬ÀType┬Àkeywords┬Àto┬Àfilter┬
+Àimmediately┬Àthrough┬Àdecrypted┬Àlocal┬Àrecords.┬ÀToggle┬Àbetween┬ÀActive,┬ÀPending┬ÀReview,┬Àand┬ÀArchived┬Àcases.` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Search┬Àand┬ÀFilter:</strong>┬ÀType┬Àkeywords
+┬ÀtoÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àfilter┬Àimmediately┬Àthrough┬Àdecrypted┬Àlocal┬Àrecords.┬ÀToggle┬Àbetween┬ÀActive,┬À
+PendingÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀReview,┬Àand┬ÀArchived┬Àcases.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+234:17  Error: Replace `<strong┬ÀclassName="text-foreground">Critical┬ÀHighlighting:</strong>┬ÀCases┬Àflagged┬Àas┬Àhigh
+┬Àpriority┬Àglow┬Àwith┬Àdistinctive┬Àborders┬Àto┬Àfocus┬Àyour┬Àattention.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong
+┬ÀclassName="text-foreground">Critical┬ÀHighlighting:</strong>┬ÀCases┬Àflagged┬ÀasÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àhigh┬À
+priority┬Àglow┬Àwith┬Àdistinctive┬Àborders┬Àto┬Àfocus┬Àyour┬Àattention.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+235:17  Error: Replace `<strong┬ÀclassName="text-foreground">Overdue┬ÀReviews:</strong>┬ÀAutomatically┬Àflags┬Àcases┬Àc
+ontaining┬Àpending┬Àtasks┬Àthat┬Àhave┬Àcrossed┬Àtheir┬Àdue┬Àdate┬Àtargets.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<stron
+g┬ÀclassName="text-foreground">Overdue┬ÀReviews:</strong>┬ÀAutomatically┬ÀflagsÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcases┬Àco
+ntaining┬Àpending┬Àtasks┬Àthat┬Àhave┬Àcrossed┬Àtheir┬Àdue┬Àdate┬Àtargets.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+252:17  Error: Replace `<strong┬ÀclassName="text-foreground">Due┬ÀDates:</strong>┬ÀAssign┬Àtarget┬Àcompletion┬Àtimes.┬À
+If┬Àleft┬Àblank,┬Àthe┬Àservice┬Àlayer┬Àdefaults┬Àit┬Àto┬À**1┬Àhour**.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬Àcl
+assName="text-foreground">Due┬ÀDates:</strong>┬ÀAssign┬Àtarget┬ÀcompletionÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtimes.┬ÀIf┬Àle
+ft┬Àblank,┬Àthe┬Àservice┬Àlayer┬Àdefaults┬Àit┬Àto┬À**1┬Àhour**.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+253:17  Error: Replace 
+`<strong┬ÀclassName="text-foreground">Priorities:</strong>┬ÀFlag┬Àtasks┬Àas┬ÀHigh,┬ÀMedium,┬Àor┬ÀLow.` with `ÔÅÄ┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Priorities:</strong>┬ÀFlag┬Àtasks┬Àas┬ÀHigh,┬ÀMedium,ÔÅÄ┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àor┬ÀLow.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+254:17  Error: Replace `<strong┬ÀclassName="text-foreground">Overdue┬ÀAlerts:</strong>┬ÀIncomplete┬Àtasks┬Àpast┬Àtheir┬
+Àtarget┬Àtime┬Àturn┬Àred┬Àand┬Àdisplay┬Àthe┬Àtime┬Àelapsed.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="t
+ext-foreground">Overdue┬ÀAlerts:</strong>┬ÀIncomplete┬Àtasks┬ÀpastÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtheir┬Àtarget┬Àtime┬Àt
+urn┬Àred┬Àand┬Àdisplay┬Àthe┬Àtime┬Àelapsed.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+269:69  Error: Replace `Clinical┬ÀLimitations┬ÀWarning` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀClinical┬ÀLimitations┬ÀWarningÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+271:95  Error: Replace 
+`┬Àcheckups.┬ÀIt┬Àis┬À**NOT**┬Àa┬Àreplacement┬Àfor┬Àlocal┬Àprescribing┬Àguides,┬Àcalculators,┬Àor` with `ÔÅÄ┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcheckups.┬ÀIt┬Àis┬À**NOT**┬Àa┬Àreplacement┬Àfor┬Àlocal┬Àprescribing┬Àguides,┬Àcalculators,┬ÀorÔÅÄ┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+276:98  Error: Replace 
+`┬Àforms,┬Àroutes┬Àof┬Àadministration,┬Àand┬Àcritical┬Àclinical┬Ànotes┬À(e.g.,┬Àcontraindications┬Àor` with `ÔÅÄ┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬Àforms,┬Àroutes┬Àof┬Àadministration,┬Àand┬Àcritical┬Àclinical┬Ànotes┬À(e.g.,┬Àcontraindications┬ÀorÔÅÄ┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+292:17  Error: Replace `<strong┬ÀclassName="text-foreground">Case┬ÀDistributions:</strong>┬ÀVisual┬Àcharts┬Àof┬Àactive,
+┬Àpending,┬Àand┬Àarchived┬Àcase┬Àbalances.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">C
+ase┬ÀDistributions:</strong>┬ÀVisual┬Àcharts┬ÀofÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àactive,┬Àpending,┬Àand┬Àarchived┬Àcase┬À
+balances.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+293:17  Error: Replace `<strong┬ÀclassName="text-foreground">Trend┬ÀIdentifiers:</strong>┬ÀDisplays┬Àfrequency┬Àof┬Àenc
+ounter┬Àclinical┬Àcomplaints,┬Àproviding┬Àvaluable┬Àinsights┬Àfor┬Àreflective┬Àstudy┬Àor┬Àlogging┬Àtraining┬Àlogs.` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Trend┬ÀIdentifiers:</strong>┬ÀDisplays┬Àfrequ
+ency┬ÀofÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àencounter┬Àclinical┬Àcomplaints,┬Àproviding┬Àvaluable┬Àinsights┬Àfor┬Àreflective
+┬Àstudy┬ÀorÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlogging┬Àtraining┬Àlogs.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+294:17  Error: Replace 
+`<strong┬ÀclassName="text-foreground">Task┬ÀMetrics:</strong>┬ÀTracks┬Àtask┬Àcompletion┬Àperformance┬Àrates.` with `ÔÅÄ
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Task┬ÀMetrics:</strong>┬ÀTracks┬Àtask┬ÀcompletionÔÅÄ┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àperformance┬Àrates.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+309:82  Error: Replace `Exporting┬ÀBackup` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀExporting┬ÀBackupÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+310:54  Error: Replace `Go┬Àto┬ÀSettings┬ÀÔåÆ┬ÀData┬ÀManagement┬ÀÔåÆ┬Àclick┬À**Export**.┬ÀCompiles┬Àencrypted┬Àclinical
+┬Àdata┬Àrecords┬Àinto┬Àa┬Àsecure┬À`.json`┬Àfile.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀGo┬Àto┬ÀSettings┬ÀÔåÆ┬ÀData┬
+ÀManagement┬ÀÔåÆ┬Àclick┬À**Export**.┬ÀCompiles┬Àencrypted┬ÀclinicalÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdata┬Àrecords┬Àin
+to┬Àa┬Àsecure┬À`.json`┬Àfile.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+313:82  Error: Replace `Restoring┬ÀBackup` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀRestoring┬ÀBackupÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+314:54  Error: Replace `Go┬Àto┬ÀSettings┬ÀÔåÆ┬Àclick┬À**Import**┬ÀÔåÆ┬Àupload┬ÀJSON┬Àfile.┬ÀCWC┬Àdecrypts┬Àa┬Àsample┬Àr
+ecord┬Àusing┬Àyour┬Àcurrent┬Àactive┬Àpasscode.┬ÀIf┬Àthe┬Àpasscode┬Àdoes┬Ànot┬Àmatch,┬Àthe┬Àimport┬Àaborts┬Àto┬Àprevent┬
+Àcorruption.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀGo┬Àto┬ÀSettings┬ÀÔåÆ┬Àclick┬À**Import**┬ÀÔåÆ┬Àupload┬ÀJSON┬Àfil
+e.┬ÀCWC┬Àdecrypts┬Àa┬Àsample┬ÀrecordÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àusing┬Àyour┬Àcurrent┬Àactive┬Àpasscode.┬ÀIf┬Àthe
+┬Àpasscode┬Àdoes┬Ànot┬Àmatch,┬Àthe┬ÀimportÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àaborts┬Àto┬Àprevent┬Àcorruption.ÔÅÄ┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+331:17  Error: Replace `<strong┬ÀclassName="text-foreground">Offline┬ÀQueue:</strong>┬ÀUpdates┬Àare┬Àqueued┬Àlocally┬Ài
+nside┬ÀIndexedDB┬Àwhen┬Àconnection┬Àis┬Àlost,┬Àand┬Àauto-pushed┬Àto┬Àservers┬Àupon┬Àconnection┬Àrestoration.` with `ÔÅÄ
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Offline┬ÀQueue:</strong>┬ÀUpdates┬Àare┬Àqueued┬Àlocall
+yÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àinside┬ÀIndexedDB┬Àwhen┬Àconnection┬Àis┬Àlost,┬Àand┬Àauto-pushed┬Àto┬Àservers┬Àupon┬Àco
+nnectionÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àrestoration.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+332:17  Error: Replace `<strong┬ÀclassName="text-foreground">End-to-End┬ÀEncryption:</strong>┬ÀRecords┬Àare┬Àencrypted┬
+À*before*┬Àthey┬Àleave┬Àyour┬Àclient┬Àbrowser.┬ÀOur┬Àservers┬Ànever┬Àhold┬Àyour┬Àdecryption┬Àpasscode.` with `ÔÅÄ┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">End-to-End┬ÀEncryption:</strong>┬ÀRecords┬ÀareÔÅÄ┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬Àencrypted┬À*before*┬Àthey┬Àleave┬Àyour┬Àclient┬Àbrowser.┬ÀOur┬Àservers┬Ànever┬Àhold┬ÀyourÔÅÄ┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬Àdecryption┬Àpasscode.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+345:86  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+348:17  Error: Replace `<strong┬ÀclassName="text-foreground">AES-256-GCM┬ÀLocal┬ÀDatabase:</strong>┬ÀCase┬Ànotes┬Àare┬À
+encrypted┬Àbefore┬Àcommitting┬Àto┬ÀIndexedDB.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground
+">AES-256-GCM┬ÀLocal┬ÀDatabase:</strong>┬ÀCase┬ÀnotesÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àare┬Àencrypted┬Àbefore┬Àcommitting┬
+Àto┬ÀIndexedDB.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+349:17  Error: Replace `<strong┬ÀclassName="text-foreground">In-Memory┬ÀPasscodes:</strong>┬ÀDecryption┬Àkeys┬Àare┬Àhel
+d┬Àin┬Àvolatile┬Àmemory┬Àand┬Àare┬Àcleared┬Àon┬Àlogouts,┬Àtab┬Àclosures,┬Àor┬À15┬Àminutes┬Àof┬Àinactivity.` with `ÔÅÄ┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">In-Memory┬ÀPasscodes:</strong>┬ÀDecryption┬Àkeys┬ÀareÔÅÄ
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àheld┬Àin┬Àvolatile┬Àmemory┬Àand┬Àare┬Àcleared┬Àon┬Àlogouts,┬Àtab┬Àclosures,┬Àor┬À15┬Àminute
+s┬ÀofÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àinactivity.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+350:17  Error: Replace `<strong┬ÀclassName="text-foreground">Lockout┬ÀEnforcement:</strong>┬À3┬Àconsecutive┬Àincorrect┬
+Àattempts┬Àtrigger┬Àa┬Àtemporary┬Àfull-screen┬Àlockout.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-
+foreground">Lockout┬ÀEnforcement:</strong>┬À3┬ÀconsecutiveÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àincorrect┬Àattempts┬Àtrigger┬À
+a┬Àtemporary┬Àfull-screen┬Àlockout.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+365:38  Error: Replace `Zero-knowledge┬Àmeans┬Àwe┬Àcannot┬Àreset┬Àpasscodes.┬ÀLocal┬Àdata┬Àis┬Àunrecoverable.┬ÀYou┬Àmus
+t┬Àclear┬Àbrowser┬Àsite┬Àdata┬Àto┬Àinitialize┬Àa┬Àclean┬Àworkspace.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀZero-know
+ledge┬Àmeans┬Àwe┬Àcannot┬Àreset┬Àpasscodes.┬ÀLocal┬Àdata┬Àis┬Àunrecoverable.┬ÀYouÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmus
+t┬Àclear┬Àbrowser┬Àsite┬Àdata┬Àto┬Àinitialize┬Àa┬Àclean┬Àworkspace.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+368:70  Error: Replace `Sync┬Àfails┬Àor┬Àindicator┬Àsays┬À"Offline":` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀSync┬Àfails┬Àor┬Àindicator┬Àsays┬À"Offline":ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+368:99  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+368:107  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+369:38  Error: Replace `Hospital┬Àfirewalls┬Àmight┬Àblock┬Àsync┬Àsockets.┬ÀCWC┬Àkeeps┬Àdata┬Àsafe┬Àin┬Àlocal┬Àstorage┬À
+and┬Àwill┬Àupload┬Àwhen┬Àstandard┬Àcellular┬Àor┬Àopen┬Ànetwork┬Àaccess┬Àreturns.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬ÀHospital┬Àfirewalls┬Àmight┬Àblock┬Àsync┬Àsockets.┬ÀCWC┬Àkeeps┬Àdata┬Àsafe┬Àin┬Àlocal┬ÀstorageÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬Àand┬Àwill┬Àupload┬Àwhen┬Àstandard┬Àcellular┬Àor┬Àopen┬Ànetwork┬Àaccess┬Àreturns.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬
+À┬À┬À`  prettier/prettier
+383:17  Error: Replace `<strong┬ÀclassName="text-foreground">Morning┬Àrounds:</strong>┬ÀSpend┬À5┬Àminutes┬Àpre-shift┬Àl
+isting┬Àknown┬Àcheck-backs.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground">Morning┬Àrounds:
+</strong>┬ÀSpend┬À5┬Àminutes┬Àpre-shiftÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlisting┬Àknown┬Àcheck-backs.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À`  prettier/prettier
+384:17  Error: Replace `<strong┬ÀclassName="text-foreground">Contextualize┬Àchecklists:</strong>┬ÀAlways┬Àassign┬Àtasks
+┬Àdirectly┬Àto┬Àa┬Àpatient┬Àalias┬Àdropdown.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong┬ÀclassName="text-foreground"
+>Contextualize┬Àchecklists:</strong>┬ÀAlways┬ÀassignÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtasks┬Àdirectly┬Àto┬Àa┬Àpatient┬Àali
+as┬Àdropdown.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+385:17  Error: Replace `<strong┬ÀclassName="text-foreground">Handovers:</strong>┬ÀReview┬Àand┬Àcheck┬Àoff┬Àfinished┬Àta
+sks┬Àbefore┬Àleaving.┬ÀArchive┬Àresolved┬Àcases┬Àto┬Àpreserve┬Àboard┬Àclarity.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<s
+trong┬ÀclassName="text-foreground">Handovers:</strong>┬ÀReview┬Àand┬Àcheck┬Àoff┬ÀfinishedÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬
+Àtasks┬Àbefore┬Àleaving.┬ÀArchive┬Àresolved┬Àcases┬Àto┬Àpreserve┬Àboard┬Àclarity.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+416:67  Error: Replace `1.┬ÀIs┬Àthis┬Àapp┬ÀHIPAA/GDPR┬Àcompliant?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À1.┬ÀIs┬Àthis┬Àapp┬ÀHIPAA/GDPR┬Àcompliant?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+417:43  Error: Replace `Yes.┬ÀBecause┬ÀCWC┬Àencrypts┬Àall┬Àcase┬Àdata┬Àclient-side┬Àand┬Àexplicitly┬Àforbids┬Àthe┬Àentr
+y┬Àof┬Àdirect┬ÀProtected┬ÀHealth┬ÀInformation┬À(PHI)┬Àthrough┬Àstrict┬Àenforcement┬Àof┬Ànon-identifying┬Àpatient┬Àalias
+es,┬Àit┬Àaligns┬Àwith┬Àdata┬Àprivacy┬Àregulations.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀYes.┬ÀBecause┬ÀCWC┬Àencrypts┬À
+all┬Àcase┬Àdata┬Àclient-side┬Àand┬Àexplicitly┬Àforbids┬Àthe┬ÀentryÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àof┬Àdirect┬ÀProtected┬
+ÀHealth┬ÀInformation┬À(PHI)┬Àthrough┬Àstrict┬Àenforcement┬ÀofÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànon-identifying┬Àpatient┬Àa
+liases,┬Àit┬Àaligns┬Àwith┬Àdata┬Àprivacy┬Àregulations.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+420:67  Error: Replace `2.┬ÀWhere┬Àis┬Àmy┬Àdata┬Àactually┬Àstored?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À2.┬ÀWhere┬Àis┬Àmy┬Àdata┬Àactually┬Àstored?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+421:43  Error: Replace `Locally┬Àon┬Àyour┬Àphysical┬Àdevice┬Àwithin┬Àthe┬Àbrowser's┬Àsandboxed┬ÀIndexedDB┬Àdatabase.┬ÀI
+f┬Àyou┬Àenable┬Àcloud┬Àsync,┬Àan┬Àencrypted┬Àcopy┬Àof┬Àthis┬Àdatabase┬Àis┬Àstored┬Àon┬Àour┬Àsecure┬Àservers.` with `ÔÅÄ
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀLocally┬Àon┬Àyour┬Àphysical┬Àdevice┬Àwithin┬Àthe┬Àbrowser's┬Àsandboxed┬ÀIndexedDB┬Àdatabase
+.┬ÀIfÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àyou┬Àenable┬Àcloud┬Àsync,┬Àan┬Àencrypted┬Àcopy┬Àof┬Àthis┬Àdatabase┬Àis┬Àstored┬Àon┬
+Àour┬ÀsecureÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àservers.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+421:93  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+424:67  Error: Replace `3.┬ÀWhat┬Àhappens┬Àif┬ÀI┬Àlose┬Àmy┬Àphone?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À3.┬ÀWhat┬Àhappens┬Àif┬ÀI┬Àlose┬Àmy┬Àphone?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+425:43  Error: Replace `If┬Àyou┬Àenabled┬Àcloud┬Àsync,┬Àsimply┬Àopen┬Àthe┬Àapp┬Àon┬Àa┬Ànew┬Àdevice,┬Àlog┬Àin,┬Àand┬Àent
+er┬Àyour┬Àoriginal┬Àencryption┬Àpasscode┬Àto┬Àrestore┬Àyour┬Àcases┬Àand┬Àtasks.┬ÀIf┬Àyou┬Àwere┬Àin┬Àlocal-only┬Àmode,┬À
+you┬Àcan┬Àrestore┬Àyour┬Àdata┬Àusing┬Àyour┬Àlast┬Àexported┬ÀJSON┬Àbackup┬Àfile┬Àand┬Àyour┬Àoriginal┬Àpasscode.` with `Ô
+ÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀIf┬Àyou┬Àenabled┬Àcloud┬Àsync,┬Àsimply┬Àopen┬Àthe┬Àapp┬Àon┬Àa┬Ànew┬Àdevice,┬Àlog┬Àin,┬Àan
+d┬Àenter┬ÀyourÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àoriginal┬Àencryption┬Àpasscode┬Àto┬Àrestore┬Àyour┬Àcases┬Àand┬Àtasks.┬ÀIf┬
+Àyou┬Àwere┬ÀinÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlocal-only┬Àmode,┬Àyou┬Àcan┬Àrestore┬Àyour┬Àdata┬Àusing┬Àyour┬Àlast┬Àexpor
+ted┬ÀJSON┬Àbackup┬ÀfileÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àand┬Àyour┬Àoriginal┬Àpasscode.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+428:67  Error: Replace `4.┬ÀCan┬Àother┬Àdoctors┬Àsee┬Àmy┬Àactive┬Àcases?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À4.┬ÀCan┬Àother┬Àdoctors┬Àsee┬Àmy┬Àactive┬Àcases?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+429:43  Error: Replace `No.┬ÀCWC┬Àis┬Àdesigned┬Àas┬Àa┬Àpersonal┬Àworkflow┬Àcompanion.┬ÀThere┬Àis┬Àno┬Àcollaborative┬Àvi
+ew┬Àor┬Àshared┬Àdatabase.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀNo.┬ÀCWC┬Àis┬Àdesigned┬Àas┬Àa┬Àpersonal┬Àworkflow┬Àcomp
+anion.┬ÀThere┬Àis┬Àno┬Àcollaborative┬ÀviewÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àor┬Àshared┬Àdatabase.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À`  prettier/prettier
+432:67  Error: Replace `5.┬ÀWhy┬Àdoes┬Àthe┬Àapp┬Àlock┬Àitself┬Àautomatically?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À5.┬ÀWhy┬Àdoes┬Àthe┬Àapp┬Àlock┬Àitself┬Àautomatically?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+433:43  Error: Replace `To┬Àprevent┬Àunauthorized┬Àaccess┬Àto┬Àclinical┬Ànotes┬Àif┬Àyou┬Àleave┬Àyour┬Àdevice┬Àunattende
+d┬Àon┬Àa┬Àward┬Àdesk┬Àor┬Ànurse's┬Àstation.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀTo┬Àprevent┬Àunauthorized┬Àaccess┬Àto
+┬Àclinical┬Ànotes┬Àif┬Àyou┬Àleave┬Àyour┬Àdevice┬ÀunattendedÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àon┬Àa┬Àward┬Àdesk┬Àor┬Ànurse'
+s┬Àstation.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+433:151  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+436:67  Error: Replace `6.┬ÀCan┬ÀI┬Àuse┬Àthe┬Àapp┬Àon┬Àboth┬Àmy┬Àcomputer┬Àand┬Àmy┬Àphone?` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À6.┬ÀCan┬ÀI┬Àuse┬Àthe┬Àapp┬Àon┬Àboth┬Àmy┬Àcomputer┬Àand┬Àmy┬Àphone?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+437:43  Error: Replace `Yes.┬ÀIf┬Àyou┬Àregister┬Àan┬Àaccount┬Àand┬Àenable┬Àcloud┬Àsync,┬Àlogging┬Àin┬Àon┬Àboth┬Àdevices
+┬Àwith┬Àthe┬Àsame┬Àcredentials┬Àand┬Àpasscode┬Àwill┬Àsync┬Àyour┬Àactive┬Àworkflows.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬
+À┬ÀYes.┬ÀIf┬Àyou┬Àregister┬Àan┬Àaccount┬Àand┬Àenable┬Àcloud┬Àsync,┬Àlogging┬Àin┬Àon┬Àboth┬Àdevices┬ÀwithÔÅÄ┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬Àthe┬Àsame┬Àcredentials┬Àand┬Àpasscode┬Àwill┬Àsync┬Àyour┬Àactive┬Àworkflows.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`
+  prettier/prettier
+440:67  Error: Replace `7.┬ÀWhat┬Àdoes┬À"Last-Write-Wins"┬Àmean?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À7.┬ÀWhat┬Àdoes┬À"Last-Write-Wins"┬Àmean?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+440:80  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+440:96  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+441:43  Error: Replace `If┬Àyou┬Àedit┬Àthe┬Àsame┬Àcase┬Àon┬Àtwo┬Àdifferent┬Àdevices┬Àwhile┬Àoffline,┬Àthe┬Àchanges┬Àmad
+e┬Àmost┬Àrecently┬À(timestamped┬Àby┬Àthe┬Àdevice)┬Àwill┬Àoverwrite┬Àthe┬Àolder┬Àchanges┬Àonce┬Àboth┬Àdevices┬Àsync┬Àonl
+ine.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀIf┬Àyou┬Àedit┬Àthe┬Àsame┬Àcase┬Àon┬Àtwo┬Àdifferent┬Àdevices┬Àwhile┬Àoffline,
+┬Àthe┬Àchanges┬ÀmadeÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àmost┬Àrecently┬À(timestamped┬Àby┬Àthe┬Àdevice)┬Àwill┬Àoverwrite┬Àthe
+┬Àolder┬Àchanges┬Àonce┬ÀbothÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdevices┬Àsync┬Àonline.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+444:67  Error: Replace `8.┬ÀDoes┬ÀCWC┬Àconsume┬Àa┬Àlot┬Àof┬Àmobile┬Àdata?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À8.┬ÀDoes┬ÀCWC┬Àconsume┬Àa┬Àlot┬Àof┬Àmobile┬Àdata?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+445:43  Error: Replace `No.┬ÀBecause┬ÀCWC┬Àonly┬Àsynchronizes┬Àhighly┬Àoptimized,┬Àencrypted┬Àtext┬Àblocks,┬Àit┬Àuses┬À
+a┬Àminimal┬Àamount┬Àof┬Àdata.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀNo.┬ÀBecause┬ÀCWC┬Àonly┬Àsynchronizes┬Àhighly┬Àopti
+mized,┬Àencrypted┬Àtext┬Àblocks,┬Àit┬Àuses┬ÀaÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àminimal┬Àamount┬Àof┬Àdata.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À`  prettier/prettier
+448:67  Error: Replace `9.┬ÀWhy┬Àdoes┬Àmy┬Àtask┬Àlist┬Àshow┬Àa┬Àdefault┬À1-hour┬Àdue┬Àdate?` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À9.┬ÀWhy┬Àdoes┬Àmy┬Àtask┬Àlist┬Àshow┬Àa┬Àdefault┬À1-hour┬Àdue┬Àdate?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+449:43  Error: Replace `To┬Àkeep┬Àyou┬Àfocused┬Àand┬Àprevent┬Àtasks┬Àfrom┬Àlanguishing.┬ÀIf┬Àa┬Àtask┬Àis┬Ànot┬Àtime-sen
+sitive,┬Àyou┬Àcan┬Àeasily┬Àadjust┬Àits┬Àdue┬Àdate┬Àduring┬Àcreation.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀTo┬Àkeep┬Àyo
+u┬Àfocused┬Àand┬Àprevent┬Àtasks┬Àfrom┬Àlanguishing.┬ÀIf┬Àa┬Àtask┬Àis┬ÀnotÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtime-sensitive,
+┬Àyou┬Àcan┬Àeasily┬Àadjust┬Àits┬Àdue┬Àdate┬Àduring┬Àcreation.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+452:67  Error: Replace `10.┬ÀCan┬ÀI┬Àcustomize┬Àthe┬Àdrug┬Àlibrary?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À10.┬ÀCan┬ÀI┬Àcustomize┬Àthe┬Àdrug┬Àlibrary?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+453:43  Error: Replace `The┬Àdrug┬Àlibrary┬Àis┬Àa┬Àstandardized┬Àoffline┬Àreference.┬ÀHowever,┬Àyou┬Àcan┬Àadd┬Àcustom┬À
+administration┬Ànotes┬Àdirectly┬Àto┬Àyour┬Àpatient┬Àcase┬Ànotes┬Àor┬Àtask┬Àdescriptions.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬ÀThe┬Àdrug┬Àlibrary┬Àis┬Àa┬Àstandardized┬Àoffline┬Àreference.┬ÀHowever,┬Àyou┬Àcan┬Àadd┬ÀcustomÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬Àadministration┬Ànotes┬Àdirectly┬Àto┬Àyour┬Àpatient┬Àcase┬Ànotes┬Àor┬Àtask┬Àdescriptions.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬
+À┬À┬À┬À┬À`  prettier/prettier
+456:67  Error: Replace `11.┬ÀWhat┬Àhappens┬Àif┬ÀI┬Àclear┬Àmy┬Àbrowser┬Àhistory?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À11.┬ÀWhat┬Àhappens┬Àif┬ÀI┬Àclear┬Àmy┬Àbrowser┬Àhistory?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+457:43  Error: Replace `If┬Àyou┬Àclear┬Àyour┬Àbrowser's┬À"Site┬ÀData"┬Àor┬À"Offline┬ÀWebsite┬ÀData",┬Àthe┬Àlocal┬ÀIndex
+edDB┬Àdatabase┬Àmay┬Àbe┬Àdeleted.┬ÀIf┬Àthis┬Àhappens,┬Àyou┬Àwill┬Àneed┬Àto┬Àrestore┬Àyour┬Àdata┬Àfrom┬Àa┬Àbackup┬Àfile┬
+Àor┬Àcloud┬Àsync.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀIf┬Àyou┬Àclear┬Àyour┬Àbrowser's┬À"Site┬ÀData"┬Àor┬À"Offline┬ÀWe
+bsite┬ÀData",┬Àthe┬Àlocal┬ÀIndexedDBÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdatabase┬Àmay┬Àbe┬Àdeleted.┬ÀIf┬Àthis┬Àhappens,┬Àyou
+┬Àwill┬Àneed┬Àto┬Àrestore┬Àyour┬Àdata┬Àfrom┬ÀaÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àbackup┬Àfile┬Àor┬Àcloud┬Àsync.ÔÅÄ┬À┬À┬À┬À┬
+À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+457:68  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+457:71  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+457:81  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+457:86  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+457:107  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+460:67  Error: Replace `12.┬ÀHow┬Àdo┬ÀI┬Àknow┬Àif┬Àmy┬Àdata┬Àis┬Àsynced?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À12.┬ÀHow┬Àdo┬ÀI┬Àknow┬Àif┬Àmy┬Àdata┬Àis┬Àsynced?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+461:43  Error: Replace `The┬Ànavigation┬Àbar┬Àdisplays┬Àa┬Àsync┬Àstatus┬Àicon.┬ÀA┬Àgreen┬Àcheckmark┬Àindicates┬Àall┬Àch
+anges┬Àhave┬Àsuccessfully┬Àsynchronized┬Àwith┬Àthe┬Àcloud.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀThe┬Ànavigation┬Àbar┬À
+displays┬Àa┬Àsync┬Àstatus┬Àicon.┬ÀA┬Àgreen┬Àcheckmark┬Àindicates┬ÀallÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àchanges┬Àhave┬Àsucc
+essfully┬Àsynchronized┬Àwith┬Àthe┬Àcloud.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+464:67  Error: Replace `13.┬ÀDoes┬ÀCWC┬Àrun┬Àin┬Àthe┬Àbackground?` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À13.┬ÀDoes┬ÀCWC┬Àrun┬Àin┬Àthe┬Àbackground?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+465:43  Error: Replace `Yes.┬ÀWhen┬Àinstalled┬Àas┬Àa┬ÀPWA,┬Àbackground┬Àprocesses┬Àmanage┬Àthe┬Àsync┬Àqueue┬Àautomatica
+lly┬Àwhen┬Ànetwork┬Àavailability┬Àchanges.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀYes.┬ÀWhen┬Àinstalled┬Àas┬Àa┬ÀPWA,┬Àba
+ckground┬Àprocesses┬Àmanage┬Àthe┬Àsync┬Àqueue┬ÀautomaticallyÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àwhen┬Ànetwork┬Àavailability┬
+Àchanges.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+468:67  Error: Replace `14.┬ÀWhat┬Àshould┬ÀI┬Àdo┬Àif┬Àmy┬Àpasscode┬Àis┬Àcompromised?` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À14.┬ÀWhat┬Àshould┬ÀI┬Àdo┬Àif┬Àmy┬Àpasscode┬Àis┬Àcompromised?ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+469:43  Error: Replace `Go┬Àto┬ÀSettings,┬Àscroll┬Àto┬ÀEncryption┬ÀLayer,┬Àclick┬ÀUpdate┬ÀEncryption┬ÀPasscode,┬Àand┬Àe
+nter┬Àa┬Ànew┬Àpasscode.┬ÀCWC┬Àwill┬Àautomatically┬Àdecrypt┬Àand┬Àre-encrypt┬Àall┬Àlocal┬Àrecords┬Àusing┬Àyour┬Ànew┬Àpas
+scode.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀGo┬Àto┬ÀSettings,┬Àscroll┬Àto┬ÀEncryption┬ÀLayer,┬Àclick┬ÀUpdate┬ÀEncrypti
+on┬ÀPasscode,┬ÀandÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àenter┬Àa┬Ànew┬Àpasscode.┬ÀCWC┬Àwill┬Àautomatically┬Àdecrypt┬Àand┬Àre-e
+ncrypt┬Àall┬Àlocal┬ÀrecordsÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àusing┬Àyour┬Ànew┬Àpasscode.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+473:43  Error: Replace 
+`Yes.┬ÀThe┬ÀClinical┬ÀWorkflow┬ÀCompanion┬Àis┬Àfree┬Àto┬Àuse┬Àfor┬Àjunior┬Àclinicians,┬Àinterns,┬Àand┬Àtrainees.` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀYes.┬ÀThe┬ÀClinical┬ÀWorkflow┬ÀCompanion┬Àis┬Àfree┬Àto┬Àuse┬Àfor┬Àjunior┬Àclinicians,┬À
+interns,ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àand┬Àtrainees.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+489:17  Error: Replace `<strong>Telemetry:</strong>┬ÀGo┬Àto┬ÀSettings┬ÀÔåÆ┬Àclick┬À**Export┬ÀTelemetry┬ÀLogs**┬Àto┬Àdow
+nload┬Àa┬Àdiagnostic┬Àaudit.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong>Telemetry:</strong>┬ÀGo┬Àto┬ÀSettings┬ÀÔåÆ┬À
+click┬À**Export┬ÀTelemetry┬ÀLogs**┬ÀtoÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àdownload┬Àa┬Àdiagnostic┬Àaudit.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À`  prettier/prettier
+490:17  Error: Replace `<strong>Support┬ÀEmail:</strong>┬ÀContact┬Àus┬Àat┬À<code┬ÀclassName="text-primary┬Àbg-primary/1
+0┬Àpx-1┬Àpy-0.5┬Àrounded">cwc-support@domain.local</code>.` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong>Support┬ÀEmail
+:</strong>┬ÀContact┬Àus┬Àat{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<code┬ÀclassName="text-primary┬Àbg-primary/10┬Àpx-1┬Àpy
+-0.5┬Àrounded">ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcwc-support@domain.localÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À</code>ÔÅÄ┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+491:17  Error: Replace 
+`<strong>Privacy┬ÀNotice:</strong>┬ÀDo┬ÀNOT┬Àattach┬Àscreenshot┬Àattachments┬Àof┬Àpatient┬Àcase┬Àlogs.` with `ÔÅÄ┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À<strong>Privacy┬ÀNotice:</strong>┬ÀDo┬ÀNOT┬Àattach┬Àscreenshot┬Àattachments┬Àof┬Àpatient┬ÀcaseÔÅÄ
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àlogs.ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+498:44  Error: Replace `sec` with `(sec)`  prettier/prettier
+508:55  Error: Insert `,`  prettier/prettier
+511:38  Error: Replace `(sec` with `((sec)`  prettier/prettier
+551:29  Error: Replace `cat` with `(cat)`  prettier/prettier
+552:59  Error: Replace `s` with `(s)`  prettier/prettier
+560:36  Error: Replace `sec` with `(sec)`  prettier/prettier
+586:55  Error: Replace `┬ÀclassName:┬À'w-5┬Àh-5┬Àtext-primary┬Àshrink-0'` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀclassName:┬À'w-5┬Àh-5┬Àtext-primary┬Àshrink-0',ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+590:70  Error: Replace `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À{activeSection.content}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À` with 
+`{activeSection.content}`  prettier/prettier
+
+./src/app/login/components/AuthContent.tsx
+9:9  Error: Delete `┬À`  prettier/prettier
+10:3  Warning: 'Shield' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+10:10  Error: Delete `┬À`  prettier/prettier
+11:3  Warning: 'Wifi' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+11:8  Error: Delete `┬À`  prettier/prettier
+12:3  Warning: 'Database' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+12:12  Error: Delete `┬À`  prettier/prettier
+13:8  Error: Delete `┬À`  prettier/prettier
+14:15  Error: Delete `┬À`  prettier/prettier
+15:17  Error: Delete `┬À`  prettier/prettier
+17:3  Warning: 'X' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:4  Error: Replace `┬À` with `,`  prettier/prettier
+153:13  Error: Delete `┬À`  prettier/prettier
+154:30  Error: Delete `┬À`  prettier/prettier
+155:49  Error: Delete `┬À`  prettier/prettier
+156:80  Error: Delete `┬À`  prettier/prettier
+165:98  Error: Replace `┬Àchecking┬Àoff┬Àtasks┬Àand┬Àdocumenting┬Àclinical┬Àlogs,┬Àyou┬Àagree┬Àto┬Àthese┬Àoperational` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àchecking┬Àoff┬Àtasks┬Àand┬Àdocumenting┬Àclinical┬Àlogs,┬Àyou┬Àagree┬Àto┬Àthese
+┬ÀoperationalÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+176:71  Error: Replace `Personal┬ÀWorkflow┬ÀUtility┬ÀOnly` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀPersonal┬ÀWorkflow┬ÀUtility┬ÀOnlyÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+178:98  Error: Replace `┬Àtasks,┬Àorganize┬Àrounds,┬Àand┬Àstructure┬Àcase┬Ànotes.┬ÀIt┬Àis┬À<strong>NOT</strong>┬Àa` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àtasks,┬Àorganize┬Àrounds,┬Àand┬Àstructure┬Àcase┬Ànotes.┬ÀIt┬Àis┬À<strong>N
+OT</strong>┬ÀaÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+188:71  Error: Replace `No┬ÀMedical┬ÀDecision┬ÀAuthority` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀNo┬ÀMedical┬ÀDecision┬ÀAuthorityÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+190:98  Error: Replace `┬Àsuggestions.┬ÀClinical┬Àjudgment┬Àremains┬Àthe┬Àsole┬Àresponsibility┬Àof┬Àthe┬Àprescribing` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àsuggestions.┬ÀClinical┬Àjudgment┬Àremains┬Àthe┬Àsole┬Àresponsibility┬Àof┬À
+the┬ÀprescribingÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+202:101  Error: Replace 
+`┬Àcharting┬Àpipelines.┬ÀAlways┬Àenter┬Àofficial┬Àclinical┬Àsummaries┬Àin┬Àyour┬Àinstitution's` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À
+┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Àcharting┬Àpipelines.┬ÀAlways┬Àenter┬Àofficial┬Àclinical┬Àsummaries┬Àin┬Àyour┬Àinstitution'sÔÅÄ┬À┬
+À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+202:182  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+212:68  Error: Replace `Use┬ÀNon-Identifying┬ÀAliases┬ÀOnly` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀUse┬ÀNon-Identifying┬ÀAliases┬ÀOnlyÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+214:93  Error: Replace `┬Ànational┬ÀIDs,┬Àexact┬Àbirth┬Àdates,┬Àor┬Àphone┬Ànumbers)┬Àinto┬ÀCWC.┬ÀProtect┬Àpatient` 
+with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬Ànational┬ÀIDs,┬Àexact┬Àbirth┬Àdates,┬Àor┬Àphone┬Ànumbers)┬Àinto┬ÀCWC.┬ÀPro
+tect┬ÀpatientÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+224:71  Error: Replace `Volatile┬ÀPasscode┬ÀSecurity` with 
+`ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬ÀVolatile┬ÀPasscode┬ÀSecurityÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  
+prettier/prettier
+226:101  Error: Replace `┬Ànever┬Àuploaded┬Àto┬Àour┬Àservers.┬ÀIf┬Àlost,` with `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À
+never┬Àuploaded┬Àto┬Àour┬Àservers.┬ÀIf┬Àlost,{'┬À'}ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+240:98  Error: Insert `ÔÅÄ┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À┬À`  prettier/prettier
+
+./src/components/AppInitializer.tsx
+3:8  Warning: 'React' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/components/ui/AppIcon.tsx
+17:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:86  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/ui/AppImage.tsx
+34:35  Warning: 'errorInfo' is defined but never used. Allowed unused args must match /^_/u.  
+@typescript-eslint/no-unused-vars
+42:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from 
+`next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from 
+your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+71:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+134:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:11  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative 
+images.  jsx-a11y/alt-text
+191:7  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative 
+images.  jsx-a11y/alt-text
+
+./src/components/ui/EmptyState.tsx
+3:8  Warning: 'Icon' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/components/ui/MetricCard.tsx
+3:8  Warning: 'Icon' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/lib/clinicalDataService.test.ts
+129:3  Warning: 'updateCase' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+160:13  Warning: 'restoreSpy' is assigned a value but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+
+./src/lib/clinicalDataService.ts
+685:7  Warning: Unexpected console statement. Only these console methods are allowed: warn, error, info.  no-console
+688:7  Warning: Unexpected console statement. Only these console methods are allowed: warn, error, info.  no-console
+
+./src/lib/localDB.ts
+8:15  Warning: 'ClinicalCase' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+8:29  Warning: 'ClinicalTask' is defined but never used. Allowed unused vars must match /^_/u.  
+@typescript-eslint/no-unused-vars
+339:13  Warning: 'db' is defined but never used. Allowed unused args must match /^_/u.  
+@typescript-eslint/no-unused-vars
+340:5  Warning: Unexpected console statement. Only these console methods are allowed: warn, error, info.  no-console
+352:9  Warning: Unexpected console statement. Only these console methods are allowed: warn, error, info.  no-console
+
+info  - Need to disable some ESLint rules? Learn more here: 
+https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

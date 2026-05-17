@@ -2,7 +2,6 @@ import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import Icon from '@/components/ui/AppIcon';
 
-
 interface MetricCardProps {
   label: string;
   value: string | number;
@@ -70,8 +69,11 @@ export default function MetricCard({
         {trend && (
           <div
             className={`flex items-center gap-1 text-xs font-medium ${
-              trend.direction === 'up' ?'text-emerald-400'
-                : trend.direction === 'down' ?'text-red-400' :'text-muted-foreground'
+              trend.direction === 'up'
+                ? 'text-emerald-400'
+                : trend.direction === 'down'
+                  ? 'text-red-400'
+                  : 'text-muted-foreground'
             }`}
           >
             <span>{trend.direction === 'up' ? '↑' : trend.direction === 'down' ? '↓' : '—'}</span>
@@ -88,9 +90,7 @@ export default function MetricCard({
         <p className="text-xs font-medium text-muted-foreground mt-1.5 tracking-wide uppercase">
           {label}
         </p>
-        {subtext && (
-          <p className="text-xs text-muted-foreground/70 mt-1">{subtext}</p>
-        )}
+        {subtext && <p className="text-xs text-muted-foreground/70 mt-1">{subtext}</p>}
       </div>
     </div>
   );
