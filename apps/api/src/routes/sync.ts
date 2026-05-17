@@ -3,11 +3,6 @@
  * Handles encrypted data sync (last-write-wins strategy)
  * POST /api/sync/case - Create/update case
  * PUT /api/sync/case - Update case
-/**
- * Sync Routes
- * Handles encrypted data sync (last-write-wins strategy)
- * POST /api/sync/case - Create/update case
- * PUT /api/sync/case - Update case
  * DELETE /api/sync/case - Delete case
  * POST /api/sync/task - Create/update task
  * PUT /api/sync/task - Update task
