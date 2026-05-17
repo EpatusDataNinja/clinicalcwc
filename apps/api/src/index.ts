@@ -16,10 +16,14 @@ dotenv.config();
 const app: Express = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
+const FRONTEND_URL = process.env.FRONTEND_URL;
+const allowedOrigins = [
+  ...(FRONTEND_URL ? FRONTEND_URL.split(',').map((origin) => origin.trim()).filter(Boolean) : []),
+];
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:4028',
+  origin: allowedOrigins.length > 0 ? allowedOrigins : false,
   credentials: true,
 }));
 app.use(express.json({ limit: '1mb' }));
@@ -32,7 +36,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Health check
 app.get('/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok' });
 });
 
 // Routes
@@ -52,8 +56,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+  console.log(`Server listening on port ${PORT}`);
+  console.log(`Frontend URL: ${FRONTEND_URL || 'not configured'}`);
 });
 
 // Graceful shutdown

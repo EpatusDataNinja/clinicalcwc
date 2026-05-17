@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const shouldDisableServiceWorker = process.env.NODE_ENV !== 'production';
+
   return (
     <html lang="en" className="dark">
       <head>
@@ -45,16 +47,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Fix 6: Only register service worker in production
-              // In dev, unregister any stale service workers to prevent caching issues
               if ('serviceWorker' in navigator) {
-                if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-                  // Development: unregister any stale SW
+                if (${JSON.stringify(shouldDisableServiceWorker)}) {
                   navigator.serviceWorker.getRegistrations().then(function(registrations) {
                     registrations.forEach(function(reg) { reg.unregister(); });
                   });
                 } else {
-                  // Production: register SW
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register('/sw.js').catch(function() {});
                   });

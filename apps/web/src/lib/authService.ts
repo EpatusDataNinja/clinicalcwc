@@ -1,7 +1,6 @@
 import { useCaseStore } from './store';
 import { lockClinicalData } from './clinicalDataService';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+import { apiUrl } from './apiConfig';
 
 export interface AuthUser {
   id: string;
@@ -15,7 +14,7 @@ export interface AuthResponse {
 }
 
 async function authRequest(path: string, body: Record<string, unknown>): Promise<AuthResponse> {
-  const res = await fetch(`${API_BASE}/api/auth/${path}`, {
+  const res = await fetch(apiUrl(`/api/auth/${path}`), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -68,7 +67,7 @@ export async function updateProfile(input: {
   const token = useCaseStore.getState().authToken;
   if (!token) throw new Error('Not authenticated');
 
-  const res = await fetch(`${API_BASE}/api/auth/profile`, {
+  const res = await fetch(apiUrl('/api/auth/profile'), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

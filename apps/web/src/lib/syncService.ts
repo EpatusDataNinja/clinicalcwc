@@ -6,8 +6,8 @@
 import { casesDB, syncQueueDB, tasksDB, type SyncQueueItem } from './localDB';
 import { useCaseStore } from './store';
 import { restoreEncryptedRecords } from './clinicalDataService';
+import { apiUrl } from './apiConfig';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
 const MAX_RETRIES = 3;
 
 export type SyncStatus = 'idle' | 'syncing' | 'success' | 'error' | 'offline';
@@ -31,7 +31,7 @@ async function syncItem(
   token?: string
 ): Promise<{ ok: boolean; reason?: SyncFailureReason }> {
   try {
-    const endpoint = `${API_BASE}/api/sync/${item.entity}`;
+    const endpoint = apiUrl(`/api/sync/${item.entity}`);
     const res = await fetch(endpoint, {
       method: item.type === 'delete' ? 'DELETE' : item.type === 'create' ? 'POST' : 'PUT',
       headers: {
@@ -125,7 +125,7 @@ export async function pullRemoteSnapshot(
 
     const lastSyncAt = useCaseStore.getState().lastSyncAt;
     const queryParams = lastSyncAt ? `?lastSyncAt=${encodeURIComponent(lastSyncAt)}` : '';
-    const res = await fetch(`${API_BASE}/api/sync/snapshot${queryParams}`, {
+    const res = await fetch(apiUrl(`/api/sync/snapshot${queryParams}`), {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json().catch(() => ({}));
