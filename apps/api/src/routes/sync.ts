@@ -3,6 +3,11 @@
  * Handles encrypted data sync (last-write-wins strategy)
  * POST /api/sync/case - Create/update case
  * PUT /api/sync/case - Update case
+/**
+ * Sync Routes
+ * Handles encrypted data sync (last-write-wins strategy)
+ * POST /api/sync/case - Create/update case
+ * PUT /api/sync/case - Update case
  * DELETE /api/sync/case - Delete case
  * POST /api/sync/task - Create/update task
  * PUT /api/sync/task - Update task
@@ -12,6 +17,7 @@
 import { Router, type Request, type Response } from 'express';
 import { prisma } from '../index.js';
 import type { AuthRequest } from '../middleware/auth.js';
+import type { SyncedCaseBlob, SyncedTaskBlob } from '@prisma/client';
 
 const router = Router();
 
@@ -43,13 +49,13 @@ router.get('/snapshot', async (req: AuthRequest, res: Response): Promise<void> =
     ]);
 
     res.status(200).json({
-      cases: cases.map((item) => ({
+      cases: cases.map((item: SyncedCaseBlob) => ({
         id: item.entityId,
         encryptedData: item.encryptedData,
         createdAt: item.createdAt.toISOString(),
         updatedAt: item.updatedAt.toISOString(),
       })),
-      tasks: tasks.map((item) => ({
+      tasks: tasks.map((item: SyncedTaskBlob) => ({
         id: item.entityId,
         caseId: item.caseId || '',
         encryptedData: item.encryptedData,
