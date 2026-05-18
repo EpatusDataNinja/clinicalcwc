@@ -14,6 +14,10 @@ import {
 import { useCaseStore } from './store';
 import { restoreEncryptedRecords } from './clinicalDataService';
 
+vi.mock('./apiConfig', () => ({
+  apiUrl: (path: string) => `http://localhost:3001${path}`,
+}));
+
 // Mock localDB to control the sync queue and state
 vi.mock('./localDB', () => ({
   syncQueueDB: {
