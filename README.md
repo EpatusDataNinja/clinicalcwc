@@ -1,139 +1,229 @@
-# ClinicalCWC — Monorepo Production Hub
+# ClinicalCWC
 
-ClinicalCWC is a personal, offline-first clinical workflow companion designed for physicians. It provides high-performance tracking for patient case aliases, tasks, drug references, telemetry tracking, and encrypted data backups. 
+ClinicalCWC is an offline-first clinical workflow companion. The repository is a monorepo with a Next.js frontend and an Express/TypeScript backend that syncs encrypted clinical data to PostgreSQL.
 
-This repository is organized as a unified modern monorepo:
-* **`apps/web`**: Next.js 15 App Router Frontend featuring pure Zustand state-cache, Dexie (IndexedDB) encrypted storage, and offline-first interfaces.
-* **`apps/api`**: PostgreSQL + Prisma + Express JWT-authenticated REST Backend for storing and syncing encrypted data blobs.
+## Project Structure
 
----
-
-## 🏛️ System Architecture
-
-```mermaid
-graph TD
-    UI[Next.js App / Components]
-    Service[clinicalDataService.ts]
-    DB[(IndexedDB / Dexie)]
-    Store[Zustand Store Cache]
-    Sync[syncService.ts]
-    API[Express API Backend]
-    PG[(PostgreSQL Database)]
-
-    UI -->|1. Mutate| Service
-    Service -->|2. Encrypt & Persist| DB
-    Service -->|3. Hydrate cache| Store
-    Store -.->|4. Re-render state| UI
-    Service -->|5. Queue Change| DB
-    Sync -->|6. Dequeue & Push| API
-    API -->|7. Upsert Blobs| PG
+```text
+cwc/
++-- apps/
+|   +-- web/   # Next.js frontend
+|   +-- api/   # Express + TypeScript backend
++-- packages/
++-- infra/docker/docker-compose.yml
++-- package.json
++-- package-lock.json
 ```
 
-### Key Architectural Guidelines
-1. **Single Source of Truth (SSOT)**: The database (IndexedDB) is the definitive authority. The Zustand Store is treated strictly as an in-memory cache/render target (Zero async operations or direct database writes occur inside `store.ts`).
-2. **Deterministic Hydration**: Every clinical mutation triggers exactly one hydration restore from the database (`restoreDataFromDB`). Helper recalculators are isolated from triggering restorations.
-3. **No Phantom UI Data**: All client reference items (including the formulary drug reference) reside in IndexedDB via seed structures, eliminating unpersisted UI-only datasets.
-4. **Decoupled Entities**: UI components remain pure and stateless; ID generation, schema verification, and default attributes (e.g. `dueAt` timestamps) reside fully in the service layer.
+## Requirements
 
----
+- Node.js 20+
+- npm
+- PostgreSQL database, local or hosted
+- Supabase Transaction Mode PostgreSQL URL if using Supabase
 
-## ⚙️ Requirements & Environment
+The repo includes `.nvmrc` with Node `20`.
 
-### Prerequisites
-- **Node.js** v20+
-- **npm** v11+
-- **PostgreSQL** (running locally or via Docker Compose)
+## First Setup After Cloning
 
-### Environment Configurations
+Install dependencies from the repository root:
 
-#### Frontend (`apps/web/.env`)
-* `NEXT_PUBLIC_API_BASE_URL`: Express API endpoint (Defaults to `http://localhost:3001`).
-
-#### Backend (`apps/api/.env`)
-* `DATABASE_URL`: PostgreSQL connection string.
-* `JWT_SECRET`: Secret key used to sign tokens (Fails fast on startup if missing).
-* `FRONTEND_URL`: Allowed web origin (Defaults to `http://localhost:4028`).
-* `PORT`: Server port (Defaults to `3001`).
-
----
-
-## 🚀 Quick Start (Local Development)
-
-### 1. Install Dependencies
-Run from the root of the workspace:
 ```bash
 npm install
 ```
 
-### 2. Configure Environment Files
-Copy env configurations from templates:
+If PowerShell blocks `npm.ps1` on Windows, use:
+
+```bash
+cmd /c npm install
+```
+
+Create local env files from the examples:
+
+```bash
+copy apps\api\.env.example apps\api\.env
+copy apps\web\.env.example apps\web\.env
+```
+
+On macOS/Linux:
+
 ```bash
 cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env
 ```
-Ensure you set a strong, secure `JWT_SECRET` and correct `DATABASE_URL` in the API `.env` file.
 
-### 3. Database Initialization
-Ensure your PostgreSQL instance is running, then run Prisma migrations:
+## Local Environment Variables
+
+Backend: `apps/api/.env`
+
+```env
+PORT=3001
+DATABASE_URL="your-postgresql-url"
+JWT_SECRET="your-local-development-secret"
+FRONTEND_URL="http://localhost:4028"
+NODE_ENV="development"
+```
+
+Frontend: `apps/web/.env`
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+Do not commit real `.env` files. Keep real database URLs and secrets only in local env files or Railway variables.
+
+## Database Setup
+
+The backend uses Prisma. After configuring `apps/api/.env`, run migrations:
+
 ```bash
 npm --workspace clinicalcwc-api run migrate
 ```
 
-### 4. Start the Application Stack
-Launch the development servers:
+If you only need to generate Prisma client after installing dependencies:
+
 ```bash
-# Start Express Backend
+npm --workspace clinicalcwc-api run prisma -- generate
+```
+
+## Run Locally
+
+Start the backend:
+
+```bash
 npm --workspace clinicalcwc-api run dev
-
-# Start Next.js Frontend
-npm --workspace clinicalcwc run dev
 ```
 
-* **Frontend Hub**: `http://localhost:4028`
-* **API Health Check**: `http://localhost:3001/health`
+Start the frontend in another terminal:
 
----
-
-## 🧪 Testing & Code Verification
-
-To verify architecture compliance, static types, and test suites prior to production lock, run the verification pipeline:
-
-```bash
-# Frontend Validation
-npm --workspace clinicalcwc run lint          # ESLint & Prettier
-npm --workspace clinicalcwc run type-check    # Strict TypeScript validation
-npm --workspace clinicalcwc run test          # Vitest suite execution
-npm --workspace clinicalcwc run build         # Next.js optimization build
-
-# Backend Validation
-npm --workspace clinicalcwc-api run lint
-npm --workspace clinicalcwc-api run type-check
-npm --workspace clinicalcwc-api run test
-```
-
----
-
-## 🔐 Security & Disaster Recovery
-
-* **Zero Plaintext Storage**: Credentials are never stored plain-text in `localStorage`. Patient notes are encrypted client-side using AES-256-GCM prior to storage.
-* **Encrypted Backups**: Backup settings export only encrypted blobs. Decrypted material is never exposed. Imports validate passcodes before commit.
-* **Proactive Protection**: Decryption lockouts, rate backoffs, and telemetry logging trigger on passcode mismatch indicators.
-* **Disaster Recovery Expectations**:
-  - **RTO (Recovery Time Objective)**: < 2 minutes (Requires manual encrypted backup JSON file and passcode).
-  - **RPO (Recovery Point Objective)**: Limited to the last manual backup or last successfully executed cloud sync check.
-
----
-
-## 🐳 Docker Deployment
-
-To spin up the PostgreSQL database and Express API container environment:
-```bash
-# Set JWT_SECRET in environment
-export JWT_SECRET="your-strong-production-jwt-secret"
-
-# Start Docker containers
-docker compose -f infra/docker/docker-compose.yml up -d
-```
-The Next.js Web App is run independently with:
 ```bash
 npm --workspace clinicalcwc run dev
 ```
+
+Local URLs:
+
+- Frontend: `http://localhost:4028`
+- Backend health check: `http://localhost:3001/health`
+
+Expected health response:
+
+```json
+{ "status": "ok" }
+```
+
+## Verification Commands
+
+Frontend:
+
+```bash
+cd apps/web
+npm run lint
+npm run type-check
+npm run build
+```
+
+Backend:
+
+```bash
+cd apps/api
+npm run build
+```
+
+From the root you can also use workspace commands:
+
+```bash
+npm --workspace clinicalcwc run build
+npm --workspace clinicalcwc-api run build
+```
+
+## Railway Deployment
+
+Deploy this repository as two Railway services in one Railway project.
+
+### Backend Service
+
+Service root directory:
+
+```text
+apps/api
+```
+
+Build command:
+
+```bash
+npm install && npm run build
+```
+
+Start command:
+
+```bash
+npm start
+```
+
+Backend Railway variables:
+
+```env
+DATABASE_URL=your Supabase Transaction Mode PostgreSQL URL
+JWT_SECRET=make-this-a-long-random-secret
+FRONTEND_URL=https://your-web.up.railway.app
+NODE_ENV=production
+```
+
+Railway provides `PORT`; you usually do not need to set it manually.
+
+### Frontend Service
+
+Service root directory:
+
+```text
+apps/web
+```
+
+Build command:
+
+```bash
+npm install && npm run build
+```
+
+Start command:
+
+```bash
+npm start
+```
+
+Frontend Railway variables:
+
+```env
+NEXT_PUBLIC_API_URL=https://your-api.up.railway.app
+```
+
+Deploy the backend first, copy its public Railway URL into the frontend as `NEXT_PUBLIC_API_URL`, then copy the frontend public Railway URL into the backend as `FRONTEND_URL`.
+
+## Before Deleting Your Local Copy
+
+Run this checklist so you can safely clone the project later:
+
+```bash
+git status
+git add .
+git commit -m "Prepare Railway deployment and README setup"
+git push
+```
+
+Then verify on GitHub that the latest commit includes:
+
+- `README.md`
+- `apps/web/README.md`
+- `apps/api/README.md`
+- `apps/web/.env.example`
+- `apps/api/.env.example`
+- `.nvmrc`
+
+After that, it is safe to delete the local folder if you no longer need untracked files.
+
+## Notes
+
+- The frontend calls the backend through `NEXT_PUBLIC_API_URL`.
+- The backend allows browser calls through `FRONTEND_URL`.
+- Production CORS is not wildcarded.
+- Build artifacts, dependency folders, logs, and real env files are ignored by Git.
