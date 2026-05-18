@@ -9,6 +9,7 @@ on:
 env:
   CI: true
   TZ: UTC
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   verify:
@@ -69,7 +70,7 @@ jobs:
         # Mandatory build gate: fails immediately on optimization errors or missing dependencies
         run: npm --workspace clinicalcwc run build
         env:
-          NEXT_PUBLIC_API_BASE_URL: http://localhost:3001
+          NEXT_PUBLIC_API_URL: http://localhost:3001
 
       - name: "[API] Build"
         # Compiles TypeScript for the Express backend
