@@ -15,6 +15,17 @@ import type { AuthRequest } from '../middleware/auth.js';
 
 const router = Router();
 
+type SyncedCaseSnapshot = {
+  entityId: string;
+  encryptedData: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type SyncedTaskSnapshot = SyncedCaseSnapshot & {
+  caseId: string | null;
+};
+
 interface SyncRequest extends AuthRequest {
   body: {
     entityId: string;
@@ -43,13 +54,13 @@ router.get('/snapshot', async (req: AuthRequest, res: Response): Promise<void> =
     ]);
 
     res.status(200).json({
-      cases: cases.map((item) => ({
+      cases: cases.map((item: SyncedCaseSnapshot) => ({
         id: item.entityId,
         encryptedData: item.encryptedData,
         createdAt: item.createdAt.toISOString(),
         updatedAt: item.updatedAt.toISOString(),
       })),
-      tasks: tasks.map((item) => ({
+      tasks: tasks.map((item: SyncedTaskSnapshot) => ({
         id: item.entityId,
         caseId: item.caseId || '',
         encryptedData: item.encryptedData,
